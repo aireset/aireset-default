@@ -36,3 +36,7 @@ function aireset_default_wooo_add_admin_menu() {
 // Inclui funções adicionais
 include_once plugin_dir_path(__FILE__) . 'includes/status.php';
 include_once plugin_dir_path(__FILE__) . 'includes/cart.php';
+include_once plugin_dir_path(__FILE__) . 'includes/crocoblock.php';
+include_once plugin_dir_path(__FILE__) . 'includes/imagens.php';
+include_once plugin_dir_path(__FILE__) . 'includes/yith.php';
+include_once plugin_dir_path(__FILE__) . 'includes/order-custom-column.php';

@@ -16,7 +16,7 @@
 // }
 // add_filter( 'custom_permalink_before_saving', 'yasglobal_permalink_before_saving', 10, 2 );
 
-/*
+
 if(!function_exists('custom_orders_list_column_content')){
     add_action( 'manage_shop_order_posts_custom_column' , 'custom_orders_list_column_content', 50, 2 );
     
@@ -39,6 +39,3 @@ if(!function_exists('custom_orders_list_column_content')){
         }
     }
 }
-
-
-*/

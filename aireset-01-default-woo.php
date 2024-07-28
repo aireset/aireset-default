@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Aireset - 01 - Configurações Padrões Woocomerce - Aireset
+Plugin Name: Aireset - 01 - Configurações Padrões
 Plugin URI: https://github.com/aireset/aireset-01-default-woo
 Description: Cria e Padroniza diversas configurações padrões para os E-commerces
-Version: 1.0
+Version: 1.0.0
 Author: Felipe Almeman - Aireset Agencia Web
 Link: https://aireset.com.br
 License: GPL2

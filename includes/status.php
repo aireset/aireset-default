@@ -1,134 +1,174 @@
 <?php
 
-function add_custom_order_status() {
-    // register_post_status( 'wc-payed', array(
-    //     'label'                     => 'Pedido Pago',
-    //     'public'                    => true,
-    //     'show_in_admin_status_list' => true,
-    //     'show_in_admin_all_list'    => true,
-    //     'exclude_from_search'       => false,
-    //     'label_count'               => _n_noop( 'Pedidos Pagos <span class="count">(%s)</span>', 'Pedidos Pago <span class="count">(%s)</span>' )
-    // ) );
-    register_post_status( 'wc-partial-payed', array(
-        'label'                     => 'Pedido Pago Parcialmente',
-        'public'                    => true,
-        'show_in_admin_status_list' => true,
-        'show_in_admin_all_list'    => true,
-        'exclude_from_search'       => false,
-        'label_count'               => _n_noop( 'Pedidos Pagos Parcialmente <span class="count">(%s)</span>', 'Pedidos Pago Parcialmente <span class="count">(%s)</span>' )
-    ) );
-    register_post_status( 'wc-in-production', array(
-        'label'                     => 'Em Produção',
-        'public'                    => true,
-        'show_in_admin_status_list' => true,
-        'show_in_admin_all_list'    => true,
-        'exclude_from_search'       => false,
-        'label_count'               => _n_noop( 'Em Produção <span class="count">(%s)</span>', 'Em Produção <span class="count">(%s)</span>' )
-    ) );
-    register_post_status( 'wc-in-separation', array(
-        'label'                     => 'Em Separação',
-        'public'                    => true,
-        'show_in_admin_status_list' => true,
-        'show_in_admin_all_list'    => true,
-        'exclude_from_search'       => false,
-        'label_count'               => _n_noop( 'Em Separação <span class="count">(%s)</span>', 'Em Separação <span class="count">(%s)</span>' )
-    ) );
-    register_post_status( 'wc-order-sended', array(
-        'label'                     => 'Pedido Enviado',
-        'public'                    => true,
-        'show_in_admin_status_list' => true,
-        'show_in_admin_all_list'    => true,
-        'exclude_from_search'       => false,
-        'label_count'               => _n_noop( 'Pedidos Enviados <span class="count">(%s)</span>', 'Pedidos Enviados <span class="count">(%s)</span>' )
-    ) );
-}
-add_action( 'init', 'add_custom_order_status' );
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly.
+    }
 
-function edit_default_order_status_titles( $order_statuses ) {
-    // Editando os status padrões
-    if ( isset( $order_statuses['wc-on-hold'] ) ) {
-        $order_statuses['wc-on-hold'] = 'Aguardando Confirmação'; // Novo título para 'on-hold'
+    function aireset_add_custom_order_status() {
+        // register_post_status( 'wc-payed', [
+        //     'label'                     => 'Pedido Pago',
+        //     'public'                    => true,
+        //     'show_in_admin_status_list' => true,
+        //     'show_in_admin_all_list'    => true,
+        //     'exclude_from_search'       => false,
+        //     'label_count'               => _n_noop( 'Pedidos Pagos <span class="count">(%s)</span>', 'Pedidos Pago <span class="count">(%s)</span>' )
+        // ] );
+        register_post_status( 'wc-partial-payed', [
+            'label'                     => _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-01-default-woo' ),
+            'public'                    => true,
+            'show_in_admin_status_list' => true,
+            'show_in_admin_all_list'    => true,
+            'exclude_from_search'       => false,
+            'label_count'               => _n_noop( 
+                /* translators: %s: Number of partial paid orders */
+                'Pedidos Pagos Parcialmente <span class="count">(%s)</span>', 
+                'Pedidos Pago Parcialmente <span class="count">(%s)</span>', 
+                'aireset-01-default-woo' 
+            )
+        ]);
+    
+        register_post_status( 'wc-in-production', [
+            'label'                     => _x( 'Em Produção', 'Order status', 'aireset-01-default-woo' ),
+            'public'                    => true,
+            'show_in_admin_status_list' => true,
+            'show_in_admin_all_list'    => true,
+            'exclude_from_search'       => false,
+            'label_count'               => _n_noop( 
+                'Em Produção <span class="count">(%s)</span>', 
+                'Em Produção <span class="count">(%s)</span>', 
+                'aireset-01-default-woo' 
+            )
+        ]);
+    
+        register_post_status( 'wc-in-separation', [
+            'label'                     => _x( 'Em Separação', 'Order status', 'aireset-01-default-woo' ),
+            'public'                    => true,
+            'show_in_admin_status_list' => true,
+            'show_in_admin_all_list'    => true,
+            'exclude_from_search'       => false,
+            'label_count'               => _n_noop( 
+                'Em Separação <span class="count">(%s)</span>', 
+                'Em Separação <span class="count">(%s)</span>', 
+                'aireset-01-default-woo' 
+            )
+        ]);
+    
+        register_post_status( 'wc-order-sended', [
+            'label'                     => _x( 'Pedido Enviado', 'Order status', 'aireset-01-default-woo' ),
+            'public'                    => true,
+            'show_in_admin_status_list' => true,
+            'show_in_admin_all_list'    => true,
+            'exclude_from_search'       => false,
+            'label_count'               => _n_noop( 
+                'Pedidos Enviados <span class="count">(%s)</span>', 
+                'Pedidos Enviados <span class="count">(%s)</span>', 
+                'aireset-01-default-woo' 
+            )
+        ]);
     }
-    if ( isset( $order_statuses['wc-pending'] ) ) {
-        $order_statuses['wc-pending'] = 'Pagamento Pendente'; // Novo título para 'pending'
-    }
-    if ( isset( $order_statuses['wc-processing'] ) ) {
-        // $order_statuses['wc-processing'] = 'Processando'; // Novo título para 'pending'
-        $order_statuses['wc-processing'] = 'Pedido Pago'; // Novo título para 'pending'
-    }
-    if ( isset( $order_statuses['wc-cancelled'] ) ) {
-        $order_statuses['wc-cancelled'] = 'Cancelado'; // Novo título para 'pending'
-    }
-    if ( isset( $order_statuses['wc-order-completed'] ) ) {
-        $order_statuses['wc-order-completed'] = 'Concluído'; // Novo título para 'pending'
-    }
-    if ( isset( $order_statuses['wc-order-refunded'] ) ) {
-        $order_statuses['wc-order-refunded'] = 'Reembolsado'; // Novo título para 'pending'
-    }
-    if ( isset( $order_statuses['wc-order-failed'] ) ) {
-        $order_statuses['wc-order-failed'] = 'Malsucedido'; // Novo título para 'pending'
-    }
-	
-    $new_order_statuses = array();
-    foreach ( $order_statuses as $key => $status ) {
-        $new_order_statuses[ $key ] = $status;
-        if ( 'wc-processing' === $key ) {
-            // $new_order_statuses['wc-payed'] = 'Pedido Pago';
-            $new_order_statuses['wc-partial-payed'] = 'Pedido Pago Parcialmente';
-            $new_order_statuses['wc-in-production'] = 'Em Produção';
-            $new_order_statuses['wc-in-separation'] = 'Em Separação';
-            $new_order_statuses['wc-order-sended'] = 'Pedido Enviado';
+    add_action( 'init', 'aireset_add_custom_order_status' );
+    
+    /**
+     * Edita títulos dos status padrão de pedidos
+     */
+    function aireset_edit_default_order_status_titles( $order_statuses ) {
+        if ( isset( $order_statuses['wc-on-hold'] ) ) {
+            $order_statuses['wc-on-hold'] = _x( 'Aguardando Confirmação', 'Order status', 'aireset-01-default-woo' );
         }
+        if ( isset( $order_statuses['wc-pending'] ) ) {
+            $order_statuses['wc-pending'] = _x( 'Pagamento Pendente', 'Order status', 'aireset-01-default-woo' );
+        }
+        if ( isset( $order_statuses['wc-processing'] ) ) {
+            $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'aireset-01-default-woo' );
+        }
+        if ( isset( $order_statuses['wc-cancelled'] ) ) {
+            $order_statuses['wc-cancelled'] = _x( 'Cancelado', 'Order status', 'aireset-01-default-woo' );
+        }
+        if ( isset( $order_statuses['wc-order-completed'] ) ) {
+            $order_statuses['wc-order-completed'] = _x( 'Concluído', 'Order status', 'aireset-01-default-woo' );
+        }
+        if ( isset( $order_statuses['wc-order-refunded'] ) ) {
+            $order_statuses['wc-order-refunded'] = _x( 'Reembolsado', 'Order status', 'aireset-01-default-woo' );
+        }
+        if ( isset( $order_statuses['wc-order-failed'] ) ) {
+            $order_statuses['wc-order-failed'] = _x( 'Malsucedido', 'Order status', 'aireset-01-default-woo' );
+        }
+    
+        $new_order_statuses = array();
+        foreach ( $order_statuses as $key => $status ) {
+            $new_order_statuses[ $key ] = $status;
+            if ( 'wc-processing' === $key ) {
+                $new_order_statuses['wc-partial-payed'] = _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-01-default-woo' );
+                $new_order_statuses['wc-in-production'] = _x( 'Em Produção', 'Order status', 'aireset-01-default-woo' );
+                $new_order_statuses['wc-in-separation'] = _x( 'Em Separação', 'Order status', 'aireset-01-default-woo' );
+                $new_order_statuses['wc-order-sended'] = _x( 'Pedido Enviado', 'Order status', 'aireset-01-default-woo' );
+            }
+        }
+        return $new_order_statuses;
     }
-    return $new_order_statuses;
-}
-add_filter( 'wc_order_statuses', 'edit_default_order_status_titles' );
-
-function custom_order_status_color() {
-    ?>
-    <style>
-        .order-status.status-wc-on-hold { background: #f7a400; }
-        .order-status.status-wc-pending { background: #3d3d3d; }
-        .order-status.status-wc-processing { background: #cccc00; }
-        .order-status.status-wc-cancelled { background: #e50000; }
-        /* .order-status.status-wc-payed { background: #44ce00; } */
-        .order-status.status-wc-partial-payed { background: #44ce00; }
-        .order-status.status-wc-in-production { background: #214dd1; }
-        .order-status.status-wc-in-separation { background: #214dd1; }
-        .order-status.status-wc-order-sended { background: #00c130; }
-        .order-status.status-wc-order-completed { background: #007fe0; }
-        .order-status.status-wc-order-refunded { background: #898989; }
-        .order-status.status-wc-order-failed { background: #ea4f4f; }		
-    </style>
-    <?php
-}
-add_action('admin_head', 'custom_order_status_color');
-
-function add_custom_order_status_bulk_actions($bulk_actions) {
-    $bulk_actions['mark_on-hold'] = 'Marcar como aguardando';
-    $bulk_actions['mark_pending'] = 'Marcar como pendente';
-    $bulk_actions['mark_processing'] = 'Marcar como processando';
-    $bulk_actions['mark_cancelled'] = 'Marcar como cancelado';	
-    // $bulk_actions['mark_payed'] = 'Marcar como pago';
-    $bulk_actions['mark_partial_payed'] = 'Marcar como pago parcialmente';
-    $bulk_actions['mark_in-production'] = 'Marcar como em producao';
-    $bulk_actions['mark_in-separation'] = 'Marcar como em separação';
-    $bulk_actions['mark_order-sended'] = 'Marcar como pedido enviado';
-    $bulk_actions['mark_order-completed'] = 'Marcar como concluído';
-	$bulk_actions['mark_order-refunded'] = 'Marcar como reembolsado';
-	$bulk_actions['mark_order-failed'] = 'Marcar como falho';
-    return $bulk_actions;
-}
-add_filter('bulk_actions-edit-shop_order', 'add_custom_order_status_bulk_actions');
-function include_custom_order_status_in_reports( $order_statuses ) {
-    // $order_statuses[] = 'wc-payed'; // Adiciona o status personalizado aos relatórios
-    $order_statuses[] = 'wc-partial-payed'; // Adiciona o status personalizado aos relatórios
-    $order_statuses[] = 'wc-in-production';
-    $order_statuses[] = 'wc-in-separation';
-    $order_statuses[] = 'wc-order-sended'; // Adiciona o status personalizado aos relatórios
-    return $order_statuses;
-}
-add_filter( 'woocommerce_reports_order_statuses', 'include_custom_order_status_in_reports' );
+    add_filter( 'wc_order_statuses', 'aireset_edit_default_order_status_titles' );
+    
+    /**
+     * Adiciona cores personalizadas para os status de pedidos
+     */
+    function aireset_custom_order_status_color() {
+        // Enqueue estilo personalizado
+        wp_enqueue_style( 'aireset-order-status-styles', Aireset_General_Plugin::get_assets_url() . 'css/order-status-styles.css' );
+    }
+    
+    // Adiciona o hook para carregar o estilo na área administrativa
+    add_action('admin_enqueue_scripts', 'aireset_custom_order_status_color');
+    
+    /**
+     * Adiciona ações em massa personalizadas para os pedidos
+     */
+    function aireset_add_custom_order_status_bulk_actions($bulk_actions) {
+        $bulk_actions['mark_on-hold'] = _x( 'Marcar como aguardando', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_pending'] = _x( 'Marcar como pendente', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_processing'] = _x( 'Marcar como processando', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_cancelled'] = _x( 'Marcar como cancelado', 'Bulk action', 'aireset-01-default-woo' );	
+        $bulk_actions['mark_partial_payed'] = _x( 'Marcar como pago parcialmente', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_in-production'] = _x( 'Marcar como em produção', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_in-separation'] = _x( 'Marcar como em separação', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_order-sended'] = _x( 'Marcar como pedido enviado', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_order-completed'] = _x( 'Marcar como concluído', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_order-refunded'] = _x( 'Marcar como reembolsado', 'Bulk action', 'aireset-01-default-woo' );
+        $bulk_actions['mark_order-failed'] = _x( 'Marcar como falho', 'Bulk action', 'aireset-01-default-woo' );
+        
+        return $bulk_actions;
+    }
+    add_filter('bulk_actions-edit-shop_order', 'aireset_add_custom_order_status_bulk_actions');
+    
+    /**
+     * Inclui os status personalizados nos relatórios
+     */
+    function aireset_include_custom_order_status_in_reports( $order_statuses ) {
+        $order_statuses[] = 'wc-partial-payed'; // Adiciona o status personalizado aos relatórios
+        $order_statuses[] = 'wc-in-production';
+        $order_statuses[] = 'wc-in-separation';
+        $order_statuses[] = 'wc-order-sended'; // Adiciona o status personalizado aos relatórios
+        return $order_statuses;
+    }
+    add_filter( 'woocommerce_reports_order_statuses', 'aireset_include_custom_order_status_in_reports' );
+    
+    /**
+     * Desabilita notificações de email do WooCommerce
+     */
+    function aireset_disable_all_woocommerce_emails( $email_enabled, $email ) {
+        return false;
+    }
+    add_filter( 'woocommerce_email_enabled', 'aireset_disable_all_woocommerce_emails', 10, 2 );
+    
+    /**
+     * Renomeia o status 'processing' para 'Pedido Pago'
+     */
+    function aireset_custom_rename_order_statuses( $order_statuses ) {
+        if ( isset( $order_statuses['wc-processing'] ) ) {
+            $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'aireset-01-default-woo' );
+        }
+        return $order_statuses;
+    }
+    add_filter( 'wc_order_statuses', 'aireset_custom_rename_order_statuses' );
 
 /*
 
@@ -276,13 +316,6 @@ if ( ! class_exists( 'WC_Email_Order_Status_Payed' ) ) {
     }
 }*/
 
-
-// Function to disable WooCommerce email notifications
-function disable_all_woocommerce_emails( $email_enabled, $email ) {
-    return false;
-}
-add_filter( 'woocommerce_email_enabled', 'disable_all_woocommerce_emails', 10, 2 );
-
 // // Function to conditionally disable WooCommerce email notifications
 // function disable_specific_woocommerce_emails( $email_enabled, $email ) {
 //     $emails_to_disable = array(
@@ -307,22 +340,5 @@ add_filter( 'woocommerce_email_enabled', 'disable_all_woocommerce_emails', 10, 2
 // }
 // add_filter( 'woocommerce_email_enabled', 'disable_specific_woocommerce_emails', 10, 2 );
 
-// Change the text for the 'processing' status to 'Pedido Pago'
-function custom_rename_order_statuses( $order_statuses ) {
-    if ( isset( $order_statuses['wc-processing'] ) ) {
-        $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'woocommerce' );
-    }
-    return $order_statuses;
-}
-add_filter( 'wc_order_statuses', 'custom_rename_order_statuses' );
 
-// Add custom styles for the 'payed' status
-function custom_order_status_styles() {
-    echo '<style>
-        .order-status.status-processing {
-            background: #39b54a;
-            color: white;
-        }
-    </style>';
-}
-add_action( 'admin_head', 'custom_order_status_styles' );
+

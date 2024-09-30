@@ -1,0 +1,65 @@
+msgid "Pedido Pago Parcialmente"
+msgstr "Partial Payment Order"
+
+msgid "Em Produção"
+msgstr "In Production"
+
+msgid "Em Separação"
+msgstr "In Separation"
+
+msgid "Pedido Enviado"
+msgstr "Order Sent"
+
+msgid "Aguardando Confirmação"
+msgstr "Awaiting Confirmation"
+
+msgid "Pagamento Pendente"
+msgstr "Pending Payment"
+
+msgid "Cancelado"
+msgstr "Cancelled"
+
+msgid "Concluído"
+msgstr "Completed"
+
+msgid "Reembolsado"
+msgstr "Refunded"
+
+msgid "Malsucedido"
+msgstr "Failed"
+
+msgid "Marcar como aguardando"
+msgstr "Mark as Awaiting"
+
+msgid "Marcar como pendente"
+msgstr "Mark as Pending"
+
+msgid "Marcar como processando"
+msgstr "Mark as Processing"
+
+msgid "Marcar como cancelado"
+msgstr "Mark as Cancelled"
+
+msgid "Marcar como pago parcialmente"
+msgstr "Mark as Partially Paid"
+
+msgid "Marcar como em produção"
+msgstr "Mark as In Production"
+
+msgid "Marcar como em separação"
+msgstr "Mark as In Separation"
+
+msgid "Marcar como pedido enviado"
+msgstr "Mark as Order Sent"
+
+msgid "Marcar como concluído"
+msgstr "Mark as Completed"
+
+msgid "Marcar como reembolsado"
+msgstr "Mark as Refunded"
+
+msgid "Marcar como falho"
+msgstr "Mark as Failed"
+
+msgid "Pedido Pago"
+msgstr "Paid Order"

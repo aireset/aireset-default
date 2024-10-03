@@ -13,61 +13,68 @@
         //     'exclude_from_search'       => false,
         //     'label_count'               => _n_noop( 'Pedidos Pagos <span class="count">(%s)</span>', 'Pedidos Pago <span class="count">(%s)</span>' )
         // ] );
+        // Pedido Pago Parcialmente
         register_post_status( 'wc-partial-payed', [
             'label'                     => _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-01-default-woo' ),
             'public'                    => true,
             'show_in_admin_status_list' => true,
             'show_in_admin_all_list'    => true,
             'exclude_from_search'       => false,
-            'label_count'               => _n_noop( 
-                /* translators: %s: Number of partial paid orders */
+            /* translators: %s: Number of partial paid orders */
+            'label_count'               => _n_noop(
                 'Pedidos Pagos Parcialmente <span class="count">(%s)</span>', 
                 'Pedidos Pago Parcialmente <span class="count">(%s)</span>', 
-                'aireset-01-default-woo' 
+                'aireset-01-default-woo'
             )
         ]);
-    
+
+        // Em Produção
         register_post_status( 'wc-in-production', [
             'label'                     => _x( 'Em Produção', 'Order status', 'aireset-01-default-woo' ),
             'public'                    => true,
             'show_in_admin_status_list' => true,
             'show_in_admin_all_list'    => true,
             'exclude_from_search'       => false,
+            /* translators: %s: Number of orders in production */
             'label_count'               => _n_noop( 
                 'Em Produção <span class="count">(%s)</span>', 
                 'Em Produção <span class="count">(%s)</span>', 
-                'aireset-01-default-woo' 
+                'aireset-01-default-woo'
             )
         ]);
-    
+
+        // Em Separação
         register_post_status( 'wc-in-separation', [
             'label'                     => _x( 'Em Separação', 'Order status', 'aireset-01-default-woo' ),
             'public'                    => true,
             'show_in_admin_status_list' => true,
             'show_in_admin_all_list'    => true,
             'exclude_from_search'       => false,
+            /* translators: %s: Number of orders in separation */
             'label_count'               => _n_noop( 
                 'Em Separação <span class="count">(%s)</span>', 
                 'Em Separação <span class="count">(%s)</span>', 
-                'aireset-01-default-woo' 
+                'aireset-01-default-woo'
             )
         ]);
-    
+
+        // Pedido Enviado
         register_post_status( 'wc-order-sended', [
             'label'                     => _x( 'Pedido Enviado', 'Order status', 'aireset-01-default-woo' ),
             'public'                    => true,
             'show_in_admin_status_list' => true,
             'show_in_admin_all_list'    => true,
             'exclude_from_search'       => false,
+            /* translators: %s: Number of sent orders */
             'label_count'               => _n_noop( 
                 'Pedidos Enviados <span class="count">(%s)</span>', 
                 'Pedidos Enviados <span class="count">(%s)</span>', 
-                'aireset-01-default-woo' 
+                'aireset-01-default-woo'
             )
         ]);
     }
     add_action( 'init', 'aireset_add_custom_order_status' );
-    
+
     /**
      * Edita títulos dos status padrão de pedidos
      */
@@ -93,7 +100,7 @@
         if ( isset( $order_statuses['wc-order-failed'] ) ) {
             $order_statuses['wc-order-failed'] = _x( 'Malsucedido', 'Order status', 'aireset-01-default-woo' );
         }
-    
+
         $new_order_statuses = array();
         foreach ( $order_statuses as $key => $status ) {
             $new_order_statuses[ $key ] = $status;
@@ -107,7 +114,7 @@
         return $new_order_statuses;
     }
     add_filter( 'wc_order_statuses', 'aireset_edit_default_order_status_titles' );
-    
+
     /**
      * Adiciona cores personalizadas para os status de pedidos
      */
@@ -115,10 +122,10 @@
         // Enqueue estilo personalizado
         wp_enqueue_style( 'aireset-order-status-styles', Aireset_General_Plugin::get_assets_url() . 'css/order-status-styles.css' );
     }
-    
+
     // Adiciona o hook para carregar o estilo na área administrativa
     add_action('admin_enqueue_scripts', 'aireset_custom_order_status_color');
-    
+
     /**
      * Adiciona ações em massa personalizadas para os pedidos
      */
@@ -138,7 +145,7 @@
         return $bulk_actions;
     }
     add_filter('bulk_actions-edit-shop_order', 'aireset_add_custom_order_status_bulk_actions');
-    
+
     /**
      * Inclui os status personalizados nos relatórios
      */
@@ -150,7 +157,7 @@
         return $order_statuses;
     }
     add_filter( 'woocommerce_reports_order_statuses', 'aireset_include_custom_order_status_in_reports' );
-    
+
     /**
      * Desabilita notificações de email do WooCommerce
      */
@@ -158,7 +165,7 @@
         return false;
     }
     add_filter( 'woocommerce_email_enabled', 'aireset_disable_all_woocommerce_emails', 10, 2 );
-    
+
     /**
      * Renomeia o status 'processing' para 'Pedido Pago'
      */

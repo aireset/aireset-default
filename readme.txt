@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,9 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+= 1.1.1 (03/10/2024) =
+* Melhorando o codigo e removendo funcionalidades desnecessárias
 
 = 1.1.0 (30/09/2024) =
 * Correções para combinarem com a solicitações do Wordpress

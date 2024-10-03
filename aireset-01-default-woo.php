@@ -4,7 +4,7 @@
  * Plugin Name: Aireset - Geral
  * Plugin URI: https://github.com/aireset/aireset-01-default-woo
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces
- * Version: 1.1.0
+ * Version: 1.1.1
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0

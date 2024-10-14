@@ -16,7 +16,7 @@
             // ] );
             // Pedido Pago Parcialmente
             register_post_status( 'wc-partial-payed', [
-                'label'                     => _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-01-default-woo' ),
+                'label'                     => _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-default' ),
                 'public'                    => true,
                 'show_in_admin_status_list' => true,
                 'show_in_admin_all_list'    => true,
@@ -25,13 +25,13 @@
                 'label_count'               => _n_noop(
                     'Pedidos Pagos Parcialmente <span class="count">(%s)</span>', 
                     'Pedidos Pago Parcialmente <span class="count">(%s)</span>', 
-                    'aireset-01-default-woo'
+                    'aireset-default'
                 )
             ]);
 
             // Em Produção
             register_post_status( 'wc-in-production', [
-                'label'                     => _x( 'Em Produção', 'Order status', 'aireset-01-default-woo' ),
+                'label'                     => _x( 'Em Produção', 'Order status', 'aireset-default' ),
                 'public'                    => true,
                 'show_in_admin_status_list' => true,
                 'show_in_admin_all_list'    => true,
@@ -40,13 +40,13 @@
                 'label_count'               => _n_noop( 
                     'Em Produção <span class="count">(%s)</span>', 
                     'Em Produção <span class="count">(%s)</span>', 
-                    'aireset-01-default-woo'
+                    'aireset-default'
                 )
             ]);
 
             // Em Separação
             register_post_status( 'wc-in-separation', [
-                'label'                     => _x( 'Em Separação', 'Order status', 'aireset-01-default-woo' ),
+                'label'                     => _x( 'Em Separação', 'Order status', 'aireset-default' ),
                 'public'                    => true,
                 'show_in_admin_status_list' => true,
                 'show_in_admin_all_list'    => true,
@@ -55,13 +55,13 @@
                 'label_count'               => _n_noop( 
                     'Em Separação <span class="count">(%s)</span>', 
                     'Em Separação <span class="count">(%s)</span>', 
-                    'aireset-01-default-woo'
+                    'aireset-default'
                 )
             ]);
 
             // Pedido Enviado
             register_post_status( 'wc-order-sended', [
-                'label'                     => _x( 'Pedido Enviado', 'Order status', 'aireset-01-default-woo' ),
+                'label'                     => _x( 'Pedido Enviado', 'Order status', 'aireset-default' ),
                 'public'                    => true,
                 'show_in_admin_status_list' => true,
                 'show_in_admin_all_list'    => true,
@@ -70,7 +70,7 @@
                 'label_count'               => _n_noop( 
                     'Pedidos Enviados <span class="count">(%s)</span>', 
                     'Pedidos Enviados <span class="count">(%s)</span>', 
-                    'aireset-01-default-woo'
+                    'aireset-default'
                 )
             ]);
         }
@@ -83,35 +83,35 @@
          */
         function aireset_edit_default_order_status_titles( $order_statuses ) {
             if ( isset( $order_statuses['wc-on-hold'] ) ) {
-                $order_statuses['wc-on-hold'] = _x( 'Aguardando Confirmação', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-on-hold'] = _x( 'Aguardando Confirmação', 'Order status', 'aireset-default' );
             }
             if ( isset( $order_statuses['wc-pending'] ) ) {
-                $order_statuses['wc-pending'] = _x( 'Pagamento Pendente', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-pending'] = _x( 'Pagamento Pendente', 'Order status', 'aireset-default' );
             }
             if ( isset( $order_statuses['wc-processing'] ) ) {
-                $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'aireset-default' );
             }
             if ( isset( $order_statuses['wc-cancelled'] ) ) {
-                $order_statuses['wc-cancelled'] = _x( 'Cancelado', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-cancelled'] = _x( 'Cancelado', 'Order status', 'aireset-default' );
             }
             if ( isset( $order_statuses['wc-order-completed'] ) ) {
-                $order_statuses['wc-order-completed'] = _x( 'Concluído', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-order-completed'] = _x( 'Concluído', 'Order status', 'aireset-default' );
             }
             if ( isset( $order_statuses['wc-order-refunded'] ) ) {
-                $order_statuses['wc-order-refunded'] = _x( 'Reembolsado', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-order-refunded'] = _x( 'Reembolsado', 'Order status', 'aireset-default' );
             }
             if ( isset( $order_statuses['wc-order-failed'] ) ) {
-                $order_statuses['wc-order-failed'] = _x( 'Malsucedido', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-order-failed'] = _x( 'Malsucedido', 'Order status', 'aireset-default' );
             }
 
             $new_order_statuses = array();
             foreach ( $order_statuses as $key => $status ) {
                 $new_order_statuses[ $key ] = $status;
                 if ( 'wc-processing' === $key ) {
-                    $new_order_statuses['wc-partial-payed'] = _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-01-default-woo' );
-                    $new_order_statuses['wc-in-production'] = _x( 'Em Produção', 'Order status', 'aireset-01-default-woo' );
-                    $new_order_statuses['wc-in-separation'] = _x( 'Em Separação', 'Order status', 'aireset-01-default-woo' );
-                    $new_order_statuses['wc-order-sended'] = _x( 'Pedido Enviado', 'Order status', 'aireset-01-default-woo' );
+                    $new_order_statuses['wc-partial-payed'] = _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-default' );
+                    $new_order_statuses['wc-in-production'] = _x( 'Em Produção', 'Order status', 'aireset-default' );
+                    $new_order_statuses['wc-in-separation'] = _x( 'Em Separação', 'Order status', 'aireset-default' );
+                    $new_order_statuses['wc-order-sended'] = _x( 'Pedido Enviado', 'Order status', 'aireset-default' );
                 }
             }
             return $new_order_statuses;
@@ -138,17 +138,17 @@
          * Adiciona ações em massa personalizadas para os pedidos
          */
         function aireset_add_custom_order_status_bulk_actions($bulk_actions) {
-            $bulk_actions['mark_on-hold'] = _x( 'Marcar como aguardando', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_pending'] = _x( 'Marcar como pendente', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_processing'] = _x( 'Marcar como processando', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_cancelled'] = _x( 'Marcar como cancelado', 'Bulk action', 'aireset-01-default-woo' );	
-            $bulk_actions['mark_partial_payed'] = _x( 'Marcar como pago parcialmente', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_in-production'] = _x( 'Marcar como em produção', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_in-separation'] = _x( 'Marcar como em separação', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_order-sended'] = _x( 'Marcar como pedido enviado', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_order-completed'] = _x( 'Marcar como concluído', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_order-refunded'] = _x( 'Marcar como reembolsado', 'Bulk action', 'aireset-01-default-woo' );
-            $bulk_actions['mark_order-failed'] = _x( 'Marcar como falho', 'Bulk action', 'aireset-01-default-woo' );
+            $bulk_actions['mark_on-hold'] = _x( 'Marcar como aguardando', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_pending'] = _x( 'Marcar como pendente', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_processing'] = _x( 'Marcar como processando', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_cancelled'] = _x( 'Marcar como cancelado', 'Bulk action', 'aireset-default' );	
+            $bulk_actions['mark_partial_payed'] = _x( 'Marcar como pago parcialmente', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_in-production'] = _x( 'Marcar como em produção', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_in-separation'] = _x( 'Marcar como em separação', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_order-sended'] = _x( 'Marcar como pedido enviado', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_order-completed'] = _x( 'Marcar como concluído', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_order-refunded'] = _x( 'Marcar como reembolsado', 'Bulk action', 'aireset-default' );
+            $bulk_actions['mark_order-failed'] = _x( 'Marcar como falho', 'Bulk action', 'aireset-default' );
             
             return $bulk_actions;
         }
@@ -185,7 +185,7 @@
          */
         function aireset_custom_rename_order_statuses( $order_statuses ) {
             if ( isset( $order_statuses['wc-processing'] ) ) {
-                $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'aireset-01-default-woo' );
+                $order_statuses['wc-processing'] = _x( 'Pedido Pago', 'Order status', 'aireset-default' );
             }
             return $order_statuses;
         }

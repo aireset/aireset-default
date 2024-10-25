@@ -27,6 +27,14 @@ class Aireset_General_Plugin {
     private static $instance = null; // Declare static instance property
 
 	/**
+	 * Plugin initiated
+	 *
+	 * @since 1.0.0
+	 * @var bool
+	 */
+	public $initiated = false;
+
+	/**
 	 * Plugin slug.
 	 *
 	 * @since 1.0.0
@@ -69,7 +77,7 @@ class Aireset_General_Plugin {
 		}
         
         // Add admin menu
-        add_action('admin_menu', array( $this, 'add_admin_menu' ));
+        // add_action('admin_menu', array( $this, 'add_admin_menu' ));
 
         // Enqueue scripts and styles
         // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -77,6 +85,56 @@ class Aireset_General_Plugin {
         // Include additional functions
         $this->include_functions();
     }
+
+
+	/**
+	 * Run on activation
+	 * 
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public static function activate() {
+		self::clear_wc_template_cache();
+	}
+
+
+	/**
+	 * Deactivate plugin
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public static function deactivate() {
+		self::clear_wc_template_cache();
+	}
+
+
+	/**
+	 * Clear WooCommerce template cache
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public static function clear_wc_template_cache() {
+		if ( function_exists('wc_clear_template_cache') ) {
+			wc_clear_template_cache();
+		}
+	}
+
+
+	/**
+	 * Define constant if not already set
+	 *
+	 * @since 1.0.0
+	 * @param string $name | Constant name
+	 * @param string|bool $value | Constant value
+	 * @return void
+	 */
+	private function define( $name, $value ) {
+		if ( ! defined( $name ) ) {
+			define( $name, $value );
+		}
+	}
 
 	/**
 	 * Define constants
@@ -135,23 +193,23 @@ class Aireset_General_Plugin {
     /**
      * Add admin menu item.
      */
-    public function add_admin_menu() {
-        add_menu_page(
-            'Aireset', // Título da página
-            'Aireset', // Título do menu
-            'manage_options',        // Capacidade necessária
-            'aireset-default', // Slug da página
-            array( $this, 'admin_page_content' ) // Função que gera o conteúdo
-        );
-    }
+    // public function add_admin_menu() {
+    //     add_menu_page(
+    //         'Aireset', // Título da página
+    //         'Aireset', // Título do menu
+    //         'manage_options',        // Capacidade necessária
+    //         'aireset-default', // Slug da página
+    //         array( $this, 'admin_page_content' ) // Função que gera o conteúdo
+    //     );
+    // }
 
     /**
      * Admin page content (can be customized later).
      */
-    public function admin_page_content() {
-        echo '<h1>' . esc_html__( 'Aireset - Geral', 'aireset-default' ) . '</h1>';
-        // Add additional content here as needed.
-    }
+    // public function admin_page_content() {
+    //     echo '<h1>' . esc_html__( 'Aireset - Geral', 'aireset-default' ) . '</h1>';
+    //     // Add additional content here as needed.
+    // }
 
     /**
      * Enqueue scripts and styles.
@@ -211,7 +269,7 @@ class Aireset_General_Plugin {
 			// 'classes/class-license.php',
 			'class-init.php',
 			'classes/class-admin-options.php',
-			// 'classes/class-helpers.php',
+			'classes/class-helpers.php',
 			// 'classes/class-assets.php',
 			// 'classes/class-ajax.php',
 			// 'classes/class-compat-autoloader.php',
@@ -251,10 +309,39 @@ class Aireset_General_Plugin {
     public function highlight_array( $array, $name = 'var' ) {
         highlight_string( "<?php\n\$$name =\n" . var_export( $array, true ) . ";\n?>" );
     }
+
+
+	/**
+	 * Cloning is forbidden.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default-for-woocommerce' ), '1.0.0' );
+	}
+
+
+	/**
+	 * Unserializing instances of this class is forbidden.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default-for-woocommerce' ), '1.0.0' );
+	}
 }
 
 // Initialize the plugin
-Aireset_General_Plugin::get_instance();
+// Aireset_General_Plugin::get_instance();
+
+$aireset_default = new Aireset_General_Plugin();
+
+if ( $aireset_default->initiated ) {
+	register_activation_hook( __FILE__, array( $aireset_default, 'activate' ) );
+	register_deactivation_hook( __FILE__, array( $aireset_default, 'deactivate' ) );
+}
 
 // if ( ! function_exists( 'adp_fs' ) ) {
 //     // Create a helper function for easy SDK access.

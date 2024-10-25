@@ -1,6 +1,6 @@
 <?php
 
-namespace MeuMouse\aireset-default;
+namespace Aireset\Default;
 
 defined('ABSPATH') || exit;
 

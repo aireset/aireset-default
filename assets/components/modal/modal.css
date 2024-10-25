@@ -103,7 +103,7 @@
 
     #inter_bank_pix_container.show,
     #inter_bank_slip_container.show,
-    .flexify-checkout-step-container.show,
+    .aireset-default-step-container.show,
     .add-new-checkout-fields-container.show,
     .auto-fill-address-api-container.show,
     #set_new_font_family_container.show,

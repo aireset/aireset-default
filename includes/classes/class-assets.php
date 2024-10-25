@@ -1,13 +1,13 @@
 <?php
 
-namespace MeuMouse\aireset-default;
+namespace Aireset\Default;
 
-use MeuMouse\aireset-default\Init;
-use MeuMouse\aireset-default\License;
-use MeuMouse\aireset-default\Helpers;
-use MeuMouse\aireset-default\Steps;
-use MeuMouse\aireset-default\Core;
-use MeuMouse\aireset-default\Conditions;
+use Aireset\Default\Init;
+use Aireset\Default\License;
+use Aireset\Default\Helpers;
+use Aireset\Default\Steps;
+use Aireset\Default\Core;
+use Aireset\Default\Conditions;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -77,10 +77,10 @@ class Assets {
 
 		wp_dequeue_style( 'global-styles' );
 
-		wp_enqueue_style( 'flexify-checkout-theme', FLEXIFY_CHECKOUT_ASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), FLEXIFY_CHECKOUT_VERSION, false );
+		wp_enqueue_style( 'aireset-default-theme', AIRESET_DEFAULTASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), AIRESET_DEFAULTVERSION, false );
 
 		if ( is_aaireset_default() || Core::is_thankyou_page() ) {
-			wp_add_inline_style( 'flexify-checkout-theme', self::get_dynamic_styles( $settings ) );
+			wp_add_inline_style( 'aireset-default-theme', self::get_dynamic_styles( $settings ) );
 		}
 
 		$deps = array(
@@ -95,15 +95,15 @@ class Assets {
 
 		// international phone number selector
 		if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aaireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'flexify-international-phone-js', FLEXIFY_CHECKOUT_ASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
-			wp_enqueue_style( 'flexify-international-phone-css', FLEXIFY_CHECKOUT_ASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
+			wp_enqueue_script( 'flexify-international-phone-js', AIRESET_DEFAULTASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
+			wp_enqueue_style( 'flexify-international-phone-css', AIRESET_DEFAULTASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
 			$deps[] = 'flexify-international-phone-js';
 		}
 
 		$timestamp = time();
 
 		// Add the timestamp as a query parameter to the main.js file URL
-		$script = FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/main.js?version=' . $timestamp;
+		$script = AIRESET_DEFAULTASSETS . 'frontend/js/main.js?version=' . $timestamp;
 
 		// Set script version to null to avoid version-based caching
 		$version = null;
@@ -112,7 +112,7 @@ class Assets {
 
 		// autofill address to enter postcode (just valid for Brazil)
 		if ( Init::get_setting('enable_fill_address') === 'yes' && is_aaireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'flexify-checkout-autofill-address-js', FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/autofill-address.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION, false );
+			wp_enqueue_script( 'aireset-default-autofill-address-js', AIRESET_DEFAULTASSETS . 'frontend/js/autofill-address.js', array('jquery'), AIRESET_DEFAULTVERSION, false );
 
 			// send params from JS
 			$auto_fill_address_api_params = apply_filters( 'aaireset_default_auto_fill_address', array(
@@ -123,46 +123,46 @@ class Assets {
 				'state_param' => Init::get_setting('api_auto_fill_address_state_param'),
 			));
 			
-			wp_localize_script( 'flexify-checkout-autofill-address-js', 'fcw_auto_fill_address_api_params', $auto_fill_address_api_params );
+			wp_localize_script( 'aireset-default-autofill-address-js', 'fcw_auto_fill_address_api_params', $auto_fill_address_api_params );
 		}
 
 		// autofill field on enter CNPJ (just valid for Brazil)
 		if ( Init::get_setting('enable_autofill_company_info') === 'yes' && is_aaireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'flexify-checkout-autofill-cnpj-js', FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION, false );
+			wp_enqueue_script( 'aireset-default-autofill-cnpj-js', AIRESET_DEFAULTASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), AIRESET_DEFAULTVERSION, false );
 		}
 
 		// remove brazilian market fields if is not Brazil country
 		if ( Init::get_setting('enable_unset_wcbcf_fields_not_brazil') === 'yes' && is_aaireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'flexify-checkout-remove-wcbcf-fields', FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_script( 'aireset-default-remove-wcbcf-fields', AIRESET_DEFAULTASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), AIRESET_DEFAULTVERSION );
 		}
 
 		// enable field masks
 		if ( Init::get_setting('enable_field_masks') === 'yes' && is_aaireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'jquery-mask-lib', FLEXIFY_CHECKOUT_ASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
-			wp_enqueue_script( 'flexify-checkout-field-masks', FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/field-masks.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
-			wp_localize_script( 'flexify-checkout-field-masks', 'fcw_field_masks', array( 'get_input_masks' => Core::get_fields_with_mask() ) );
+			wp_enqueue_script( 'jquery-mask-lib', AIRESET_DEFAULTASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
+			wp_enqueue_script( 'aireset-default-field-masks', AIRESET_DEFAULTASSETS . 'frontend/js/field-masks.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_localize_script( 'aireset-default-field-masks', 'fcw_field_masks', array( 'get_input_masks' => Core::get_fields_with_mask() ) );
 		}
 
 		// add email suggestions
 		if ( Init::get_setting('email_providers_suggestion') === 'yes' ) {
-			wp_enqueue_script( 'flexify-checkout-email-suggestions', FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/email-suggestions.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_script( 'aireset-default-email-suggestions', AIRESET_DEFAULTASSETS . 'frontend/js/email-suggestions.js', array('jquery'), AIRESET_DEFAULTVERSION );
 
 			$emails_suggestions_params = apply_filters( 'aaireset_default_emails_suggestions', array(
 				'get_providers' => Init::get_setting('set_email_providers'),
 			));
 
-			wp_localize_script( 'flexify-checkout-email-suggestions', 'fcw_emails_suggestions_params', $emails_suggestions_params );
+			wp_localize_script( 'aireset-default-email-suggestions', 'fcw_emails_suggestions_params', $emails_suggestions_params );
 		}
 
 		// add frontend conditions
 		if ( ! empty( get_option('aaireset_default_conditions') ) ) {
-			wp_enqueue_script( 'flexify-checkout-conditions', FLEXIFY_CHECKOUT_ASSETS . 'frontend/js/conditions.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_script( 'aireset-default-conditions', AIRESET_DEFAULTASSETS . 'frontend/js/conditions.js', array('jquery'), AIRESET_DEFAULTVERSION );
 
 			$conditions_params = apply_filters( 'aaireset_default_front_conditions', array(
 				'field_condition' => Conditions::filter_component_type('field'),
 			));
 
-			wp_localize_script( 'flexify-checkout-conditions', 'fcw_condition_param', $conditions_params );
+			wp_localize_script( 'aireset-default-conditions', 'fcw_condition_param', $conditions_params );
 		}
 
 		/**
@@ -203,7 +203,7 @@ class Assets {
 			'update_cart_nonce' => wp_create_nonce('update_cart'),
 			'shop_page' => Helpers::get_shop_page_url(),
 			'base_country' => WC()->countries->get_base_country(),
-			'intl_util_path' => plugins_url( 'assets/vendor/intl-tel-input/js/utils.js', FLEXIFY_CHECKOUT_FILE ),
+			'intl_util_path' => plugins_url( 'assets/vendor/intl-tel-input/js/utils.js', AIRESET_DEFAULTFILE ),
 			'get_new_select_fields' => Helpers::get_new_select_fields(),
 			'check_password_strenght' => Init::get_setting('check_password_strenght'),
 			'get_all_checkout_fields' => Helpers::export_all_checkout_fields(),
@@ -247,23 +247,23 @@ class Assets {
 		if ( is_aaireset_default_admin_settings() ) {
 			wp_enqueue_media();
 			
-			wp_enqueue_script( 'flexify-checkout-modal', FLEXIFY_CHECKOUT_ASSETS . 'components/modal/modal'. $min_file .'.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
-			wp_enqueue_style( 'flexify-checkout-modal-styles', FLEXIFY_CHECKOUT_ASSETS . 'components/modal/modal'. $min_file .'.css', array(), FLEXIFY_CHECKOUT_VERSION );
-			wp_enqueue_script( 'flexify-checkout-visibility-controller', FLEXIFY_CHECKOUT_ASSETS . 'components/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_script( 'aireset-default-modal', AIRESET_DEFAULTASSETS . 'components/modal/modal'. $min_file .'.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_style( 'aireset-default-modal-styles', AIRESET_DEFAULTASSETS . 'components/modal/modal'. $min_file .'.css', array(), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'aireset-default-visibility-controller', AIRESET_DEFAULTASSETS . 'components/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), AIRESET_DEFAULTVERSION );
 			
-			wp_enqueue_style( 'bootstrap-datepicker-styles', FLEXIFY_CHECKOUT_ASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker'. $min_file .'.css', array(), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_style( 'bootstrap-datepicker-styles', AIRESET_DEFAULTASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker'. $min_file .'.css', array(), AIRESET_DEFAULTVERSION );
 			wp_enqueue_script( 'bootstrap-datepicker', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js', array('jquery'), '1.9.0' );
-			wp_enqueue_script( 'bootstrap-datepicker-translate-pt-br', FLEXIFY_CHECKOUT_ASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js', array('jquery'), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_script( 'bootstrap-datepicker-translate-pt-br', AIRESET_DEFAULTASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js', array('jquery'), AIRESET_DEFAULTVERSION );
 
-			wp_enqueue_script( 'flexify-checkout-admin-scripts', FLEXIFY_CHECKOUT_ASSETS . 'admin/js/flexify-checkout-admin-scripts'. $min_file .'.js', array('jquery', 'media-upload'), FLEXIFY_CHECKOUT_VERSION );
-			wp_enqueue_style( 'flexify-checkout-admin-styles', FLEXIFY_CHECKOUT_ASSETS . 'admin/css/flexify-checkout-admin-styles'. $min_file .'.css', array(), FLEXIFY_CHECKOUT_VERSION );
+			wp_enqueue_script( 'aireset-default-admin-scripts', AIRESET_DEFAULTASSETS . 'admin/js/aireset-default-admin-scripts'. $min_file .'.js', array('jquery', 'media-upload'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_style( 'aireset-default-admin-styles', AIRESET_DEFAULTASSETS . 'admin/css/aireset-default-admin-styles'. $min_file .'.css', array(), AIRESET_DEFAULTVERSION );
 
 			if ( ! class_exists('Flexify_Dashboard') ) {
-                wp_enqueue_style( 'bootstrap-grid', FLEXIFY_CHECKOUT_ASSETS . 'vendor/bootstrap/bootstrap-grid.min.css', array(), '5.3.3' );
-                wp_enqueue_style( 'bootstrap-utilities', FLEXIFY_CHECKOUT_ASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
+                wp_enqueue_style( 'bootstrap-grid', AIRESET_DEFAULTASSETS . 'vendor/bootstrap/bootstrap-grid.min.css', array(), '5.3.3' );
+                wp_enqueue_style( 'bootstrap-utilities', AIRESET_DEFAULTASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
             }
 		
-			wp_localize_script( 'flexify-checkout-admin-scripts', 'aaireset_default_params', array(
+			wp_localize_script( 'aireset-default-admin-scripts', 'aaireset_default_params', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'set_logo_modal_title' => esc_html__( 'Escolher Imagem de cabeçalho', 'aireset-default' ),
 				'use_this_image_title' => esc_html__( 'Usar esta imagem', 'aireset-default' ),
@@ -384,32 +384,32 @@ class Assets {
 		 */
 		if ( 'modern' === $theme ) :
 			if ( $settings['set_placeholder_color'] ) : ?>
-				.flexify-checkout ::-webkit-input-placeholder {
+				.aireset-default ::-webkit-input-placeholder {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?>;
 				}
 
-				.flexify-checkout ::-moz-placeholder {
+				.aireset-default ::-moz-placeholder {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?>;
 				}
 
-				.flexify-checkout ::-ms-input-placeholder {
+				.aireset-default ::-ms-input-placeholder {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?>;
 				}
 
-				.flexify-checkout ::placeholder {
+				.aireset-default ::placeholder {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?>;
 				}
 
-				.flexify-checkout :-ms-input-placeholder {
+				.aireset-default :-ms-input-placeholder {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?> !important;
 				}
 
-				.flexify-checkout .form-row label:not(.checkbox) {
+				.aireset-default .form-row label:not(.checkbox) {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?>;
 				}
 
-				.flexify-checkout .form-row label:not(.checkbox) abbr,
-				.flexify-checkout .form-row label:not(.checkbox) span {
+				.aireset-default .form-row label:not(.checkbox) abbr,
+				.aireset-default .form-row label:not(.checkbox) span {
 					color: <?php echo esc_attr( $settings['set_placeholder_color'] ); ?>;
 				}
 			<?php endif;
@@ -419,8 +419,8 @@ class Assets {
 					background-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
 
-				.flexify-checkout .flexify-button,
-				.flexify-checkout .flexify-button:hover,
+				.aireset-default .flexify-button,
+				.aireset-default .flexify-button:hover,
 				.button,
 				button {
 					background-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
@@ -459,26 +459,26 @@ class Assets {
 					border-color: <?php echo esc_attr( $primary ); ?> !important;
 				}
 
-				.flexify-checkout a, .lost_password a {
+				.aireset-default a, .lost_password a {
 					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
 
-				.flexify-checkout a:hover, .lost_password a:hover {
-					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
-					filter: brightness( 80% );
-				}
-
-				.flexify-checkout.flexify-checkout--modern .flexify-checkout__login-button {
-					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
-				}
-
-				.flexify-checkout.flexify-checkout--modern .flexify-checkout__login-button:hover {
+				.aireset-default a:hover, .lost_password a:hover {
 					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 					filter: brightness( 80% );
 				}
 
-				.flexify-checkout #payment .payment_methods li.wc_payment_method > input[type=radio]:checked + label:after,
-				.flexify-checkout input[type=radio]:checked + label:after, .flexify-checkout input[type=radio]:checked + label:after {
+				.aireset-default.aireset-default--modern .aireset-default__login-button {
+					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
+				}
+
+				.aireset-default.aireset-default--modern .aireset-default__login-button:hover {
+					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
+					filter: brightness( 80% );
+				}
+
+				.aireset-default #payment .payment_methods li.wc_payment_method > input[type=radio]:checked + label:after,
+				.aireset-default input[type=radio]:checked + label:after, .aireset-default input[type=radio]:checked + label:after {
 					background-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 					border-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
@@ -516,8 +516,8 @@ class Assets {
 			<?php endif;
 
 			if ( $settings['set_primary_color_on_hover'] ) : ?>
-				.flexify-checkout .button:not(.wc-forward,.woocommerce-MyAccount-downloads-file),
-				.flexify-checkout .button:not(.wc-forward,.woocommerce-MyAccount-downloads-file):hover, .button:hover, button:hover {
+				.aireset-default .button:not(.wc-forward,.woocommerce-MyAccount-downloads-file),
+				.aireset-default .button:not(.wc-forward,.woocommerce-MyAccount-downloads-file):hover, .button:hover, button:hover {
 					background-color: <?php echo esc_attr( $settings['set_primary_color_on_hover'] ); ?>;
 				}
 
@@ -568,7 +568,7 @@ class Assets {
 			<?php endif; ?>
 
 			.processing .blockUI.blockOverlay {
-  				background-image: url("<?php echo esc_attr( FLEXIFY_CHECKOUT_ASSETS . 'frontend/img/loader.gif' ); ?>") !important;
+  				background-image: url("<?php echo esc_attr( AIRESET_DEFAULTASSETS . 'frontend/img/loader.gif' ); ?>") !important;
 			}
 		<?php endif;
 
@@ -589,6 +589,6 @@ class Assets {
 
 new Assets();
 
-if ( ! class_exists('MeuMouse\aireset-default\Assets\Assets') ) {
-    class_alias( 'MeuMouse\aireset-default\Assets', 'MeuMouse\aireset-default\Assets\Assets' );
+if ( ! class_exists('Aireset\Default\Assets\Assets') ) {
+    class_alias( 'Aireset\Default\Assets', 'Aireset\Default\Assets\Assets' );
 }

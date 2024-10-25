@@ -1,6 +1,6 @@
 <?php
 
-namespace MeuMouse\aireset-default;
+namespace Aireset\Default;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -545,6 +545,6 @@ class Conditions {
 
 new Conditions();
 
-if ( ! class_exists('MeuMouse\aireset-default\Conditions\Conditions') ) {
-    class_alias( 'MeuMouse\aireset-default\Conditions', 'MeuMouse\aireset-default\Conditions\Conditions' );
+if ( ! class_exists('Aireset\Default\Conditions\Conditions') ) {
+    class_alias( 'Aireset\Default\Conditions', 'Aireset\Default\Conditions\Conditions' );
 }

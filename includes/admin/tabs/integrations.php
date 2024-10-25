@@ -1,6 +1,6 @@
 <?php
 
-use MeuMouse\aireset-default\License;
+use Aireset\Default\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
@@ -33,12 +33,12 @@ defined('ABSPATH') || exit; ?>
 
             <p class="card-text fs-sm mb-4"><?php echo esc_html__( 'Comece a receber via Pix e Boleto com aprovação imediata e sem cobrança de taxas. Exclusivo para clientes Inter Empresas.', 'aireset-default' ) ?></p>
             
-            <?php if ( is_plugin_active('module-inter-bank-for-flexify-checkout/module-inter-bank-for-flexify-checkout.php') ) : ?>
+            <?php if ( is_plugin_active('module-inter-bank-for-aireset-default/module-inter-bank-for-aireset-default.php') ) : ?>
                <button id="require_inter_bank_module_trigger" class="btn btn-sm btn-outline-primary <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>"><?php echo esc_html__( 'Configurar', 'aireset-default' ) ?></button>
-            <?php elseif ( array_key_exists( 'module-inter-bank-for-flexify-checkout/module-inter-bank-for-flexify-checkout.php', get_plugins() ) ) : ?>
-               <button class="btn btn-sm btn-primary activate-plugin <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" data-plugin-slug="<?php echo esc_attr('module-inter-bank-for-flexify-checkout/module-inter-bank-for-flexify-checkout.php'); ?>"><?php echo esc_html__( 'Ativar módulo', 'aireset-default' ) ?></button>
+            <?php elseif ( array_key_exists( 'module-inter-bank-for-aireset-default/module-inter-bank-for-aireset-default.php', get_plugins() ) ) : ?>
+               <button class="btn btn-sm btn-primary activate-plugin <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" data-plugin-slug="<?php echo esc_attr('module-inter-bank-for-aireset-default/module-inter-bank-for-aireset-default.php'); ?>"><?php echo esc_html__( 'Ativar módulo', 'aireset-default' ) ?></button>
             <?php else : ?>
-               <button class="btn btn-sm btn-primary install-module <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" data-plugin-url="https://github.com/meumouse/module-inter-bank-for-flexify-checkout/raw/main/dist/module-inter-bank-for-flexify-checkout.zip" data-plugin-slug="<?php echo esc_attr('module-inter-bank-for-flexify-checkout/module-inter-bank-for-flexify-checkout.php'); ?>"><?php echo esc_html__( 'Instalar módulo', 'aireset-default' ) ?></button>
+               <button class="btn btn-sm btn-primary install-module <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" data-plugin-url="https://github.com/meumouse/module-inter-bank-for-aireset-default/raw/main/dist/module-inter-bank-for-aireset-default.zip" data-plugin-slug="<?php echo esc_attr('module-inter-bank-for-aireset-default/module-inter-bank-for-aireset-default.php'); ?>"><?php echo esc_html__( 'Instalar módulo', 'aireset-default' ) ?></button>
             <?php endif; ?>
          </div>
 

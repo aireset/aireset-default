@@ -1,7 +1,7 @@
 <?php
 
-use MeuMouse\aireset-default\Helpers;
-use MeuMouse\aireset-default\License;
+use Aireset\Default\Helpers;
+use Aireset\Default\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>

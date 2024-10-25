@@ -1,8 +1,8 @@
 <?php
 
-use MeuMouse\aireset-default\Init;
-use MeuMouse\aireset-default\Admin_Options;
-use MeuMouse\aireset-default\License;
+use Aireset\Default\Init;
+use Aireset\Default\Admin_Options;
+use Aireset\Default\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
@@ -20,7 +20,7 @@ defined('ABSPATH') || exit; ?>
         <tr>
             <th>
                 <?php echo esc_html__( 'Mostrar campo de observações adicionais', 'aireset-default' ) ?>
-                <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para mostrar o campo de observações adicionais no pedido.', 'aireset-default' ) ?></span>
+                <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para mostrar o campo de observações adicionais no pedido.', 'aireset-default' ) ?></span>
             </th>
             <td>
                 <div class="form-check form-switch">
@@ -31,7 +31,7 @@ defined('ABSPATH') || exit; ?>
         <tr>
             <th>
                 <?php echo esc_html__( 'Ocultar campo de cupom de desconto', 'aireset-default' ) ?>
-                <span class="flexify-checkout-description"><?php echo esc_html__( 'Quando ativado, o campo do cupom não será exibido aos usuários e eles não poderão inserir um código de cupom. No entanto, você pode aplicar um cupom automaticamente.', 'aireset-default' ) ?></span>
+                <span class="aireset-default-description"><?php echo esc_html__( 'Quando ativado, o campo do cupom não será exibido aos usuários e eles não poderão inserir um código de cupom. No entanto, você pode aplicar um cupom automaticamente.', 'aireset-default' ) ?></span>
             </th>
             <td>
                 <div class="form-check form-switch">
@@ -42,7 +42,7 @@ defined('ABSPATH') || exit; ?>
         <tr>
             <th>
                 <?php echo esc_html__( 'Adicionar máscaras para campos', 'aireset-default' ) ?>
-                <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para adicionar máscaras de preenchimento em campos da finalização de compras.', 'aireset-default' ) ?></span>
+                <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para adicionar máscaras de preenchimento em campos da finalização de compras.', 'aireset-default' ) ?></span>
             </th>
             <td>
                 <div class="form-check form-switch">
@@ -60,7 +60,7 @@ defined('ABSPATH') || exit; ?>
                         <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
                     </span>
                 <?php endif; ?>
-                <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para remover a etapa de entrega em produtos digitais.', 'aireset-default' ) ?></span>
+                <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para remover a etapa de entrega em produtos digitais.', 'aireset-default' ) ?></span>
             </th>
             <td>
                 <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -81,7 +81,7 @@ defined('ABSPATH') || exit; ?>
                         </span>
                     <?php endif; ?>
 
-                    <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para ocultar os campos inseridos pelo plugin Brazilian Market on WooCommerce quando o país selecionado não for Brasil.', 'aireset-default' ) ?></span>
+                    <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para ocultar os campos inseridos pelo plugin Brazilian Market on WooCommerce quando o país selecionado não for Brasil.', 'aireset-default' ) ?></span>
                 </th>
                 <td>
                     <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -96,7 +96,7 @@ defined('ABSPATH') || exit; ?>
         <tr class="w-100">
             <th>
                 <?php echo esc_html__( 'Gerenciar os campos e etapas da finalização de compras', 'aireset-default' ); ?>
-                <span class="flexify-checkout-description"><?php echo esc_html__( 'Arraste e solte o campo para reordenar ou mudar o campo de etapa.', 'aireset-default' ) ?></span>
+                <span class="aireset-default-description"><?php echo esc_html__( 'Arraste e solte o campo para reordenar ou mudar o campo de etapa.', 'aireset-default' ) ?></span>
             </th>
             <td>
                 <div class="form-check form-switch">

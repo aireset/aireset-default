@@ -16,8 +16,8 @@
          */
         do_action('aaireset_default_before_layout'); ?>
 
-        <div class="flexify-checkout flexify-checkout--modern flexify-checkout--has-sidebar" data-effect="pure-effect-slide">
-            <main class="flexify-checkout__content">
+        <div class="aireset-default aireset-default--modern aireset-default--has-sidebar" data-effect="pure-effect-slide">
+            <main class="aireset-default__content">
                 <?php while ( have_posts() ) :
                     the_post();
                     the_content();
@@ -32,7 +32,7 @@
              */
             do_action('aaireset_default_after_content'); ?>
 
-            <div class="flexify-checkout__spinner"><img src="<?php echo esc_url( AIRESET_DEFAULT_ASSETS . 'frontend/img/loader.gif' ) ?>"/></div>
+            <div class="aireset-default__spinner"><img src="<?php echo esc_url( AIRESET_DEFAULT_ASSETS . 'frontend/img/loader.gif' ) ?>"/></div>
         </div>
 
         <?php

@@ -1,9 +1,9 @@
 <?php
 
-namespace MeuMouse\aireset-default;
+namespace Aireset\Default;
 
-use MeuMouse\aireset-default\Init;
-use MeuMouse\aireset-default\License;
+use Aireset\Default\Init;
+// use Aireset\Default\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -668,6 +668,6 @@ class Helpers {
     }
 }
 
-if ( ! class_exists('MeuMouse\aireset-default\Helpers\Helpers') ) {
-    class_alias( 'MeuMouse\aireset-default\Helpers', 'MeuMouse\aireset-default\Helpers\Helpers' );
+if ( ! class_exists('Aireset\Default\Helpers\Helpers') ) {
+    class_alias( 'Aireset\Default\Helpers', 'Aireset\Default\Helpers\Helpers' );
 }

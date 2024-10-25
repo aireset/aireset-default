@@ -1,7 +1,7 @@
 <?php
 
-use MeuMouse\aireset-default\Init;
-use MeuMouse\aireset-default\License;
+use Aireset\Default\Init;
+use Aireset\Default\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
@@ -66,7 +66,7 @@ defined('ABSPATH') || exit; ?>
 				<td>
 					<span class="h4 d-block"><?php esc_attr_e( 'Notamos que teve problemas de conexão ao tentar ativar sua licença', 'aireset-default' ); ?></span>
 					<span class="d-block text-muted"><?php esc_attr_e( 'Você pode fazer upload do arquivo .key da licença para fazer sua ativação manual.', 'aireset-default' ); ?></span>
-					<a class="fancy-link mt-2 mb-3" href="https://meumouse.com/minha-conta/licenses/?domain=<?php echo urlencode( License::get_domain() ); ?>&license_key=<?php echo urlencode( get_option('aaireset_default_temp_license_key') ); ?>&app_version=<?php echo urlencode( FLEXIFY_CHECKOUT_VERSION ); ?>&product_id=<?php echo ( strpos( get_option('aaireset_default_temp_license_key'), 'CM-' ) === 0 ) ? '7' : '3'; ?>&settings_page=<?php echo urlencode( License::get_domain() . '/wp-admin/admin.php?page=aireset-default' ); ?>" target="_blank"><?php echo esc_html__( 'Clique aqui para gerar seu arquivo de licença', 'aireset-default' ) ?></a>
+					<a class="fancy-link mt-2 mb-3" href="https://meumouse.com/minha-conta/licenses/?domain=<?php echo urlencode( License::get_domain() ); ?>&license_key=<?php echo urlencode( get_option('aaireset_default_temp_license_key') ); ?>&app_version=<?php echo urlencode( AIRESET_DEFAULTVERSION ); ?>&product_id=<?php echo ( strpos( get_option('aaireset_default_temp_license_key'), 'CM-' ) === 0 ) ? '7' : '3'; ?>&settings_page=<?php echo urlencode( License::get_domain() . '/wp-admin/admin.php?page=aireset-default' ); ?>" target="_blank"><?php echo esc_html__( 'Clique aqui para gerar seu arquivo de licença', 'aireset-default' ) ?></a>
 
 					<div class="drop-file-license-key">
 						<div class="dropzone-license mt-4" id="license_key_zone">
@@ -90,7 +90,7 @@ defined('ABSPATH') || exit; ?>
 		<?php else : ?>
 			<tr>
 				<td class="d-grid">
-					<a class="btn btn-primary my-4 d-flex align-items-center w-fit" href="https://meumouse.com/plugins/flexify-checkout-para-woocommerce/?utm_source=wordpress&utm_medium=plugins-list&utm_campaign=aireset-default" target="_blank">
+					<a class="btn btn-primary my-4 d-flex align-items-center w-fit" href="https://meumouse.com/plugins/aireset-default-para-woocommerce/?utm_source=wordpress&utm_medium=plugins-list&utm_campaign=aireset-default" target="_blank">
 						<svg class="icon icon-white me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <path d="M13.5 16.5854C13.5 17.4138 12.8284 18.0854 12 18.0854C11.1716 18.0854 10.5 17.4138 10.5 16.5854C10.5 15.7569 11.1716 15.0854 12 15.0854C12.8284 15.0854 13.5 15.7569 13.5 16.5854Z"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M6.33367 10C6.20971 9.64407 6.09518 9.27081 5.99836 8.88671C5.69532 7.68444 5.54485 6.29432 5.89748 4.97439C6.26228 3.60888 7.14664 2.39739 8.74323 1.59523C10.3398 0.793061 11.8397 0.806642 13.153 1.32902C14.4225 1.83396 15.448 2.78443 16.2317 3.7452C16.4302 3.98851 16.6166 4.23669 16.7907 4.48449C17.0806 4.89706 16.9784 5.45918 16.5823 5.7713C16.112 6.14195 15.4266 6.01135 15.0768 5.52533C14.9514 5.35112 14.8197 5.17831 14.6819 5.0094C14.0088 4.18414 13.2423 3.51693 12.4138 3.18741C11.6292 2.87533 10.7252 2.83767 9.64112 3.38234C8.55703 3.92702 8.04765 4.6748 7.82971 5.49059C7.5996 6.35195 7.6774 7.36518 7.93771 8.39788C8.07953 8.96054 8.26936 9.50489 8.47135 10H18C19.6569 10 21 11.3431 21 13V20C21 21.6569 19.6569 23 18 23H6C4.34315 23 3 21.6569 3 20V13C3 11.3431 4.34315 10 6 10H6.33367ZM19 13C19 12.4477 18.5523 12 18 12H6C5.44772 12 5 12.4477 5 13V20C5 20.5523 5.44772 21 6 21H18C18.5523 21 19 20.5523 19 20V13Z"></path></g></svg>	
 						<span><?php echo esc_html__(  'Comprar licença', 'aireset-default' );?></span>
 					</a>
@@ -155,12 +155,12 @@ defined('ABSPATH') || exit; ?>
 				</span>
 			</div>
 			<div class="d-flex mb-2">
-				<span><?php esc_html_e( 'Versão do Flexify Checkout para WooCommerce:', 'aireset-default' ); ?></span>
+				<span><?php esc_html_e( 'Versão do Aireset - Geral:', 'aireset-default' ); ?></span>
 				<span class="ms-2">
 					<span class="badge bg-translucent-success">
 						<?php $license_status = ( License::is_valid() ) ? __( 'Pro', 'aireset-default' ) : '';
 
-						echo sprintf( esc_html( FLEXIFY_CHECKOUT_VERSION . ' %s' ), $license_status ); ?>
+						echo sprintf( esc_html( AIRESET_DEFAULTVERSION . ' %s' ), $license_status ); ?>
 					</span>
 				</span>
 			</div>
@@ -418,7 +418,7 @@ defined('ABSPATH') || exit; ?>
 
 		<tr>
 			<td class="d-flex">
-				<a class="btn btn-sm btn-outline-danger d-flex align-items-center" target="_blank" href="https://meumouse.com/reportar-problemas/?wpf9053_2=<?php echo urlencode( FLEXIFY_CHECKOUT_ADMIN_EMAIL ); ?>&wpf9053_5=<?php echo urlencode( 'Flexify Checkout para WooCommerce' ) ?>&wpf9053_9=<?php echo urlencode( License::is_valid() ? 'Sim' : 'Não' ) ?>&wpf9053_7=<?php echo urlencode( License::get_domain() ) ?>&wpf9053_6=<?php echo urlencode( wp_get_theme()->get('Name') ) ?>"><?php esc_html_e( 'Reportar problemas', 'aireset-default' ); ?></a>
+				<a class="btn btn-sm btn-outline-danger d-flex align-items-center" target="_blank" href="https://meumouse.com/reportar-problemas/?wpf9053_2=<?php echo urlencode( AIRESET_DEFAULTADMIN_EMAIL ); ?>&wpf9053_5=<?php echo urlencode( 'Aireset - Geral' ) ?>&wpf9053_9=<?php echo urlencode( License::is_valid() ? 'Sim' : 'Não' ) ?>&wpf9053_7=<?php echo urlencode( License::get_domain() ) ?>&wpf9053_6=<?php echo urlencode( wp_get_theme()->get('Name') ) ?>"><?php esc_html_e( 'Reportar problemas', 'aireset-default' ); ?></a>
 				<button class="btn btn-sm btn-outline-primary ms-2" id="aaireset_default_clear_activation_cache"><?php echo esc_html__( 'Limpar cache de ativação', 'aireset-default' ); ?></button>
 			</td>
 		</tr>

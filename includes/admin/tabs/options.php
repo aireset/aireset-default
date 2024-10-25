@@ -1,7 +1,7 @@
 <?php
 
-use MeuMouse\aireset-default\Init;
-use MeuMouse\aireset-default\License;
+use Aireset\Default\Init;
+use Aireset\Default\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
@@ -19,7 +19,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Ativar Flexify Checkout', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para que o Flexify Checkout possa ser instanciado.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que o Flexify Checkout possa ser instanciado.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -30,7 +30,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Mostrar botão Voltar à loja', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para exibir o botão "Voltar à loja" na primeira etapa de finalização de compra.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir o botão "Voltar à loja" na primeira etapa de finalização de compra.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -41,7 +41,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Tornar imagem de produtos clicáveis', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para permitir que o usuário acesse o produto ao clicar na imagem do produto.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para permitir que o usuário acesse o produto ao clicar na imagem do produto.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -52,7 +52,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Pular página do carrinho', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para redirecionar o usuário da página de carrinho para a finalização de compra automaticamente.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para redirecionar o usuário da página de carrinho para a finalização de compra automaticamente.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -63,7 +63,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Ativar verificação de força da senha do usuário', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para forçar a verificação da força de senha na criação da conta do usuário, na finalização de compras.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para forçar a verificação da força de senha na criação da conta do usuário, na finalização de compras.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -74,7 +74,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Ativar sugestão de preenchimento do e-mail', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para exibir a sugestão do provedor de e-mail, na finalização de compras.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir a sugestão do provedor de e-mail, na finalização de compras.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -95,7 +95,7 @@ defined('ABSPATH') || exit; ?>
                         <tr class="mb-4">
                            <th class="w-50">
                               <?php echo esc_html__( 'Nome e extensão do novo provedor', 'aireset-default' ) ?>
-                              <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe o nome do novo provedor incluindo a extensão, por exemplo, meumouse.com', 'aireset-default' ) ?></span>
+                              <span class="aireset-default-description"><?php echo esc_html__( 'Informe o nome do novo provedor incluindo a extensão, por exemplo, meumouse.com', 'aireset-default' ) ?></span>
                            </th>
                            <td class="w-50">
                               <div class="input-group">
@@ -127,7 +127,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Mostrar resumo do pedido aberto por padrão', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para mostrar o resumo do pedido aberto por padrão em celulares.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para mostrar o resumo do pedido aberto por padrão em celulares.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -140,7 +140,7 @@ defined('ABSPATH') || exit; ?>
          <tr>
             <th>
                <?php echo esc_html__( 'Mostrar endereço da loja física para retirada da encomenda Kangu', 'aireset-default' ) ?>
-               <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para mostrar o endereço da sua loja como ponto de retirada da encomenda Kangu.', 'aireset-default' ) ?></span>
+               <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para mostrar o endereço da sua loja como ponto de retirada da encomenda Kangu.', 'aireset-default' ) ?></span>
             </th>
             <td>
                <div class="form-check form-switch">
@@ -170,7 +170,7 @@ defined('ABSPATH') || exit; ?>
                      <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
                   </span>
                <?php endif; ?>
-               <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para preencher as informações da empresa automaticamente ao digitar o CNPJ (Disponível apenas no Brasil).', 'aireset-default' ) ?></span>
+               <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para preencher as informações da empresa automaticamente ao digitar o CNPJ (Disponível apenas no Brasil).', 'aireset-default' ) ?></span>
             </th>
             <td>
                <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -192,7 +192,7 @@ defined('ABSPATH') || exit; ?>
                   </span>
                <?php endif; ?>
 
-               <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para preencher os campos de entrega ao digitar o CEP (Recomendado), (Disponível apenas no Brasil).', 'aireset-default' ) ?></span>
+               <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para preencher os campos de entrega ao digitar o CEP (Recomendado), (Disponível apenas no Brasil).', 'aireset-default' ) ?></span>
             </th>
             <td>
                <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -213,7 +213,7 @@ defined('ABSPATH') || exit; ?>
                            <tr>
                               <th class="w-50">
                                  <?php echo esc_html__( 'Serviço de API para busca de endereço', 'aireset-default' ) ?>
-                                 <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe o endereço da API para obter o endereço do usuário através do seu CEP em formato JSON. Use a variável {postcode} para informar o CEP.', 'aireset-default' ) ?></span>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe o endereço da API para obter o endereço do usuário através do seu CEP em formato JSON. Use a variável {postcode} para informar o CEP.', 'aireset-default' ) ?></span>
                               </th>
                               <td class="w-50">
                                  <input type="text" class="form-control" id="get_address_api_service" name="get_address_api_service" value="<?php echo Init::get_setting( 'get_address_api_service') ?>"/>
@@ -222,7 +222,7 @@ defined('ABSPATH') || exit; ?>
                            <tr>
                               <th class="w-50">
                                  <?php echo esc_html__( 'Propriedade de obtenção de endereço', 'aireset-default' ) ?>
-                                 <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe a propriedade para obter o endereço que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter o endereço que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
                               </th>
                               <td class="w-50">
                                  <input type="text" class="form-control" id="api_auto_fill_address_param" name="api_auto_fill_address_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_param') ?>"/>
@@ -231,7 +231,7 @@ defined('ABSPATH') || exit; ?>
                            <tr>
                               <th class="w-50">
                                  <?php echo esc_html__( 'Propriedade de obtenção do bairro', 'aireset-default' ) ?>
-                                 <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe a propriedade para obter o bairro que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter o bairro que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
                               </th>
                               <td class="w-50">
                                  <input type="text" class="form-control" id="api_auto_fill_address_neightborhood_param" name="api_auto_fill_address_neightborhood_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_neightborhood_param') ?>"/>
@@ -240,7 +240,7 @@ defined('ABSPATH') || exit; ?>
                            <tr>
                               <th class="w-50">
                                  <?php echo esc_html__( 'Propriedade de obtenção de cidade', 'aireset-default' ) ?>
-                                 <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe a propriedade para obter a cidade que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter a cidade que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
                               </th>
                               <td class="w-50">
                                  <input type="text" class="form-control" id="api_auto_fill_address_city_param" name="api_auto_fill_address_city_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_city_param') ?>"/>
@@ -249,7 +249,7 @@ defined('ABSPATH') || exit; ?>
                            <tr>
                               <th class="w-50">
                                  <?php echo esc_html__( 'Propriedade de obtenção de estado', 'aireset-default' ) ?>
-                                 <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe a propriedade para obter o estado que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter o estado que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
                               </th>
                               <td class="w-50">
                                  <input type="text" class="form-control" id="api_auto_fill_address_state_param" name="api_auto_fill_address_state_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_state_param') ?>"/>
@@ -276,7 +276,7 @@ defined('ABSPATH') || exit; ?>
                </span>
             <?php endif; ?>
 
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para a opção de termos e condições da última etapa ficar ativa por padrão, caso exista uma página de termos e condições configurada.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para a opção de termos e condições da última etapa ficar ativa por padrão, caso exista uma página de termos e condições configurada.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -295,7 +295,7 @@ defined('ABSPATH') || exit; ?>
                </span>
             <?php endif; ?>
 
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para exibir os seletores de quantidades do produto na finalização de compras.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir os seletores de quantidades do produto na finalização de compras.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -314,7 +314,7 @@ defined('ABSPATH') || exit; ?>
                </span>
             <?php endif; ?>
 
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para exibir o botão de remoção do produto do carrinho na finalização de compras.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir o botão de remoção do produto do carrinho na finalização de compras.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -333,7 +333,7 @@ defined('ABSPATH') || exit; ?>
                   </span>
             <?php endif; ?>
 
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para exibir o seletor de país no campo de número de telefone. Útil se você vende para outros países.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir o seletor de país no campo de número de telefone. Útil se você vende para outros países.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -352,7 +352,7 @@ defined('ABSPATH') || exit; ?>
                </span>
             <?php endif; ?>
 
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para informar um cupom de desconto para ser aplicado automaticamente na finalização de compra.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para informar um cupom de desconto para ser aplicado automaticamente na finalização de compra.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -363,7 +363,7 @@ defined('ABSPATH') || exit; ?>
       <tr class="show-coupon-code-enabled">
          <th>
             <?php echo esc_html__( 'Código do cupom de desconto', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe o código do cupom de desconto que será aplicado automaticamente na finalização de compra.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Informe o código do cupom de desconto que será aplicado automaticamente na finalização de compra.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <input type="text" name="coupon_code_for_auto_apply" class="form-control" placeholder="<?php echo esc_html__( 'CUPOMDEDESCONTO', 'aireset-default' ) ?>" value="<?php echo Init::get_setting( 'coupon_code_for_auto_apply' ) ?>"/>
@@ -380,7 +380,7 @@ defined('ABSPATH') || exit; ?>
                </span>
             <?php endif; ?>
             
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para que pedidos de usuários convidados na finalização de compra sejam atribuídos a usuários existentes.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que pedidos de usuários convidados na finalização de compra sejam atribuídos a usuários existentes.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
@@ -394,7 +394,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Ativar página de agradecimento do Flexify Checkout', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Ative esta opção para carregar o modelo de página de agradecimento do Flexify Checkout.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para carregar o modelo de página de agradecimento do Flexify Checkout.', 'aireset-default' ) ?></span>
          </th>
          <td>
             <div class="form-check form-switch">
@@ -405,7 +405,7 @@ defined('ABSPATH') || exit; ?>
       <tr>
          <th>
             <?php echo esc_html__( 'Página de contato', 'aireset-default' ) ?>
-            <span class="flexify-checkout-description"><?php echo esc_html__( 'Selecione a página de contato que será exibida aos clientes na finalização de compra.', 'aireset-default' ) ?></span>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Selecione a página de contato que será exibida aos clientes na finalização de compra.', 'aireset-default' ) ?></span>
          </th>
          <td>
          <select name="contact_page_thankyou" class="form-select">

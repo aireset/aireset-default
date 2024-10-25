@@ -11,7 +11,7 @@
                 <tr id="set_field_id">
                     <th class="w-50">
                         <?php echo esc_html__( 'Nome e ID do campo *', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe o nome que será usado no campo em letras minúsculas, usando underline no lugar dos espaços e após o prefixo "billing_".', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__( 'Informe o nome que será usado no campo em letras minúsculas, usando underline no lugar dos espaços e após o prefixo "billing_".', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <div class="input-group">
@@ -26,7 +26,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Tipo do campo *', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__( 'Selecione o tipo do campo que será incluído na finalização de compras.', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__( 'Selecione o tipo do campo que será incluído na finalização de compras.', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <select id="checkout_field_type" class="form-select">
@@ -101,7 +101,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Título do campo *', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__( 'Informe o título do campo.', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__( 'Informe o título do campo.', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <input type="text" class="form-control" id="checkout_field_title" name="checkout_field_title" value=""/>
@@ -111,7 +111,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Obrigatoriedade do campo', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__('Ao desativar, este campo se tornará não obrigatório.', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__('Ao desativar, este campo se tornará não obrigatório.', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <div class="form-check form-switch">
@@ -123,7 +123,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Posição do campo', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__('Define a posição deste campo na finalização de compras.', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__('Define a posição deste campo na finalização de compras.', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <select class="form-select" id="field_position">
@@ -137,7 +137,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Classe CSS personalizada do campo (Opcional)', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__('Informe a(s) classe(s) CSS personalizadas para este campo. (Opcional)', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__('Informe a(s) classe(s) CSS personalizadas para este campo. (Opcional)', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <input type="text" class="form-control" id="field_classes" value=""/>
@@ -147,7 +147,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Classe CSS personalizada do título (Opcional)', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__('Informe a(s) classe(s) CSS personalizadas para o título (label) deste campo. (Opcional)', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__('Informe a(s) classe(s) CSS personalizadas para o título (label) deste campo. (Opcional)', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <input type="text" class="form-control" id="field_label_classes" value=""/>
@@ -157,7 +157,7 @@
                 <tr class="require-input-mask">
                     <th class="w-50">
                         <?php echo esc_html__( 'Máscara do campo (Opcional)', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__('Adicione uma máscara de preenchimento para este campo, seguindo o padrão informado pela documentação. (Opcional)', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__('Adicione uma máscara de preenchimento para este campo, seguindo o padrão informado pela documentação. (Opcional)', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <input type="text" class="form-control" id="field_input_mask" value=""/>
@@ -167,7 +167,7 @@
                 <tr>
                     <th class="w-50">
                         <?php echo esc_html__( 'Etapa do campo', 'aireset-default' ) ?>
-                        <span class="flexify-checkout-description"><?php echo esc_html__('Define em qual etapa da finalização de compras o campo será exibido.', 'aireset-default' ) ?></span>
+                        <span class="aireset-default-description"><?php echo esc_html__('Define em qual etapa da finalização de compras o campo será exibido.', 'aireset-default' ) ?></span>
                     </th>
                     <td class="w-50">
                         <select class="form-select" id="field_step">

@@ -1,6 +1,6 @@
 <?php
 
-namespace MeuMouse\aireset-default\Compat;
+namespace Aireset\Default\Compat;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;

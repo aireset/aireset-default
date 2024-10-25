@@ -31,40 +31,40 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.25rem;
 }
 
-.flexify-checkout-admin-section-tile {
+.aireset-default-admin-section-tile {
     font-size: 1.4rem;
     font-weight: 400;
 }
 
-.flexify-checkout-logo-icon {
+.aireset-default-logo-icon {
     width: 3.225rem;
     margin-right: 0.25rem;
 }
 
-.flexify-checkout-admin-title-container {
+.aireset-default-admin-title-container {
     display: flex;
     align-items: center;
     margin-top: 1rem;
     padding: 0.5rem;
 }
 
-.flexify-checkout-admin-title-description {
+.aireset-default-admin-title-description {
     margin: 1rem 0.5rem 0;
 }
 
-.flexify-checkout-wrapper {
+.aireset-default-wrapper {
     margin: 2rem 3rem 0 0.5rem;
     border-radius: 0.5rem;
     overflow: hidden;
 }
 
 @media screen and (min-width: 992px) and (max-width: 1368px) {
-    .flexify-checkout-wrapper {
+    .aireset-default-wrapper {
         margin: 1rem 0 0 0;
     }
 }
 
-.flexify-checkout-tab-wrapper {
+.aireset-default-tab-wrapper {
     border-bottom: 0;
     overflow-x: auto;
     display: flex;
@@ -89,14 +89,14 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #495057;
 }
 
-.flexify-checkout-form {
+.aireset-default-form {
     background-color: #fff;
     padding: 2rem 0;
     border-radius: 1rem;
     margin-top: 2rem;
 }
 
-.flexify-checkout-wrapper .nav-tab {
+.aireset-default-wrapper .nav-tab {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,33 +115,33 @@ h1, h2, h3, h4, h5, h6 {
     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.flexify-checkout-wrapper .nav-tab:hover {
+.aireset-default-wrapper .nav-tab:hover {
     color: #495057;
     background-color: #d0dce9;
 }
 
-.flexify-checkout-wrapper .nav-tab:first-child {
+.aireset-default-wrapper .nav-tab:first-child {
     border-radius: 1rem 0 0 1rem;
     border: none;
 }
 
-.flexify-checkout-wrapper .nav-tab:last-child {
+.aireset-default-wrapper .nav-tab:last-child {
     border-radius: 0 1rem 1rem 0;
 }
 
-.flexify-checkout-wrapper .nav-tab.nav-tab-active {
+.aireset-default-wrapper .nav-tab.nav-tab-active {
     color: #fff;
     background-color: var(--meumouse-primary);
 }
 
-.flexify-checkout-tab-icon {
+.aireset-default-tab-icon {
     width: 1.5rem;
     height: 1.5rem;
     fill: #495057;
     margin-right: 0.25rem;
 }
 
-.nav-tab.nav-tab-active .flexify-checkout-tab-icon {
+.nav-tab.nav-tab-active .aireset-default-tab-icon {
     fill: #fff;
 }
 
@@ -165,22 +165,22 @@ table.insert-license tr {
     margin-bottom: 0;
 }
 
-.flexify-checkout-wrapper .form-table > tbody > tr > th {
+.aireset-default-wrapper .form-table > tbody > tr > th {
     padding-right: 2rem;
     width: 450px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.flexify-checkout-wrapper .form-table.flexify-checkout-table-buttons > tbody > tr > th {
+.aireset-default-wrapper .form-table.aireset-default-table-buttons > tbody > tr > th {
     width: 400px;
 }
 
-.flexify-checkout-wrapper h3 {
+.aireset-default-wrapper h3 {
     font-size: 1rem;
 }
 
-.flexify-checkout-description {
+.aireset-default-description {
     display: block;
     font-size: 0.815rem;
     line-height: 1.3;
@@ -198,7 +198,7 @@ table.insert-license tr {
     display: block;
 }
 
-.flexify-checkout-wrapper .last-row td {
+.aireset-default-wrapper .last-row td {
     padding-bottom: 4rem;
     padding-left: 0;
 }
@@ -1005,7 +1005,7 @@ a.btn-primary, a.btn-primary:hover, a.btn-primary:focus {
     opacity: 0.25;
 }
 
-.flexify-checkout-coming-soon-theme {
+.aireset-default-coming-soon-theme {
     width: 4rem;
     opacity: 1 !important;
 }
@@ -1300,7 +1300,7 @@ label.custom-file-label:hover {
 }
 
 @media screen and (max-width: 992px) {
-    .flexify-checkout-wrapper {
+    .aireset-default-wrapper {
         margin: 0.5rem;
     }
 
@@ -1316,11 +1316,11 @@ label.custom-file-label:hover {
         width: 100%;
     }
 
-    .flexify-checkout-wrapper .form-table > tbody > tr > th {
+    .aireset-default-wrapper .form-table > tbody > tr > th {
         width: 50%;
     }
 
-    .flexify-checkout-wrapper .form-table > tbody > tr > td {
+    .aireset-default-wrapper .form-table > tbody > tr > td {
         width: 50%;
     }
 
@@ -1626,7 +1626,7 @@ code {
     text-wrap: nowrap;
 }
 
-#flexify-checkout-search-header-logo {
+#aireset-default-search-header-logo {
     width: 6.625rem;
 }
 

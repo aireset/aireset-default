@@ -65,6 +65,6 @@ function aireset_verificar_e_atualizar_pedidos() {
 
     foreach ( $pedidos as $pedido ) {
         $pedido->update_status( 'em-producao' ); // Altere para o status desejado
-        aireset_registrar_log( 'Pedido ID ' . $pedido->get_id() . ' atualizado para ' . esc_html__( 'Em Produção', 'aireset-01-default-woo' ) . '.' );
+        aireset_registrar_log( 'Pedido ID ' . $pedido->get_id() . ' atualizado para ' . esc_html__( 'Em Produção', 'aireset-default' ) . '.' );
     }
 }

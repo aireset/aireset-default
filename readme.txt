@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -9,7 +9,7 @@ WC requires at least: 5.0
 WC tested up to: 9.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Plugin URI: https://github.com/aireset/aireset-01-default-woo
+Plugin URI: https://github.com/aireset/aireset-default
 
 Essa plugin traz recursos adicionais para ser usados e ativados no Wordpress e no Woocomerce dos pontos essesnciais encontrados ao desenvolvermos centenas de projetos
 
@@ -23,12 +23,12 @@ Nosso processo de instalação é simples, basta instalar que todas as configura
 
 Você pode esclarecer suas dúvidas usando:
 
-* Utilizando o nosso [fórum no Github](https://github.com/aireset/aireset-01-default-woo/issues).
+* Utilizando o nosso [fórum no Github](https://github.com/aireset/aireset-default/issues).
 * Criando um tópico no [fórum de ajuda do WordPress](https://wordpress.org/support/plugin/woocommerce-extra-checkout-fields-for-brazil).
 
 = Colaborar =
 
-Você pode contribuir com código-fonte em nossa página no [GitHub](https://github.com/aireset/aireset-01-default-woo).
+Você pode contribuir com código-fonte em nossa página no [GitHub](https://github.com/aireset/aireset-default).
 
 == Frequently Asked Questions ==
 
@@ -42,6 +42,9 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+= 1.1.2 (14/10/2024) =
+* Inclusão de tela para ativar funções e Inclusãode ferramenta para criar o cliente quando cria o pedido
 
 = 1.1.1 (03/10/2024) =
 * Melhorando o codigo e removendo funcionalidades desnecessárias

@@ -49,7 +49,7 @@ class Assets {
 
 		global $wp, $wp_scripts, $wp_styles;
 
-		$settings = get_option('aaireset_default_settings');
+		$settings = get_option('aireset_default_settings');
 		$theme = Core::get_theme();
 
 		/**
@@ -57,7 +57,7 @@ class Assets {
 		 *
 		 * @since 1.0.0
 		 */
-		$allowed_sources = apply_filters( 'aaireset_default_allowed_sources', array() );
+		$allowed_sources = apply_filters( 'aireset_default_allowed_sources', array() );
 
 		foreach ( $wp_scripts->queue as $key => $name ) {
 			$src = $wp_scripts->registered[ $name ]->src;
@@ -79,7 +79,7 @@ class Assets {
 
 		wp_enqueue_style( 'aireset-default-theme', AIRESET_DEFAULTASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), AIRESET_DEFAULTVERSION, false );
 
-		if ( is_aaireset_default() || Core::is_thankyou_page() ) {
+		if ( is_aireset_default() || Core::is_thankyou_page() ) {
 			wp_add_inline_style( 'aireset-default-theme', self::get_dynamic_styles( $settings ) );
 		}
 
@@ -94,7 +94,7 @@ class Assets {
 		);
 
 		// international phone number selector
-		if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aaireset_default() && License::is_valid() ) {
+		if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aireset_default() && License::is_valid() ) {
 			wp_enqueue_script( 'flexify-international-phone-js', AIRESET_DEFAULTASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
 			wp_enqueue_style( 'flexify-international-phone-css', AIRESET_DEFAULTASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
 			$deps[] = 'flexify-international-phone-js';
@@ -111,11 +111,11 @@ class Assets {
 		wp_enqueue_script('aireset-default', $script, $deps, $version, true);
 
 		// autofill address to enter postcode (just valid for Brazil)
-		if ( Init::get_setting('enable_fill_address') === 'yes' && is_aaireset_default() && License::is_valid() ) {
+		if ( Init::get_setting('enable_fill_address') === 'yes' && is_aireset_default() && License::is_valid() ) {
 			wp_enqueue_script( 'aireset-default-autofill-address-js', AIRESET_DEFAULTASSETS . 'frontend/js/autofill-address.js', array('jquery'), AIRESET_DEFAULTVERSION, false );
 
 			// send params from JS
-			$auto_fill_address_api_params = apply_filters( 'aaireset_default_auto_fill_address', array(
+			$auto_fill_address_api_params = apply_filters( 'aireset_default_auto_fill_address', array(
 				'api_service' => Init::get_setting('get_address_api_service'),
 				'address_param' => Init::get_setting('api_auto_fill_address_param'),
 				'neightborhood_param' => Init::get_setting('api_auto_fill_address_neightborhood_param'),
@@ -127,17 +127,17 @@ class Assets {
 		}
 
 		// autofill field on enter CNPJ (just valid for Brazil)
-		if ( Init::get_setting('enable_autofill_company_info') === 'yes' && is_aaireset_default() && License::is_valid() ) {
+		if ( Init::get_setting('enable_autofill_company_info') === 'yes' && is_aireset_default() && License::is_valid() ) {
 			wp_enqueue_script( 'aireset-default-autofill-cnpj-js', AIRESET_DEFAULTASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), AIRESET_DEFAULTVERSION, false );
 		}
 
 		// remove brazilian market fields if is not Brazil country
-		if ( Init::get_setting('enable_unset_wcbcf_fields_not_brazil') === 'yes' && is_aaireset_default() && License::is_valid() ) {
+		if ( Init::get_setting('enable_unset_wcbcf_fields_not_brazil') === 'yes' && is_aireset_default() && License::is_valid() ) {
 			wp_enqueue_script( 'aireset-default-remove-wcbcf-fields', AIRESET_DEFAULTASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), AIRESET_DEFAULTVERSION );
 		}
 
 		// enable field masks
-		if ( Init::get_setting('enable_field_masks') === 'yes' && is_aaireset_default() && License::is_valid() ) {
+		if ( Init::get_setting('enable_field_masks') === 'yes' && is_aireset_default() && License::is_valid() ) {
 			wp_enqueue_script( 'jquery-mask-lib', AIRESET_DEFAULTASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
 			wp_enqueue_script( 'aireset-default-field-masks', AIRESET_DEFAULTASSETS . 'frontend/js/field-masks.js', array('jquery'), AIRESET_DEFAULTVERSION );
 			wp_localize_script( 'aireset-default-field-masks', 'fcw_field_masks', array( 'get_input_masks' => Core::get_fields_with_mask() ) );
@@ -147,7 +147,7 @@ class Assets {
 		if ( Init::get_setting('email_providers_suggestion') === 'yes' ) {
 			wp_enqueue_script( 'aireset-default-email-suggestions', AIRESET_DEFAULTASSETS . 'frontend/js/email-suggestions.js', array('jquery'), AIRESET_DEFAULTVERSION );
 
-			$emails_suggestions_params = apply_filters( 'aaireset_default_emails_suggestions', array(
+			$emails_suggestions_params = apply_filters( 'aireset_default_emails_suggestions', array(
 				'get_providers' => Init::get_setting('set_email_providers'),
 			));
 
@@ -155,10 +155,10 @@ class Assets {
 		}
 
 		// add frontend conditions
-		if ( ! empty( get_option('aaireset_default_conditions') ) ) {
+		if ( ! empty( get_option('aireset_default_conditions') ) ) {
 			wp_enqueue_script( 'aireset-default-conditions', AIRESET_DEFAULTASSETS . 'frontend/js/conditions.js', array('jquery'), AIRESET_DEFAULTVERSION );
 
-			$conditions_params = apply_filters( 'aaireset_default_front_conditions', array(
+			$conditions_params = apply_filters( 'aireset_default_front_conditions', array(
 				'field_condition' => Conditions::filter_component_type('field'),
 			));
 
@@ -172,7 +172,7 @@ class Assets {
 		 * @version 3.5.0
 		 * @return array
 		 */
-		$flexify_script_data = apply_filters( 'aaireset_default_script_data', array(
+		$flexify_script_data = apply_filters( 'aireset_default_script_data', array(
 			'allowed_countries' => array_map( 'strtolower', array_keys( WC()->countries->get_allowed_countries() ) ),
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'is_user_logged_in' => is_user_logged_in(),
@@ -210,7 +210,7 @@ class Assets {
 			'opened_default_order_summary' => Init::get_setting('display_opened_order_review_mobile'),
 		));
 
-		wp_localize_script( 'aireset-default', 'aaireset_default_vars', $flexify_script_data );
+		wp_localize_script( 'aireset-default', 'aireset_default_vars', $flexify_script_data );
 
 		/**
 		 * Modify script data
@@ -244,7 +244,7 @@ class Assets {
 		$min_file = WP_DEBUG ? '' : '.min';
 
 		// check if is admin settings
-		if ( is_aaireset_default_admin_settings() ) {
+		if ( is_aireset_default_admin_settings() ) {
 			wp_enqueue_media();
 			
 			wp_enqueue_script( 'aireset-default-modal', AIRESET_DEFAULTASSETS . 'components/modal/modal'. $min_file .'.js', array('jquery'), AIRESET_DEFAULTVERSION );
@@ -263,7 +263,7 @@ class Assets {
                 wp_enqueue_style( 'bootstrap-utilities', AIRESET_DEFAULTASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
             }
 		
-			wp_localize_script( 'aireset-default-admin-scripts', 'aaireset_default_params', array(
+			wp_localize_script( 'aireset-default-admin-scripts', 'aireset_default_params', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'set_logo_modal_title' => esc_html__( 'Escolher Imagem de cabeçalho', 'aireset-default' ),
 				'use_this_image_title' => esc_html__( 'Usar esta imagem', 'aireset-default' ),
@@ -335,7 +335,7 @@ class Assets {
 
 		// add compatibility with manage checkout fields feature
 		if ( Init::get_setting('enable_manage_fields') === 'yes' ) {
-			$get_step_fields = get_option('aaireset_default_step_fields', array());
+			$get_step_fields = get_option('aireset_default_step_fields', array());
 			$get_step_fields = maybe_unserialize( $get_step_fields );
 	
 			if ( is_array( $get_step_fields ) ) {
@@ -347,7 +347,7 @@ class Assets {
 			}
 		}
 
-		return apply_filters( 'aaireset_default_localstorage_fields', $fields );
+		return apply_filters( 'aireset_default_localstorage_fields', $fields );
 	}
 
 
@@ -361,7 +361,7 @@ class Assets {
 	 */
 	public static function get_dynamic_styles( $settings ) {
 		$theme = Core::get_theme();
-		$settings = get_option('aaireset_default_settings', array());
+		$settings = get_option('aireset_default_settings', array());
 		$primary = Init::get_setting('set_primary_color');
 		$primary_hover = Init::get_setting('set_primary_color_on_hover');
 		$set_placeholder_color = Init::get_setting('set_placeholder_color');

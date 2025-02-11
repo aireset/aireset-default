@@ -14,7 +14,7 @@
          *
          * @since 1.0.0
          */
-        do_action('aaireset_default_before_layout'); ?>
+        do_action('aireset_default_before_layout'); ?>
 
         <div class="aireset-default aireset-default--modern aireset-default--has-sidebar" data-effect="pure-effect-slide">
             <main class="aireset-default__content">
@@ -30,7 +30,7 @@
              *
              * @since 1.0.0
              */
-            do_action('aaireset_default_after_content'); ?>
+            do_action('aireset_default_after_content'); ?>
 
             <div class="aireset-default__spinner"><img src="<?php echo esc_url( AIRESET_DEFAULT_ASSETS . 'frontend/img/loader.gif' ) ?>"/></div>
         </div>
@@ -41,7 +41,7 @@
          *
          * @since 1.0.0
          */
-        do_action('aaireset_default_after_layout');
+        do_action('aireset_default_after_layout');
 
         wp_footer(); ?>
     </body>

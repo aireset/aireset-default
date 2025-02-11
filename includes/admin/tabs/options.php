@@ -14,7 +14,7 @@ defined('ABSPATH') || exit; ?>
       * 
       * @since 3.6.0
       */
-      do_action('aaireset_default_before_general_options'); ?>
+      do_action('aireset_default_before_general_options'); ?>
 
       <tr>
          <th>
@@ -23,7 +23,7 @@ defined('ABSPATH') || exit; ?>
          </th>
          <td>
             <div class="form-check form-switch">
-               <input type="checkbox" class="toggle-switch" id="enable_aaireset_default" name="enable_aaireset_default" value="yes" <?php checked( Init::get_setting( 'enable_aaireset_default') === 'yes' ); ?> />
+               <input type="checkbox" class="toggle-switch" id="enable_aireset_default" name="enable_aireset_default" value="yes" <?php checked( Init::get_setting( 'enable_aireset_default') === 'yes' ); ?> />
             </div>
          </td>
       </tr>
@@ -106,7 +106,7 @@ defined('ABSPATH') || exit; ?>
                         </tr>
                         <tr>
                            <td class="w-50">
-                              <ul id="aaireset_default_email_providers" class="list-group">
+                              <ul id="aireset_default_email_providers" class="list-group">
                                  <?php foreach ( Init::get_setting('set_email_providers') as $provider ) : ?>
                                     <li class="list-group-item d-flex align-items-center justify-content-between" data-provider="<?php echo esc_attr( $provider ) ?>">
                                        <span><?php echo esc_html( $provider ) ?></span>
@@ -423,7 +423,7 @@ defined('ABSPATH') || exit; ?>
       * 
       * @since 3.6.0
       */
-      do_action('aaireset_default_after_general_options'); ?>
+      do_action('aireset_default_after_general_options'); ?>
 
    </table>
 </div>

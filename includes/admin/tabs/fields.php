@@ -15,7 +15,7 @@ defined('ABSPATH') || exit; ?>
          * 
          * @since 3.6.0
          */
-        do_action('aaireset_default_before_fields_options'); ?>
+        do_action('aireset_default_before_fields_options'); ?>
 
         <tr>
             <th>
@@ -106,7 +106,7 @@ defined('ABSPATH') || exit; ?>
         </tr>
         
         <tr class="step-checkout-fields-container align-items-start mt-4">
-            <?php $fields = maybe_unserialize( get_option('aaireset_default_step_fields', array()) );
+            <?php $fields = maybe_unserialize( get_option('aireset_default_step_fields', array()) );
 
             Admin_Options::render_step( '1', esc_html__( 'Etapa 1 (Contato)', 'aireset-default' ), $fields );
             Admin_Options::render_step( '2', esc_html__( 'Etapa 2 (Entrega)', 'aireset-default' ), $fields ); ?>
@@ -129,7 +129,7 @@ defined('ABSPATH') || exit; ?>
          * 
          * @since 3.6.0
          */
-        do_action('aaireset_default_after_fields_options'); ?>
+        do_action('aireset_default_after_fields_options'); ?>
 
     </table>
 </div>

@@ -43,7 +43,7 @@ class Helpers {
 		$fields = array();
 		
 		if ( Init::get_setting('enable_manage_fields') === 'yes' && License::is_valid() ) {
-			$get_field_options = get_option('aaireset_default_step_fields', array());
+			$get_field_options = get_option('aireset_default_step_fields', array());
 			$get_field_options = maybe_unserialize( $get_field_options );
 	
 			foreach ( $get_field_options as $key => $value ) {
@@ -69,7 +69,7 @@ class Helpers {
 			);
 		}
 		
-		return apply_filters( 'aaireset_default_details_fields', $fields );
+		return apply_filters( 'aireset_default_details_fields', $fields );
 	}
 
 
@@ -336,7 +336,7 @@ class Helpers {
 	 * @return boolean
 	 */
 	public static function is_modern_theme() {
-		return Init::get_setting('aaireset_default_theme') === 'modern';
+		return Init::get_setting('aireset_default_theme') === 'modern';
 	}
 
 
@@ -355,7 +355,7 @@ class Helpers {
 			 *
 			 * @since 1.0.0
 			 */
-			return apply_filters( 'aaireset_default_shop_page_url', site_url() );
+			return apply_filters( 'aireset_default_shop_page_url', site_url() );
 		}
 
 		/**
@@ -363,7 +363,7 @@ class Helpers {
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'aaireset_default_shop_page_url', get_permalink( $shop_page_id ) );
+		return apply_filters( 'aireset_default_shop_page_url', get_permalink( $shop_page_id ) );
 	}
 
 
@@ -376,7 +376,7 @@ class Helpers {
 	public static function is_coupon_enabled() {
 		$hide_coupon = Init::get_setting('enable_hide_coupon_code_field') ? Init::get_setting('enable_hide_coupon_code_field') : 'no';
 
-		return apply_filters( 'aaireset_default_is_coupon_enabled', wc_coupons_enabled() && 'yes' !== $hide_coupon );
+		return apply_filters( 'aireset_default_is_coupon_enabled', wc_coupons_enabled() && 'yes' !== $hide_coupon );
 	}
 
 
@@ -399,7 +399,7 @@ class Helpers {
 	 * @return array
 	 */
 	public static function get_new_select_fields() {
-		$fields = get_option('aaireset_default_step_fields', array());
+		$fields = get_option('aireset_default_step_fields', array());
 		$fields = maybe_unserialize( $fields );
 		$selects = array();
 
@@ -505,7 +505,7 @@ class Helpers {
 			$fields[$field_id] = $value;
 		}
 		
-		return apply_filters( 'aaireset_default_export_checkout_fields_id', $fields );
+		return apply_filters( 'aireset_default_export_checkout_fields_id', $fields );
 	}
 
 
@@ -529,7 +529,7 @@ class Helpers {
 			);
 		}
 
-		return apply_filters( 'aaireset_default_customer_review_fields_placeholder', $fields );
+		return apply_filters( 'aireset_default_customer_review_fields_placeholder', $fields );
 	}
 
 
@@ -541,7 +541,7 @@ class Helpers {
 	 * @return string
 	 */
 	public static function get_shipping_method() {
-		if ( empty( WC() ) || empty( WC()->shipping() ) || empty( WC()->session ) || empty( WC()->session->chosen_shipping_methods[0] ) || aaireset_default_only_virtual() ) {
+		if ( empty( WC() ) || empty( WC()->shipping() ) || empty( WC()->session ) || empty( WC()->session->chosen_shipping_methods[0] ) || aireset_default_only_virtual() ) {
 			return '';
 		}
 	
@@ -640,7 +640,7 @@ class Helpers {
 	 * @return array
 	 */
 	public static function get_array_index_checkout_fields() {
-		$fields = maybe_unserialize( get_option('aaireset_default_step_fields', array()) );
+		$fields = maybe_unserialize( get_option('aireset_default_step_fields', array()) );
 		$array_index = array();
 
 		foreach ( $fields as $index => $value ) {

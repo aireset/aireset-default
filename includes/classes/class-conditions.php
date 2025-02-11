@@ -42,7 +42,7 @@ class Conditions {
     public function checkout_fields_conditions( $fields ) {
         $field_conditions = self::filter_component_type('field');
 
-        if ( ! is_aaireset_default() || empty( $field_conditions ) ) {
+        if ( ! is_aireset_default() || empty( $field_conditions ) ) {
             return $fields;
         }
 
@@ -98,7 +98,7 @@ class Conditions {
     public function payment_gateways_conditions( $available_gateways ) {
         $payment_conditions = self::filter_component_type('payment');
 
-        if ( ! is_aaireset_default() || empty( $payment_conditions ) ) {
+        if ( ! is_aireset_default() || empty( $payment_conditions ) ) {
             return $available_gateways;
         }
 
@@ -139,7 +139,7 @@ class Conditions {
         $shipping_conditions = self::filter_component_type('shipping');
 
         // If conditions do not match, return all shipping methods
-        if ( ! is_aaireset_default() || empty( $shipping_conditions ) ) {
+        if ( ! is_aireset_default() || empty( $shipping_conditions ) ) {
             return $shipping_methods;
         }
 
@@ -331,7 +331,7 @@ class Conditions {
      * @return array | Filtered component type
      */
     public static function filter_component_type( $type ) {
-        $conditions = get_option('aaireset_default_conditions', array());
+        $conditions = get_option('aireset_default_conditions', array());
 
         return array_filter($conditions, function ($condition) use ($type) {
             return isset( $condition['component'] ) && $condition['component'] === $type;
@@ -490,7 +490,7 @@ class Conditions {
      */
     public static function check_fields_conditions( $condition, $field, $value ) {
         // Get fields from the session and ensure it is an array
-        $get_fields = WC()->session->get('aaireset_default_customer_fields');
+        $get_fields = WC()->session->get('aireset_default_customer_fields');
 
         // Ensure $get_fields is an array
         if ( ! is_array( $get_fields ) ) {

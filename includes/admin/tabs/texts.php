@@ -14,7 +14,7 @@ defined('ABSPATH') || exit; ?>
          * 
          * @since 3.6.0
          */
-        do_action('aaireset_default_before_texts_options'); ?>
+        do_action('aireset_default_before_texts_options'); ?>
 
         <tr>
             <th>
@@ -158,7 +158,7 @@ defined('ABSPATH') || exit; ?>
          * 
          * @since 3.6.0
          */
-        do_action('aaireset_default_after_texts_options'); ?>
+        do_action('aireset_default_after_texts_options'); ?>
 
     </table>
 </div>

@@ -12,7 +12,7 @@ defined('ABSPATH') || exit; ?>
     * 
     * @since 3.6.0
     */
-   do_action('aaireset_default_before_integrations_options'); ?>
+   do_action('aireset_default_before_integrations_options'); ?>
 
    <div class="cards-group ps-5 mb-5">
       <div class="card text-center p-0 m-4">
@@ -48,7 +48,7 @@ defined('ABSPATH') || exit; ?>
           * 
           * @since 3.8.0
           */
-         do_action('aaireset_default_inter_module'); ?>
+         do_action('aireset_default_inter_module'); ?>
       </div>
 
       <div class="card text-center p-0 m-4">
@@ -71,7 +71,7 @@ defined('ABSPATH') || exit; ?>
           * 
           * @since 3.8.0
           */
-         do_action('aaireset_default_joinotify'); ?>
+         do_action('aireset_default_joinotify'); ?>
       </div>
 
       <div class="card text-center p-0 m-4">
@@ -94,7 +94,7 @@ defined('ABSPATH') || exit; ?>
           * 
           * @since 3.8.0
           */
-         do_action('aaireset_default_google_maps'); ?>
+         do_action('aireset_default_google_maps'); ?>
       </div>
    </div>
 
@@ -104,5 +104,5 @@ defined('ABSPATH') || exit; ?>
     * 
     * @since 3.6.0
     */
-   do_action('aaireset_default_after_integrations_options'); ?>
+   do_action('aireset_default_after_integrations_options'); ?>
 </div>

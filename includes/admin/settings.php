@@ -31,7 +31,7 @@ defined('ABSPATH') || exit; ?>
  * 
  * @since 3.8.0
  */
-do_action('aaireset_default_display_admin_notices');
+do_action('aireset_default_display_admin_notices');
 
 settings_errors(); ?>
 
@@ -79,7 +79,7 @@ settings_errors(); ?>
          * @since 3.8.0
          * @return void
          */
-        do_action('aaireset_default_after_nav_tabs'); ?>
+        do_action('aireset_default_after_nav_tabs'); ?>
     </div>
 
     <form method="post" class="aireset-default-form" name="aireset-default">
@@ -98,7 +98,7 @@ settings_errors(); ?>
              * @since 3.8.0
              * @return void
              */
-            do_action('aaireset_default_include_tab_file'); 
+            do_action('aireset_default_include_tab_file'); 
         ?>
     </form>
 </div>

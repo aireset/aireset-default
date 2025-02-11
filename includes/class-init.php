@@ -23,7 +23,7 @@ class Init {
    */
   public function __construct() {
     // set default options
-    add_action( 'admin_init', array( $this, 'aaireset_default_set_default_options' ) );
+    add_action( 'admin_init', array( $this, 'aireset_default_set_default_options' ) );
 
     // set default checkout fields options
     add_action( 'admin_init', array( $this, 'set_checkout_fields_steps_options' ) );
@@ -53,7 +53,7 @@ class Init {
       'enable_woocommerce' => 'yes',
     ];
 
-    return apply_filters( 'aaireset_default_set_default_options', $options );
+    return apply_filters( 'aireset_default_set_default_options', $options );
   }
 
 
@@ -65,13 +65,13 @@ class Init {
    * @version 3.5.0
    * @return void
    */
-  public function aaireset_default_set_default_options() {
+  public function aireset_default_set_default_options() {
     $default_options = $this->set_default_data_options();
-    $get_options = get_option('aaireset_default_settings', array());
+    $get_options = get_option('aireset_default_settings', array());
 
     // if empty settings
     if ( empty( $get_options ) ) {
-        update_option( 'aaireset_default_settings', $default_options );
+        update_option( 'aireset_default_settings', $default_options );
     } else {
         // iterate for each plugin settings
         foreach ( $get_options as $option => $value ) {
@@ -83,7 +83,7 @@ class Init {
           }
         }
 
-        update_option( 'aaireset_default_settings', $get_options );
+        update_option( 'aireset_default_settings', $get_options );
     }
   }
 
@@ -97,7 +97,7 @@ class Init {
    * @return mixed | string or false
    */
   public static function get_setting( $key ) {
-    $default_options = get_option('aaireset_default_settings', array());
+    $default_options = get_option('aireset_default_settings', array());
 
     // check if array key exists and return key
     if ( isset( $default_options[$key] ) ) {
@@ -117,7 +117,7 @@ class Init {
    */
   public function set_checkout_fields_steps_options() {
     $get_fields = self::get_wc_native_checkout_fields();
-    $get_field_options = get_option('aaireset_default_step_fields', array());
+    $get_field_options = get_option('aireset_default_step_fields', array());
     $get_field_options = maybe_unserialize( $get_field_options );
 
     // create options if array is empty
@@ -128,7 +128,7 @@ class Init {
           $fields[$key] = $value;
         }
 
-        update_option('aaireset_default_step_fields', maybe_serialize( $fields ) );
+        update_option('aireset_default_step_fields', maybe_serialize( $fields ) );
     } else {
       foreach ( $get_fields as $key => $value ) {
         if ( ! isset( $get_field_options[$key] ) ) {
@@ -136,7 +136,7 @@ class Init {
         }
       }
 
-      update_option( 'aaireset_default_step_fields', maybe_serialize( $get_field_options ) );
+      update_option( 'aireset_default_step_fields', maybe_serialize( $get_field_options ) );
     }
 
     /**
@@ -150,7 +150,7 @@ class Init {
 
       // Add Brazilian Market on WooCommerce fields to existing options
       $get_field_options = array_merge( $get_field_options, $wcbcf_fields );
-      update_option('aaireset_default_step_fields', maybe_serialize( $get_field_options ));
+      update_option('aireset_default_step_fields', maybe_serialize( $get_field_options ));
     }
   }
 
@@ -310,7 +310,7 @@ class Init {
       ),
     );
 
-    return apply_filters( 'aaireset_default_get_fields', $checkout_fields );
+    return apply_filters( 'aireset_default_get_fields', $checkout_fields );
   }
 
 

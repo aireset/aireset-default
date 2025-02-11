@@ -15,7 +15,7 @@ defined('ABSPATH') || exit; ?>
 			<span class="mb-2"><?php echo esc_html__( 'Status da licença:', 'aireset-default' ) ?>
 				<?php if ( License::is_valid() ) : ?>
 					<span class="badge bg-translucent-success rounded-pill"><?php _e( 'Válida', 'aireset-default' );?></span>
-				<?php elseif ( empty( get_option('aaireset_default_license_key') ) ) : ?>
+				<?php elseif ( empty( get_option('aireset_default_license_key') ) ) : ?>
 					<span class="fs-sm"><?php _e(  'Nenhuma licença informada', 'aireset-default' );?></span>
 				<?php else : ?>
 					<span class="badge bg-translucent-danger rounded-pill"><?php _e( 'Inválida', 'aireset-default' );?></span>
@@ -31,7 +31,7 @@ defined('ABSPATH') || exit; ?>
 			</span>
 
 			<?php if ( License::is_valid() ) :
-				$license_key = get_option('aaireset_default_license_key');
+				$license_key = get_option('aireset_default_license_key');
 
 				if ( strpos( $license_key, 'CM-' ) === 0 ) : ?>
 					<span class="mb-2"><?php echo sprintf( esc_html__( 'Assinatura: Clube M - %s', 'aireset-default' ), License::license_title() ) ?></span>
@@ -55,18 +55,18 @@ defined('ABSPATH') || exit; ?>
 	<?php if ( License::is_valid() ) : ?>
 		<tr>
 			<td>
-				<button id="aaireset_default_deactive_license" class="btn btn-sm btn-primary button-loading" type="submit">
+				<button id="aireset_default_deactive_license" class="btn btn-sm btn-primary button-loading" type="submit">
 					<span><?php esc_attr_e( 'Desativar licença', 'aireset-default' ); ?></span>
 				</button>
 			</td>
 		</tr>
 	<?php else :
-		if ( get_option('aaireset_default_alternative_license_activation') === 'yes' ) : ?>
+		if ( get_option('aireset_default_alternative_license_activation') === 'yes' ) : ?>
 			<tr>
 				<td>
 					<span class="h4 d-block"><?php esc_attr_e( 'Notamos que teve problemas de conexão ao tentar ativar sua licença', 'aireset-default' ); ?></span>
 					<span class="d-block text-muted"><?php esc_attr_e( 'Você pode fazer upload do arquivo .key da licença para fazer sua ativação manual.', 'aireset-default' ); ?></span>
-					<a class="fancy-link mt-2 mb-3" href="https://meumouse.com/minha-conta/licenses/?domain=<?php echo urlencode( License::get_domain() ); ?>&license_key=<?php echo urlencode( get_option('aaireset_default_temp_license_key') ); ?>&app_version=<?php echo urlencode( AIRESET_DEFAULTVERSION ); ?>&product_id=<?php echo ( strpos( get_option('aaireset_default_temp_license_key'), 'CM-' ) === 0 ) ? '7' : '3'; ?>&settings_page=<?php echo urlencode( License::get_domain() . '/wp-admin/admin.php?page=aireset-default' ); ?>" target="_blank"><?php echo esc_html__( 'Clique aqui para gerar seu arquivo de licença', 'aireset-default' ) ?></a>
+					<a class="fancy-link mt-2 mb-3" href="https://meumouse.com/minha-conta/licenses/?domain=<?php echo urlencode( License::get_domain() ); ?>&license_key=<?php echo urlencode( get_option('aireset_default_temp_license_key') ); ?>&app_version=<?php echo urlencode( AIRESET_DEFAULTVERSION ); ?>&product_id=<?php echo ( strpos( get_option('aireset_default_temp_license_key'), 'CM-' ) === 0 ) ? '7' : '3'; ?>&settings_page=<?php echo urlencode( License::get_domain() . '/wp-admin/admin.php?page=aireset-default' ); ?>" target="_blank"><?php echo esc_html__( 'Clique aqui para gerar seu arquivo de licença', 'aireset-default' ) ?></a>
 
 					<div class="drop-file-license-key">
 						<div class="dropzone-license mt-4" id="license_key_zone">
@@ -100,8 +100,8 @@ defined('ABSPATH') || exit; ?>
 					</span>
 					<span class="form-label d-block mt-2"><?php echo esc_html__( 'Código da licença', 'aireset-default' ) ?></span>
 					<div class="input-group" style="width: 550px;">
-						<input class="form-control" type="text" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" id="aaireset_default_license_key" name="aaireset_default_license_key" size="50" value="<?php echo get_option( 'aaireset_default_license_key' ) ?>" />
-						<button id="aaireset_default_active_license" name="aaireset_default_active_license" class="btn btn-primary button-loading" type="submit">
+						<input class="form-control" type="text" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" id="aireset_default_license_key" name="aireset_default_license_key" size="50" value="<?php echo get_option( 'aireset_default_license_key' ) ?>" />
+						<button id="aireset_default_active_license" name="aireset_default_active_license" class="btn btn-primary button-loading" type="submit">
 							<span class="span-inside-button-loader"><?php esc_attr_e( 'Ativar licença', 'aireset-default' ); ?></span>
 						</button>
 					</div>
@@ -419,7 +419,7 @@ defined('ABSPATH') || exit; ?>
 		<tr>
 			<td class="d-flex">
 				<a class="btn btn-sm btn-outline-danger d-flex align-items-center" target="_blank" href="https://meumouse.com/reportar-problemas/?wpf9053_2=<?php echo urlencode( AIRESET_DEFAULTADMIN_EMAIL ); ?>&wpf9053_5=<?php echo urlencode( 'Aireset - Geral' ) ?>&wpf9053_9=<?php echo urlencode( License::is_valid() ? 'Sim' : 'Não' ) ?>&wpf9053_7=<?php echo urlencode( License::get_domain() ) ?>&wpf9053_6=<?php echo urlencode( wp_get_theme()->get('Name') ) ?>"><?php esc_html_e( 'Reportar problemas', 'aireset-default' ); ?></a>
-				<button class="btn btn-sm btn-outline-primary ms-2" id="aaireset_default_clear_activation_cache"><?php echo esc_html__( 'Limpar cache de ativação', 'aireset-default' ); ?></button>
+				<button class="btn btn-sm btn-outline-primary ms-2" id="aireset_default_clear_activation_cache"><?php echo esc_html__( 'Limpar cache de ativação', 'aireset-default' ); ?></button>
 			</td>
 		</tr>
 	</tr>

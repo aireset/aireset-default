@@ -14,9 +14,9 @@ defined('ABSPATH') || exit; ?>
         * 
         * @since 3.6.0
         */
-        do_action('aaireset_default_before_conditions_options');
+        do_action('aireset_default_before_conditions_options');
 
-        $get_conditions = get_option('aaireset_default_conditions', array());
+        $get_conditions = get_option('aireset_default_conditions', array());
         $get_fields = Helpers::get_checkout_fields_on_admin();
         
         if ( empty( $get_conditions ) ) : ?>
@@ -357,7 +357,7 @@ defined('ABSPATH') || exit; ?>
         * 
         * @since 3.6.0
         */
-        do_action('aaireset_default_after_general_options'); ?>
+        do_action('aireset_default_after_general_options'); ?>
 
     </table>
 </div>

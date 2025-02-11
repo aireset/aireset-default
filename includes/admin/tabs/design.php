@@ -13,7 +13,7 @@ defined('ABSPATH') || exit; ?>
        * 
        * @since 3.6.0
        */
-      do_action('aaireset_default_before_design_options'); ?>
+      do_action('aireset_default_before_design_options'); ?>
 
       <tr>
          <th>
@@ -29,7 +29,7 @@ defined('ABSPATH') || exit; ?>
                <div class="card-body">
                   <h5 class="card-title"><?php echo esc_html__( 'Moderno', 'aireset-default' ) ?></h5>
                   <button id="modern_theme" class="btn btn-sm btn-primary"><?php echo esc_html__( 'Ativado', 'aireset-default' ) ?></button>
-                  <input type="hidden" name="aaireset_default_theme_modern" value="<?php echo Init::get_setting('aaireset_default_theme_modern') ?>"/>
+                  <input type="hidden" name="aireset_default_theme_modern" value="<?php echo Init::get_setting('aireset_default_theme_modern') ?>"/>
                </div>
             </div>
          </td>
@@ -223,7 +223,7 @@ defined('ABSPATH') || exit; ?>
          <td>
             <div class="input-group">
                <select id="set_font_family" class="form-select" name="set_font_family">
-                  <?php $options = get_option('aaireset_default_settings', array());
+                  <?php $options = get_option('aireset_default_settings', array());
 
                   foreach ( $options['font_family'] as $font => $value ) : ?>
                      <option value="<?php echo esc_attr( $font ) ?>" <?php echo ( Init::get_setting('set_font_family') === $font ) ? "selected=selected" : ""; ?>><?php echo esc_html( $value['font_name'] ) ?></option>
@@ -258,7 +258,7 @@ defined('ABSPATH') || exit; ?>
        * 
        * @since 3.6.0
        */
-      do_action('aaireset_default_after_design_options'); ?>
+      do_action('aireset_default_after_design_options'); ?>
 
    </table>
 </div>

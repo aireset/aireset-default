@@ -51,7 +51,7 @@ function remove_filters_with_method_name( $hook_name = '', $method_name = '', $p
  * @version 3.7.0
  * @return bool
  */
-function is_aaireset_default_admin_settings() {
+function is_aireset_default_admin_settings() {
     $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $admin_page_url = admin_url('admin.php?page=aireset-default');
     
@@ -71,7 +71,7 @@ function is_aaireset_default_admin_settings() {
  * @param bool $force_early Force early check by getting the post ID from the URL.
  * @return bool
  */
-function is_aaireset_default( $force_early = false ) {
+function is_aireset_default( $force_early = false ) {
     if ( $force_early ) {
         $request_uri = ! empty( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
         $page_id = url_to_postid( home_url( $request_uri ) );
@@ -112,8 +112,8 @@ function is_aaireset_default( $force_early = false ) {
  * @version 3.5.0
  * @return bool
  */
-function is_flexify_template() {
-    return apply_filters( 'flexify_is_flexify_template', is_aaireset_default() || Core::is_thankyou_page() || is_wc_endpoint_url('order-pay') );
+function is_aireset_template() {
+    return apply_filters( 'aireset_is_aireset_template', is_aireset_default() || Core::is_thankyou_page() || is_wc_endpoint_url('order-pay') );
 }
 
 
@@ -124,7 +124,7 @@ function is_flexify_template() {
  * @version 3.5.2
  * @return bool
  */
-function aaireset_default_only_virtual() {
+function aireset_default_only_virtual() {
     $only_virtual = true;
 
     // Check if WooCommerce is initialized and the cart is available

@@ -264,7 +264,7 @@ class Aireset_General_Plugin {
         // include_once plugin_dir_path(__FILE__) . 'includes/yith.php';
         // include_once plugin_dir_path(__FILE__) . 'includes/order-custom-column.php';
         
-		$includes = apply_filters( 'aaireset_default_setup_includes', array(
+		$includes = apply_filters( 'aireset_default_setup_includes', array(
 			// 'functions.php',
 			// 'classes/class-license.php',
 			'class-init.php',

@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,9 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+= 1.2.0 (11/02/2025) =
+* Nova versao
 
 = 1.1.2 (14/10/2024) =
 * Inclusão de tela para ativar funções e Inclusãode ferramenta para criar o cliente quando cria o pedido

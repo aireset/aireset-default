@@ -48,7 +48,7 @@ class Aireset_General_Plugin {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public static $version = '1.1.2';
+	public static $version = '1.2.0';
 
     public function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
@@ -154,6 +154,7 @@ class Aireset_General_Plugin {
 		$this->define( 'AIRESET_DEFAULT_VERSION', self::$version );
 		$this->define( 'AIRESET_DEFAULT_SLUG', self::$slug );
 		$this->define( 'AIRESET_DEFAULT_ADMIN_EMAIL', get_option('admin_email') );
+		$this->define( 'AIRESET_DEFAULT_DOCS_LINK', 'https://ajuda.aireset.com.br' );
 		$this->define( 'AIRESET_DEFAULT_PLUGIN_NAME', esc_html__( 'Aireset - Geral', 'aireset-default' ) );
 	}
 
@@ -219,30 +220,30 @@ class Aireset_General_Plugin {
         // wp_enqueue_script( 'aireset-scripts', $this->get_assets_url() . 'js/script.js', array('jquery'), null, true );
 
         // Carrega o estilo CSS do plugin
-        wp_enqueue_style(
-            'aireset-style',
-            $this->get_assets_url() . 'css/style.css',
-            array(),
-            '1.0.0'
-        );
+        // wp_enqueue_style(
+        //     'aireset-style',
+        //     $this->get_assets_url() . 'css/style.css',
+        //     array(),
+        //     '1.0.0'
+        // );
 
-        // Carrega Vue.js via CDN (ou localmente se preferir)
-        wp_enqueue_script(
-            'vue-js',
-            'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
-            array(),
-            '2.6.14',
-            true
-        );
+        // // Carrega Vue.js via CDN (ou localmente se preferir)
+        // wp_enqueue_script(
+        //     'vue-js',
+        //     'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
+        //     array(),
+        //     '2.6.14',
+        //     true
+        // );
 
-        // Carrega o script principal do Vue
-        wp_enqueue_script(
-            'aireset-app',
-            $this->get_assets_url() . 'js/app.js',
-            array('vue-js'),
-            '1.0.0',
-            true
-        );
+        // // Carrega o script principal do Vue
+        // wp_enqueue_script(
+        //     'aireset-app',
+        //     $this->get_assets_url() . 'js/app.js',
+        //     array('vue-js'),
+        //     '1.0.0',
+        //     true
+        // );
     }
 
     /**
@@ -265,19 +266,19 @@ class Aireset_General_Plugin {
         // include_once plugin_dir_path(__FILE__) . 'includes/order-custom-column.php';
         
 		$includes = apply_filters( 'aireset_default_setup_includes', array(
-			// 'functions.php',
-			// 'classes/class-license.php',
+			'functions.php',
+			'classes/class-license.php',
 			'class-init.php',
-			'classes/class-admin-options.php',
 			'classes/class-helpers.php',
-			// 'classes/class-assets.php',
-			// 'classes/class-ajax.php',
-			// 'classes/class-compat-autoloader.php',
-			// 'classes/class-sidebar.php',
-			// 'classes/class-steps.php',
-			// 'classes/class-logger.php',
-			// 'classes/class-modules.php',
-			// 'classes/class-updater.php',
+			'classes/class-admin-options.php',
+			'classes/class-assets.php',
+			'classes/class-ajax.php',
+			// // 'classes/class-compat-autoloader.php',
+			// // 'classes/class-sidebar.php',
+			// // 'classes/class-steps.php',
+			// // 'classes/class-logger.php',
+			// // 'classes/class-modules.php',
+			// // 'classes/class-updater.php',
 		));
 
 		foreach ( $includes as $file ) {
@@ -287,6 +288,22 @@ class Aireset_General_Plugin {
 				include_once $file_path;
 			}
 		}
+
+		include_once AIRESET_DEFAULT_INC_PATH . 'actions.php';
+
+		
+
+		// if ( Init::get_setting('enable_aireset_default_status_woocommerce') === 'yes' ) {
+		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/woocommerce.php';
+		// }
+
+		// if ( Init::get_setting('enable_aireset_defaul_order_pay_without_login') === 'yes' ) {
+		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
+		// }
+
+		// if ( Init::get_setting('enable_aireset_defaul_order_pay_without_login') === 'yes' ) {
+		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
+		// }
     }
 
     /**

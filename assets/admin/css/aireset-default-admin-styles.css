@@ -1671,3 +1671,62 @@ code {
         width: 400px;
     }
 }
+
+
+#wpbody-content .yith-plugin-upgrade-licence-banner {
+	display: none;
+}
+
+#wpbody-content .yith-plugin-fw-wp-page-wrapper .notice {
+	display: none;
+}
+
+body.woocommerce-admin-page blockquote, 
+body.woocommerce-admin-page ol, 
+body.woocommerce-admin-page p, 
+body.woocommerce-admin-page ul {
+	float: unset;
+	
+}
+
+body.post-type-shop_order.acp-overflow-table .acp-hts-wrapper table, 
+body.post-type-shop_subscription.acp-overflow-table .acp-hts-wrapper table {
+	min-width: 100%;
+}
+
+body .search-box input[name="s"], 
+body .tablenav .search-plugins input[name="s"], 
+body .tagsdiv .newtag {
+	flex-grow: 1;
+}
+body.single-product .woo-custom-installments-offer{
+	margin-bottom: 1rem !important;
+}
+
+body.single-product.woocommerce div.product form.cart .variations td, 
+body.single-product.woocommerce div.product form.cart .variations th {
+	padding: 0;
+	line-height: 1rem;
+	display: flex;
+	vertical-align: middle;
+	flex-wrap: nowrap;
+	flex-grow: 1;
+}
+
+body.single-product.woocommerce div.product form.cart .variations td label, 
+body.single-product.woocommerce div.product form.cart .variations th label{
+	padding: 0;
+	line-height: 1rem;
+}
+
+body.single-product.woocommerce div.product form.cart .variations tr th{
+	padding-top: 15px;
+}
+
+body.single-product.woocommerce div.product form.cart .variations tr:first-child th{
+	padding-top: 0;
+}
+
+.flexify-checkout.flexify-checkout__content {
+    max-width: unset;
+}

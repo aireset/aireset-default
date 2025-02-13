@@ -43,7 +43,7 @@ class Assets {
 	 * @return void
 	 */
 	public static function frontend_assets() {
-		if ( ! defined( 'IS_FLEXIFY_CHECKOUT' ) || ! IS_FLEXIFY_CHECKOUT ) {
+		if ( ! defined( 'IS_aierset_default_CHECKOUT' ) || ! IS_aierset_default_CHECKOUT ) {
 			return;
 		}
 
@@ -77,7 +77,7 @@ class Assets {
 
 		wp_dequeue_style( 'global-styles' );
 
-		wp_enqueue_style( 'aireset-default-theme', AIRESET_DEFAULTASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), AIRESET_DEFAULTVERSION, false );
+		wp_enqueue_style( 'aireset-default-theme', AIRESET_DEFAULT_ASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), AIRESET_DEFAULT_VERSION, false );
 
 		if ( is_aireset_default() || Core::is_thankyou_page() ) {
 			wp_add_inline_style( 'aireset-default-theme', self::get_dynamic_styles( $settings ) );
@@ -95,15 +95,15 @@ class Assets {
 
 		// international phone number selector
 		if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'flexify-international-phone-js', AIRESET_DEFAULTASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
-			wp_enqueue_style( 'flexify-international-phone-css', AIRESET_DEFAULTASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
+			wp_enqueue_script( 'flexify-international-phone-js', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
+			wp_enqueue_style( 'flexify-international-phone-css', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
 			$deps[] = 'flexify-international-phone-js';
 		}
 
 		$timestamp = time();
 
 		// Add the timestamp as a query parameter to the main.js file URL
-		$script = AIRESET_DEFAULTASSETS . 'frontend/js/main.js?version=' . $timestamp;
+		$script = AIRESET_DEFAULT_ASSETS . 'frontend/js/main.js?version=' . $timestamp;
 
 		// Set script version to null to avoid version-based caching
 		$version = null;
@@ -112,7 +112,7 @@ class Assets {
 
 		// autofill address to enter postcode (just valid for Brazil)
 		if ( Init::get_setting('enable_fill_address') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-autofill-address-js', AIRESET_DEFAULTASSETS . 'frontend/js/autofill-address.js', array('jquery'), AIRESET_DEFAULTVERSION, false );
+			wp_enqueue_script( 'aireset-default-autofill-address-js', AIRESET_DEFAULT_ASSETS . 'frontend/js/autofill-address.js', array('jquery'), AIRESET_DEFAULT_VERSION, false );
 
 			// send params from JS
 			$auto_fill_address_api_params = apply_filters( 'aireset_default_auto_fill_address', array(
@@ -128,24 +128,24 @@ class Assets {
 
 		// autofill field on enter CNPJ (just valid for Brazil)
 		if ( Init::get_setting('enable_autofill_company_info') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-autofill-cnpj-js', AIRESET_DEFAULTASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), AIRESET_DEFAULTVERSION, false );
+			wp_enqueue_script( 'aireset-default-autofill-cnpj-js', AIRESET_DEFAULT_ASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), AIRESET_DEFAULT_VERSION, false );
 		}
 
 		// remove brazilian market fields if is not Brazil country
 		if ( Init::get_setting('enable_unset_wcbcf_fields_not_brazil') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-remove-wcbcf-fields', AIRESET_DEFAULTASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'aireset-default-remove-wcbcf-fields', AIRESET_DEFAULT_ASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 		}
 
 		// enable field masks
 		if ( Init::get_setting('enable_field_masks') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'jquery-mask-lib', AIRESET_DEFAULTASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
-			wp_enqueue_script( 'aireset-default-field-masks', AIRESET_DEFAULTASSETS . 'frontend/js/field-masks.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'jquery-mask-lib', AIRESET_DEFAULT_ASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
+			wp_enqueue_script( 'aireset-default-field-masks', AIRESET_DEFAULT_ASSETS . 'frontend/js/field-masks.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 			wp_localize_script( 'aireset-default-field-masks', 'fcw_field_masks', array( 'get_input_masks' => Core::get_fields_with_mask() ) );
 		}
 
 		// add email suggestions
 		if ( Init::get_setting('email_providers_suggestion') === 'yes' ) {
-			wp_enqueue_script( 'aireset-default-email-suggestions', AIRESET_DEFAULTASSETS . 'frontend/js/email-suggestions.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'aireset-default-email-suggestions', AIRESET_DEFAULT_ASSETS . 'frontend/js/email-suggestions.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 
 			$emails_suggestions_params = apply_filters( 'aireset_default_emails_suggestions', array(
 				'get_providers' => Init::get_setting('set_email_providers'),
@@ -156,7 +156,7 @@ class Assets {
 
 		// add frontend conditions
 		if ( ! empty( get_option('aireset_default_conditions') ) ) {
-			wp_enqueue_script( 'aireset-default-conditions', AIRESET_DEFAULTASSETS . 'frontend/js/conditions.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'aireset-default-conditions', AIRESET_DEFAULT_ASSETS . 'frontend/js/conditions.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 
 			$conditions_params = apply_filters( 'aireset_default_front_conditions', array(
 				'field_condition' => Conditions::filter_component_type('field'),
@@ -166,13 +166,13 @@ class Assets {
 		}
 
 		/**
-		 * Flexify checkout script localized data
+		 * Aireset Default script localized data
 		 *
 		 * @since 1.0.0
 		 * @version 3.5.0
 		 * @return array
 		 */
-		$flexify_script_data = apply_filters( 'aireset_default_script_data', array(
+		$aierset_default_script_data = apply_filters( 'aireset_default_script_data', array(
 			'allowed_countries' => array_map( 'strtolower', array_keys( WC()->countries->get_allowed_countries() ) ),
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'is_user_logged_in' => is_user_logged_in(),
@@ -210,7 +210,7 @@ class Assets {
 			'opened_default_order_summary' => Init::get_setting('display_opened_order_review_mobile'),
 		));
 
-		wp_localize_script( 'aireset-default', 'aireset_default_vars', $flexify_script_data );
+		wp_localize_script( 'aireset-default', 'aireset_default_vars', $aierset_default_script_data );
 
 		/**
 		 * Modify script data
@@ -241,26 +241,27 @@ class Assets {
 	 * @return void
 	 */
 	public function admin_assets() {
-		$min_file = WP_DEBUG ? '' : '.min';
+		// $min_file = WP_DEBUG ? '' : '.min';
+		$min_file = '';
 
 		// check if is admin settings
 		if ( is_aireset_default_admin_settings() ) {
 			wp_enqueue_media();
 			
-			wp_enqueue_script( 'aireset-default-modal', AIRESET_DEFAULTASSETS . 'components/modal/modal'. $min_file .'.js', array('jquery'), AIRESET_DEFAULTVERSION );
-			wp_enqueue_style( 'aireset-default-modal-styles', AIRESET_DEFAULTASSETS . 'components/modal/modal'. $min_file .'.css', array(), AIRESET_DEFAULTVERSION );
-			wp_enqueue_script( 'aireset-default-visibility-controller', AIRESET_DEFAULTASSETS . 'components/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'aireset-default-modal', AIRESET_DEFAULT_ASSETS . 'components/modal/modal'. $min_file .'.js', array('jquery'), AIRESET_DEFAULT_VERSION );
+			wp_enqueue_style( 'aireset-default-modal-styles', AIRESET_DEFAULT_ASSETS . 'components/modal/modal'. $min_file .'.css', array(), AIRESET_DEFAULT_VERSION );
+			wp_enqueue_script( 'aireset-default-visibility-controller', AIRESET_DEFAULT_ASSETS . 'components/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 			
-			wp_enqueue_style( 'bootstrap-datepicker-styles', AIRESET_DEFAULTASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker'. $min_file .'.css', array(), AIRESET_DEFAULTVERSION );
+			wp_enqueue_style( 'bootstrap-datepicker-styles', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker'. $min_file .'.css', array(), AIRESET_DEFAULT_VERSION );
 			wp_enqueue_script( 'bootstrap-datepicker', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js', array('jquery'), '1.9.0' );
-			wp_enqueue_script( 'bootstrap-datepicker-translate-pt-br', AIRESET_DEFAULTASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js', array('jquery'), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'bootstrap-datepicker-translate-pt-br', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 
-			wp_enqueue_script( 'aireset-default-admin-scripts', AIRESET_DEFAULTASSETS . 'admin/js/aireset-default-admin-scripts'. $min_file .'.js', array('jquery', 'media-upload'), AIRESET_DEFAULTVERSION );
-			wp_enqueue_style( 'aireset-default-admin-styles', AIRESET_DEFAULTASSETS . 'admin/css/aireset-default-admin-styles'. $min_file .'.css', array(), AIRESET_DEFAULTVERSION );
+			wp_enqueue_script( 'aireset-default-admin-scripts', AIRESET_DEFAULT_ASSETS . 'admin/js/aireset-default-admin-scripts'. $min_file .'.js', array('jquery', 'media-upload'), AIRESET_DEFAULT_VERSION );
+			wp_enqueue_style( 'aireset-default-admin-styles', AIRESET_DEFAULT_ASSETS . 'admin/css/aireset-default-admin-styles'. $min_file .'.css', array(), AIRESET_DEFAULT_VERSION );
 
-			if ( ! class_exists('Flexify_Dashboard') ) {
-                wp_enqueue_style( 'bootstrap-grid', AIRESET_DEFAULTASSETS . 'vendor/bootstrap/bootstrap-grid.min.css', array(), '5.3.3' );
-                wp_enqueue_style( 'bootstrap-utilities', AIRESET_DEFAULTASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
+			if ( ! class_exists('aierset_default_Dashboard') ) {
+                wp_enqueue_style( 'bootstrap-grid', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap/bootstrap-grid.min.css', array(), '5.3.3' );
+                wp_enqueue_style( 'bootstrap-utilities', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
             }
 		
 			wp_localize_script( 'aireset-default-admin-scripts', 'aireset_default_params', array(
@@ -568,7 +569,7 @@ class Assets {
 			<?php endif; ?>
 
 			.processing .blockUI.blockOverlay {
-  				background-image: url("<?php echo esc_attr( AIRESET_DEFAULTASSETS . 'frontend/img/loader.gif' ); ?>") !important;
+  				background-image: url("<?php echo esc_attr( AIRESET_DEFAULT_ASSETS . 'frontend/img/loader.gif' ); ?>") !important;
 			}
 		<?php endif;
 

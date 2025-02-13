@@ -86,7 +86,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'admin_ajax_save_options',
+					action: 'aireset_default_admin_ajax_save_options',
 					form_data: settings_form.serialize(),
 				},
 				success: function(response) {
@@ -424,7 +424,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'remove_checkout_fields',
+					action: 'aireset_default_remove_checkout_fields',
 					field_to_remove: index,
 				},
 				success: function(response) {
@@ -493,7 +493,7 @@
 					url: aireset_default_params.ajax_url,
 					type: 'POST',
 					data: {
-						action: 'check_field_availability',
+						action: 'aireset_default_check_field_availability',
 						field_name: concact_field,
 					},
 					success: function(response) {
@@ -658,7 +658,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'add_new_field_to_checkout',
+					action: 'aireset_default_add_new_field_to_checkout',
 					get_field_id: id,
 					get_field_type: type,
 					get_field_label: label,
@@ -786,7 +786,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'remove_select_option',
+					action: 'aireset_default_remove_select_option',
 					field_id: get_field_id,
 					exclude_option: option,
 				},
@@ -902,7 +902,7 @@
 					url: aireset_default_params.ajax_url,
 					type: 'POST',
 					data: {
-						action: 'add_new_option_select_live',
+						action: 'aireset_default_add_new_option_select_live',
 						field_id: get_field_id,
 						option_value: get_option_value,
 						option_title: get_option_title,
@@ -1164,7 +1164,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'add_new_font_action',
+					action: 'aireset_default_add_new_font_action',
 					new_font_id: get_new_font_id,
 					new_font_name: get_new_font_name,
 					new_font_url: $('#set_new_font_family_url').val(),
@@ -1919,7 +1919,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'deactive_license_action',
+					action: 'aireset_default_deactive_license_action',
 				},
 				success: function(response) {
 					console.log(response);
@@ -1996,7 +1996,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'clear_activation_cache_action',
+					action: 'aireset_default_clear_activation_cache_action',
 				},
 				success: function(response) {
 					try {
@@ -2054,7 +2054,7 @@
 				url: aireset_default_params.ajax_url,
 				type: 'POST',
 				data: {
-					action: 'reset_plugin_action',
+					action: 'aireset_default_reset_plugin_action',
 				},
 				success: function(response) {
 					try {
@@ -2166,7 +2166,7 @@
 				type: 'POST',
 				url: aireset_default_params.ajax_url,
 				data: {
-					action: 'install_modules_action',
+					action: 'aireset_default_install_modules_action',
 					plugin_url: plugin_url,
 					plugin_slug: plugin_slug,
 				},
@@ -2244,7 +2244,7 @@
 				type: 'POST',
 				url: aireset_default_params.ajax_url,
 				data: {
-					action: 'activate_plugin_action',
+					action: 'aireset_default_activate_plugin_action',
 					plugin_slug: plugin_slug,
 				},
 				success: function(response) {

@@ -1699,34 +1699,3 @@ body .tablenav .search-plugins input[name="s"],
 body .tagsdiv .newtag {
 	flex-grow: 1;
 }
-body.single-product .woo-custom-installments-offer{
-	margin-bottom: 1rem !important;
-}
-
-body.single-product.woocommerce div.product form.cart .variations td, 
-body.single-product.woocommerce div.product form.cart .variations th {
-	padding: 0;
-	line-height: 1rem;
-	display: flex;
-	vertical-align: middle;
-	flex-wrap: nowrap;
-	flex-grow: 1;
-}
-
-body.single-product.woocommerce div.product form.cart .variations td label, 
-body.single-product.woocommerce div.product form.cart .variations th label{
-	padding: 0;
-	line-height: 1rem;
-}
-
-body.single-product.woocommerce div.product form.cart .variations tr th{
-	padding-top: 15px;
-}
-
-body.single-product.woocommerce div.product form.cart .variations tr:first-child th{
-	padding-top: 0;
-}
-
-.flexify-checkout.flexify-checkout__content {
-    max-width: unset;
-}

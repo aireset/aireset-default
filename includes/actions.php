@@ -6,6 +6,44 @@
         exit; // Exit if accessed directly.
     }
 
+    function whatsapp_link_shortcode($atts) {
+        // Atributos padrão
+        $atts = shortcode_atts(
+            array(
+                'number' => '',  // Número de telefone formatado
+                'message' => ''  // Mensagem personalizada
+            ),
+            $atts,
+            'whatsapp_link'
+        );
+    
+        // Remove espaços, parênteses, traços e outros caracteres não numéricos
+        $phone_number = preg_replace('/\D+/', '', $atts['number']);
+    
+        // Obter o título da página ou do produto
+        $page_title = get_the_title();
+        
+        // Verificar se é um produto e obter o título do produto
+        $produto_title = function_exists('wc_get_product') ? get_the_title() : '';
+    
+        // Mensagem padrão
+        if (empty($atts['message'])) {
+            $message = "Olá, estou na página {title} e gostaria de mais informações.";
+        } else {
+            $message = $atts['message'];
+        }
+    
+        // Substituir os marcadores {title} e {produto_title} pela informação correspondente
+        $message = str_replace('{title}', $page_title, $message);
+        $message = str_replace('{produto_title}', $produto_title, $message);
+        $whatsapp_message = urlencode($message);
+    
+        $whatsapp_link = "https://wa.me/{$phone_number}?text={$whatsapp_message}";
+    
+        return $whatsapp_link;
+    }
+    add_shortcode('whatsapp_link', 'whatsapp_link_shortcode');
+
     if ( Init::get_setting('enable_aireset_defaul_disable_add_to_cart_message') === 'yes' ) {
         // Desativar mensagens de "Adicionar ao Carrinho"
         add_filter( 'wc_add_to_cart_message_html', '__return_false' );
@@ -179,6 +217,7 @@
                 //     'exclude_from_search'       => false,
                 //     'label_count'               => _n_noop( 'Pedidos Pagos <span class="count">(%s)</span>', 'Pedidos Pago <span class="count">(%s)</span>' )
                 // ] );
+
                 // Pedido Pago Parcialmente
                 register_post_status( 'wc-partial-payed', [
                     'label'                     => _x( 'Pedido Pago Parcialmente', 'Order status', 'aireset-default' ),
@@ -284,6 +323,14 @@
             add_filter( 'wc_order_statuses', 'aireset_edit_default_order_status_titles' );
         }
     
+        if ( ! function_exists( 'aireset_custom_styles' ) ) {
+            function aireset_custom_styles() {
+                // Enqueue estilo personalizado
+                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'css/styles.css' );
+            }
+            // Adiciona o hook para carregar o estilo na área administrativa
+            add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+        }
     
         if ( ! function_exists( 'aireset_custom_order_status_color' ) ) {
             /**

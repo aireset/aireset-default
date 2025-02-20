@@ -10,7 +10,6 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 3.8.3
- * @package MeuMouse.com
  */
 class License {
 
@@ -23,7 +22,7 @@ class License {
     private $clube_m_produt_id = '7';
     private $clube_m_product_base = 'clube-m';
     private $clube_m_product_key = 'B729F2659393EE27';
-    private $server_host = 'https://api.meumouse.com/wp-json/license/';
+    private $server_host = 'https://api.aireset.com.br/wp-json/license/';
     private $plugin_file;
     private $version = AIRESET_DEFAULT_VERSION;
     private $is_theme = false;
@@ -1032,7 +1031,7 @@ class License {
                         
                          <div class="my-4 p-3">
                              <button id="active_license_form" class="btn btn-lg btn-outline-secondary me-3"><?php echo esc_html__('Já tenho uma licença', 'aireset-checkout-for-woocommerce'); ?></button>
-                             <a class="btn btn-lg btn-primary d-inline-flex" href="https:meumouse.com/plugins/aireset-checkout-para-woocommerce/?utm_source=wordpress&utm_medium=plugins-list&utm_campaign=aireset_checkout" target="_blank">
+                             <a class="btn btn-lg btn-primary d-inline-flex" href="https://aireset.com.br/plugins/aireset-checkout-para-woocommerce/?utm_source=wordpress&utm_medium=plugins-list&utm_campaign=aireset_checkout" target="_blank">
                                  <span><?php echo esc_html__( 'Comprar uma licença', 'aireset-checkout-for-woocommerce' ) ?></span>
                              </a>
                          </div>

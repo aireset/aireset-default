@@ -95,11 +95,11 @@ defined('ABSPATH') || exit; ?>
                         <tr class="mb-4">
                            <th class="w-50">
                               <?php echo esc_html__( 'Nome e extensão do novo provedor', 'aireset-default' ) ?>
-                              <span class="aireset-default-description"><?php echo esc_html__( 'Informe o nome do novo provedor incluindo a extensão, por exemplo, meumouse.com', 'aireset-default' ) ?></span>
+                              <span class="aireset-default-description"><?php echo esc_html__( 'Informe o nome do novo provedor incluindo a extensão, por exemplo, aireset.com.br', 'aireset-default' ) ?></span>
                            </th>
                            <td class="w-50">
                               <div class="input-group">
-                                 <input type="text" class="form-control" id="get_new_email_provider" value="" placeholder="<?php echo esc_html__( 'meumouse.com', 'aireset-default' ) ?>"/>
+                                 <input type="text" class="form-control" id="get_new_email_provider" value="" placeholder="<?php echo esc_html__( 'aireset.com.br', 'aireset-default' ) ?>"/>
                                  <button id="add_new_email_provider" class="btn btn-outline-secondary" disabled><?php echo esc_html__( 'Adicionar', 'aireset-default' ) ?></button>
                               </div>
                            </td>

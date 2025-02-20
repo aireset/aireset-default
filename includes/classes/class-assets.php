@@ -17,7 +17,6 @@ defined('ABSPATH') || exit;
  *
  * @since 1.0.0
  * @version 3.8.0
- * @package MeuMouse.com
  */
 class Assets {
 
@@ -43,7 +42,7 @@ class Assets {
 	 * @return void
 	 */
 	public static function frontend_assets() {
-		if ( ! defined( 'IS_aierset_default_CHECKOUT' ) || ! IS_aierset_default_CHECKOUT ) {
+		if ( ! defined( 'IS_AIRESET_DEFAULT' ) || ! IS_AIRESET_DEFAULT ) {
 			return;
 		}
 
@@ -172,7 +171,7 @@ class Assets {
 		 * @version 3.5.0
 		 * @return array
 		 */
-		$aierset_default_script_data = apply_filters( 'aireset_default_script_data', array(
+		$aireset_default_script_data = apply_filters( 'aireset_default_script_data', array(
 			'allowed_countries' => array_map( 'strtolower', array_keys( WC()->countries->get_allowed_countries() ) ),
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'is_user_logged_in' => is_user_logged_in(),
@@ -210,7 +209,7 @@ class Assets {
 			'opened_default_order_summary' => Init::get_setting('display_opened_order_review_mobile'),
 		));
 
-		wp_localize_script( 'aireset-default', 'aireset_default_vars', $aierset_default_script_data );
+		wp_localize_script( 'aireset-default', 'aireset_default_vars', $aireset_default_script_data );
 
 		/**
 		 * Modify script data
@@ -259,7 +258,7 @@ class Assets {
 			wp_enqueue_script( 'aireset-default-admin-scripts', AIRESET_DEFAULT_ASSETS . 'admin/js/aireset-default-admin-scripts'. $min_file .'.js', array('jquery', 'media-upload'), AIRESET_DEFAULT_VERSION );
 			wp_enqueue_style( 'aireset-default-admin-styles', AIRESET_DEFAULT_ASSETS . 'admin/css/aireset-default-admin-styles'. $min_file .'.css', array(), AIRESET_DEFAULT_VERSION );
 
-			if ( ! class_exists('aierset_default_Dashboard') ) {
+			if ( ! class_exists('Aireset_Default_Dashboard') ) {
                 wp_enqueue_style( 'bootstrap-grid', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap/bootstrap-grid.min.css', array(), '5.3.3' );
                 wp_enqueue_style( 'bootstrap-utilities', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
             }

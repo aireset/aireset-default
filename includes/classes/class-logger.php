@@ -11,7 +11,6 @@ defined('ABSPATH') || exit;
  * Allows setting a source for logs and optionally logs only critical events.
  * 
  * @since 3.8.6
- * @package MeuMouse.com
  */
 trait Logger {
   

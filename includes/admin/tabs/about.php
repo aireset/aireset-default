@@ -341,7 +341,7 @@ defined('ABSPATH') || exit; ?>
 
 		<!-- <tr>
 			<td class="d-flex">
-				<a class="btn btn-sm btn-outline-danger d-flex align-items-center" target="_blank" href="https://meumouse.com/reportar-problemas/?wpf9053_2=<?php echo urlencode( AIRESET_DEFAULT_ADMIN_EMAIL ); ?>&wpf9053_5=<?php echo urlencode( 'Aireset - Geral' ) ?>&wpf9053_9=<?php echo urlencode( License::is_valid() ? 'Sim' : 'Não' ) ?>&wpf9053_7=<?php echo urlencode( License::get_domain() ) ?>&wpf9053_6=<?php echo urlencode( wp_get_theme()->get('Name') ) ?>"><?php esc_html_e( 'Reportar problemas', 'aireset-default' ); ?></a>
+				<a class="btn btn-sm btn-outline-danger d-flex align-items-center" target="_blank" href="https://aireset.com.br/reportar-problemas/?wpf9053_2=<?php echo urlencode( AIRESET_DEFAULT_ADMIN_EMAIL ); ?>&wpf9053_5=<?php echo urlencode( 'Aireset - Geral' ) ?>&wpf9053_9=<?php echo urlencode( License::is_valid() ? 'Sim' : 'Não' ) ?>&wpf9053_7=<?php echo urlencode( License::get_domain() ) ?>&wpf9053_6=<?php echo urlencode( wp_get_theme()->get('Name') ) ?>"><?php esc_html_e( 'Reportar problemas', 'aireset-default' ); ?></a>
 				<button class="btn btn-sm btn-outline-primary ms-2" id="aireset_default_clear_activation_cache"><?php echo esc_html__( 'Limpar cache de ativação', 'aireset-default' ); ?></button>
 			</td>
 		</tr> -->

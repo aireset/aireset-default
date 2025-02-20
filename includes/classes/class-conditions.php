@@ -10,7 +10,6 @@ defined('ABSPATH') || exit;
  *
  * @since 3.5.0
  * @version 3.7.0
- * @package MeuMouse.com
  */
 class Conditions {
 

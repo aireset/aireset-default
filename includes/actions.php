@@ -44,14 +44,14 @@
     }
     add_shortcode('whatsapp_link', 'whatsapp_link_shortcode');
 
-    if ( Init::get_setting('enable_aireset_defaul_disable_add_to_cart_message') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_disable_add_to_cart_message') === 'yes' ) {
         // Desativar mensagens de "Adicionar ao Carrinho"
         add_filter( 'wc_add_to_cart_message_html', '__return_false' );
         add_filter( 'woocommerce_notice_types', '__return_empty_array' );
         add_filter( 'woocommerce_order_email_verification_required', '__return_false', 9999 );
     } 
 
-    if ( Init::get_setting('enable_aireset_defaul_order_pay_without_login') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
 
         /**
          * Permitir pagamento de pedidos se o usuário estiver desconectado - WooCommerce
@@ -74,7 +74,7 @@
         } 
     }
 
-    if ( Init::get_setting('enable_aireset_default_custom_orders_list_column_content') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_custom_orders_list_column_content') === 'yes' ) {
         // function yasglobal_redundant_hyphens() {
         //   return true;
         // }
@@ -127,7 +127,7 @@
         }
     }
     
-    if ( Init::get_setting('enable_aireset_default_yith_wcas_submit_label') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_yith_wcas_submit_label') === 'yes' ) {
         if ( ! function_exists( 'aireset_yith_wcas_submit_label' ) ) {
             function aireset_yith_wcas_submit_label( $label ) { 
                 return '' . $label; 
@@ -138,7 +138,7 @@
         }
     }
 
-    if ( Init::get_setting('enable_aireset_default_images') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_images') === 'yes' ) {
         remove_image_size( 'thumbnail' );
         remove_image_size( 'medium' );
         remove_image_size( 'medium_large' );
@@ -155,7 +155,7 @@
         add_image_size( 'micro banners size', 430, 260 );
     }
 
-    if ( Init::get_setting('enable_aireset_default_auto_create_or_assign_customer_to_order') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_auto_create_or_assign_customer_to_order') === 'yes' ) {
         add_action('woocommerce_process_shop_order_meta', 'auto_create_or_assign_customer_to_order', 10, 1);
 
         function auto_create_or_assign_customer_to_order($order_id) {
@@ -206,7 +206,7 @@
         }
     }
 
-    if ( Init::get_setting('enable_aireset_default_status_woocommerce') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_status_woocommerce') === 'yes' ) {
         if ( ! function_exists( 'aireset_add_custom_order_status' ) ) {
             function aireset_add_custom_order_status() {
                 // register_post_status( 'wc-payed', [
@@ -326,7 +326,7 @@
         if ( ! function_exists( 'aireset_custom_styles' ) ) {
             function aireset_custom_styles() {
                 // Enqueue estilo personalizado
-                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'css/styles.css' );
+                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css' );
             }
             // Adiciona o hook para carregar o estilo na área administrativa
             add_action('wp_enqueue_scripts', 'aireset_custom_styles');
@@ -338,7 +338,7 @@
              */
             function aireset_custom_order_status_color() {
                 // Enqueue estilo personalizado
-                wp_enqueue_style( 'aireset-order-status-styles', AIRESET_DEFAULT_ASSETS . 'css/order-status-styles.css' );
+                wp_enqueue_style( 'aireset-order-status-styles', AIRESET_DEFAULT_ASSETS . 'front/css/order-status-styles.css' );
             }
             // Adiciona o hook para carregar o estilo na área administrativa
             add_action('admin_enqueue_scripts', 'aireset_custom_order_status_color');

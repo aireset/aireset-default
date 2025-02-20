@@ -13,7 +13,6 @@ defined('ABSPATH') || exit;
  *
  * @since 1.0.0
  * @version 3.9.2
- * @package MeuMouse.com
  */
 class Helpers {
 

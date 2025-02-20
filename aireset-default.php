@@ -55,6 +55,28 @@ class Aireset_General_Plugin {
     }
 
 	/**
+	 * Define constants
+	 * 
+	 * @since 1.0.0
+	 * @version 3.9.0
+	 * @return void
+	 */
+	private function define_constants() {
+		$this->define( 'AIRESET_DEFAULT_FILE', __FILE__ );
+		$this->define( 'AIRESET_DEFAULT_PATH', plugin_dir_path( __FILE__ ) );
+		$this->define( 'AIRESET_DEFAULT_URL', plugin_dir_url( __FILE__ ) );
+		$this->define( 'AIRESET_DEFAULT_ASSETS', AIRESET_DEFAULT_URL . 'assets/' );
+		$this->define( 'AIRESET_DEFAULT_INC_PATH', AIRESET_DEFAULT_PATH . 'includes/' );
+		$this->define( 'AIRESET_DEFAULT_TPL_PATH', AIRESET_DEFAULT_PATH . 'templates/' );
+		$this->define( 'AIRESET_DEFAULT_BASENAME', plugin_basename( __FILE__ ) );
+		$this->define( 'AIRESET_DEFAULT_VERSION', self::$version );
+		$this->define( 'AIRESET_DEFAULT_SLUG', self::$slug );
+		$this->define( 'AIRESET_DEFAULT_ADMIN_EMAIL', get_option('admin_email') );
+		$this->define( 'AIRESET_DEFAULT_DOCS_LINK', 'https://ajuda.aireset.com.br' );
+		$this->define( 'AIRESET_DEFAULT_PLUGIN_NAME', esc_html__( 'Aireset - Geral', 'aireset-default' ) );
+	}
+
+	/**
 	 * Checker dependencies before activate plugin
 	 * 
 	 * @since 1.0.0
@@ -64,7 +86,13 @@ class Aireset_General_Plugin {
 	public function init() {
 		// Display notice if PHP version is bottom 7.4
 		if ( version_compare( phpversion(), '7.4', '<' ) ) {
-			add_action( 'admin_notices', array( $this, 'php_version_notice' ) );
+			add_action( 'admin_notices', array( $this, 'aireset_default_wc_php_version_notice' ) );
+			return;
+		}
+
+		// display notice if WooCommerce version is bottom 6.0
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
+			add_action( 'admin_notices', array( $this, 'aireset_default_wc_version_notice' ) );
 			return;
 		}
 		
@@ -82,10 +110,43 @@ class Aireset_General_Plugin {
         // Enqueue scripts and styles
         // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
+		// check if WooCommerce is active
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
+			// add_action( 'plugins_loaded', array( $this, 'setup_includes' ), 20 );
+			// add_filter( 'plugin_action_links_' . AIRESET_DEFAULT_BASENAME, array( $this, 'hubgo_shipping_management_wc_plugin_links' ), 10, 4 );
+		}
+
+		// Hooks para a área administrativa – somente se estivermos no admin.
+        // if ( is_admin() ) {
+        //     // Executa a verificação do reset e adiciona o link oculto somente na página do plugin.
+        //     add_action( 'admin_init', array( $this, 'handle_reset_options' ) );
+        //     // add_action( 'admin_footer', array( $this, 'hidden_reset_link' ) );
+        // }
+
         // Include additional functions
         $this->include_functions();
     }
 
+	/**
+	 * Setup WooCommerce High-Performance Order Storage (HPOS) compatibility
+	 * 
+	 * @since 1.2.5
+	 * @return void
+	 */
+	public function setup_hpos_compatibility() {
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '7.1', '<' ) ) {
+			return;
+		}
+
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+				'custom_order_tables',
+				AIRESET_DEFAULT_FILE,
+				true
+			);
+		}
+	}
 
 	/**
 	 * Run on activation
@@ -108,6 +169,14 @@ class Aireset_General_Plugin {
 		self::clear_wc_template_cache();
 	}
 
+	/**
+	 * Get the plugin url.
+	 *
+	 * @return string
+	 */
+	public function plugin_url() {
+		return untrailingslashit( plugins_url( '/', AIRESET_DEFAULT_FILE ) );
+	}
 
 	/**
 	 * Clear WooCommerce template cache
@@ -134,28 +203,6 @@ class Aireset_General_Plugin {
 		if ( ! defined( $name ) ) {
 			define( $name, $value );
 		}
-	}
-
-	/**
-	 * Define constants
-	 * 
-	 * @since 1.0.0
-	 * @version 3.9.0
-	 * @return void
-	 */
-	private function define_constants() {
-		$this->define( 'AIRESET_DEFAULT_FILE', __FILE__ );
-		$this->define( 'AIRESET_DEFAULT_PATH', plugin_dir_path( __FILE__ ) );
-		$this->define( 'AIRESET_DEFAULT_URL', plugin_dir_url( __FILE__ ) );
-		$this->define( 'AIRESET_DEFAULT_ASSETS', AIRESET_DEFAULT_URL . 'assets/' );
-		$this->define( 'AIRESET_DEFAULT_INC_PATH', AIRESET_DEFAULT_PATH . 'includes/' );
-		$this->define( 'AIRESET_DEFAULT_TPL_PATH', AIRESET_DEFAULT_PATH . 'templates/' );
-		$this->define( 'AIRESET_DEFAULT_BASENAME', plugin_basename( __FILE__ ) );
-		$this->define( 'AIRESET_DEFAULT_VERSION', self::$version );
-		$this->define( 'AIRESET_DEFAULT_SLUG', self::$slug );
-		$this->define( 'AIRESET_DEFAULT_ADMIN_EMAIL', get_option('admin_email') );
-		$this->define( 'AIRESET_DEFAULT_DOCS_LINK', 'https://ajuda.aireset.com.br' );
-		$this->define( 'AIRESET_DEFAULT_PLUGIN_NAME', esc_html__( 'Aireset - Geral', 'aireset-default' ) );
 	}
 
     /**
@@ -288,22 +335,6 @@ class Aireset_General_Plugin {
 				include_once $file_path;
 			}
 		}
-
-		include_once AIRESET_DEFAULT_INC_PATH . 'actions.php';
-
-		
-
-		// if ( Init::get_setting('enable_aireset_default_status_woocommerce') === 'yes' ) {
-		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/woocommerce.php';
-		// }
-
-		// if ( Init::get_setting('enable_aireset_defaul_order_pay_without_login') === 'yes' ) {
-		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
-		// }
-
-		// if ( Init::get_setting('enable_aireset_defaul_order_pay_without_login') === 'yes' ) {
-		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
-		// }
     }
 
     /**
@@ -327,7 +358,6 @@ class Aireset_General_Plugin {
         highlight_string( "<?php\n\$$name =\n" . var_export( $array, true ) . ";\n?>" );
     }
 
-
 	/**
 	 * Cloning is forbidden.
 	 *
@@ -338,7 +368,6 @@ class Aireset_General_Plugin {
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default-for-woocommerce' ), '1.0.0' );
 	}
 
-
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 *
@@ -347,6 +376,37 @@ class Aireset_General_Plugin {
 	 */
 	public function __wakeup() {
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default-for-woocommerce' ), '1.0.0' );
+	}
+
+	/**
+	 * Notice if WooCommerce is deactivate
+	 */
+	public function aireset_default_wc_deactivate_notice() {
+		if ( !current_user_can( 'install_plugins' ) ) { return; }
+
+		echo '<div class="notice is-dismissible error">
+				<p>' . __( 'Requer que <strong>WooCommerce</strong> esteja instalado e ativado.', 'hubgo-shipping-management-wc' ) . '</p>
+			</div>';
+	}
+
+	/**
+	 * WooCommerce version notice.
+	 */
+	public function aireset_default_wc_version_notice() {
+		echo '<div class="notice is-dismissible error">
+				<p>' . __( 'Requer a versão do WooCommerce 5.0 ou maior. Faça a atualização do plugin WooCommerce.', 'hubgo-shipping-management-wc' ) . '</p>
+			</div>';
+	}
+
+	/**
+	 * PHP version notice
+	 * 
+	 * @since 1.0.0
+	 */
+	public function aireset_default_wc_php_version_notice() {
+		echo '<div class="notice is-dismissible error">
+				<p>' . __( 'Requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'hubgo-shipping-management-wc' ) . '</p>
+			</div>';
 	}
 }
 

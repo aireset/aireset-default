@@ -79,7 +79,6 @@
 		 * 
 		 * @since 1.0.0
 		 * @version 3.8.0
-		 * @package MeuMouse.com
 		 */
 		function ajax_save_options() {
 			$.ajax({
@@ -1891,7 +1890,6 @@
 	 * Deactivation license process
 	 * 
 	 * @since 3.8.0
-	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
 		$('#aireset_default_deactive_license').on('click', function(e) {
@@ -1972,7 +1970,6 @@
 	 * Clear activation cache process
 	 * 
 	 * @since 3.8.0
-	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
 		$('#aireset_default_clear_activation_cache').on('click', function(e) {
@@ -2106,7 +2103,6 @@
 	 * Display toast on offline connection
 	 * 
 	 * @since 4.5.0
-	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
 		function show_offline_toast() {
@@ -2143,7 +2139,6 @@
 	 * Install external modules (plugins) in AJAX
 	 * 
 	 * @since 3.8.2
-	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
 		$('.install-module').on('click', function(e) {
@@ -2223,7 +2218,6 @@
 		 * Activate plugin when installed
 		 * 
 		 * @since 3.8.2
-		 * @package MeuMouse.com
 		 */
 		$('.activate-plugin').on('click', function(e) {
 			e.preventDefault();

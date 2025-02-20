@@ -4,7 +4,6 @@
  * @since 1.0.0
  * @param {string} method | Activation element selector
  * @param {string} container | Container selector
- * @pacakge MeuMouse.com
  */
 function container_visibility(method, container) {
     let checked = jQuery(method).prop('checked');
@@ -18,7 +17,6 @@ function container_visibility(method, container) {
  * @since 3.5.0
  * @param {string} toggle | Activation element selector
  * @param {string} container | Container selector
- * @package MeuMouse.com
  */
 function visibility_controller(toggle, container) {
     container_visibility(toggle, container);
@@ -35,7 +33,6 @@ function visibility_controller(toggle, container) {
  * @param {string} select | Select ID
  * @param {Array} options | Target options for display container
  * @param {string} container | Container to be displayed
- * @package MeuMouse.com
  */
 function select_visibility_controller(select, options, container) {
     // Remove any existing 'change' event handlers
@@ -68,7 +65,6 @@ function select_visibility_controller(select, options, container) {
  * @since 3.8.0
  * @param {string} select | Select ID
  * @param {Object} options_containers | Object containing option keys and their corresponding containers
- * @package MeuMouse.com
  */
 function multi_select_visibility_controller(select, options_containers) {
     // Remove any existing 'change' event handlers

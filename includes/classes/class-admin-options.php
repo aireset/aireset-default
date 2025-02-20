@@ -14,7 +14,6 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 3.8.5
- * @package MeuMouse.com
  */
 class Admin_Options extends Init {
 
@@ -23,7 +22,6 @@ class Admin_Options extends Init {
    *
    * @since 1.0.0
    * @version 3.8.0
-   * @package MeuMouse.com
    */
   public function __construct() {
     parent::__construct();

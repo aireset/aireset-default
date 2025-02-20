@@ -10,7 +10,6 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 3.7.0
- * @package MeuMouse.com
  */
 class Autoloader {
 

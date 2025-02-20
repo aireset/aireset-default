@@ -5,7 +5,6 @@
  * @param {string} trigger | Trigger for display popup
  * @param {string} container | Container for display content
  * @param {string} close | Close button popup
- * @package MeuMouse.com
  */
 function display_popup(trigger, container, close) {
     // open modal on click to trigger

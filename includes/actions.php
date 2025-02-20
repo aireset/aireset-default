@@ -755,7 +755,13 @@
                     $original_label = $rates[$rate_id]->get_label();
                     $original_label = preg_replace('/\s*\(.*?\)$/', '', $original_label);
                     $new_label = sprintf( __( 'Entrega em aproximadamente de %s a %s dias', 'aireset-default' ), $adjusted_min, $adjusted_max );
+                    
                     $rates[$rate_id]->set_label( $original_label . ' (' . $new_label . ')' );
+                    // $rates[$rate_id]->delivery_time = $new_label;
+                    
+                    // Atualiza a meta "delivery_time" para o novo formato
+                    $rate->add_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+
             
                     // Opcional: atualizar o meta "delivery_time" para o novo formato
                     // foreach ( $rate->get_meta_data() as $key => $meta_item ) {

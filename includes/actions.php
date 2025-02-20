@@ -664,3 +664,116 @@
             'shipping' => $prices
         ]);
     });
+
+    add_filter( 'woocommerce_package_rates', 'custom_adjust_shipping_rates', 10, 2 );
+    function custom_adjust_shipping_rates( $rates, $package ) {
+        // Define a data inicial (hoje)
+        $start_date = new DateTime();
+        // Recupera os métodos ativos da zona de envio
+        $zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+        $active_methods = [];
+        foreach ( $zone->get_shipping_methods() as $method ) {
+            if ( 'yes' === $method->enabled ) {
+                $active_methods[] = $method;
+            }
+        }
+        $active_method_ids = wp_list_pluck( $active_methods, 'id' );
+
+        dump($rates);
+
+        // Itera pelos rates para ajustar o prazo de entrega
+        foreach ( $rates as $rate_id => $rate ) {
+            // Se o rate não pertencer a um método ativo, ignora-o
+            if ( ! in_array( $rate->method_id, $active_method_ids ) ) {
+                continue;
+            }
+
+            // Tenta recuperar a previsão de entrega a partir do meta 'delivery_time'
+            $meta_data = $rate->get_meta_data();
+            $delivery_time_text = '';
+            foreach ( $meta_data as $key => $meta ) {
+                if ( $key === 'delivery_time' ) {
+                    $delivery_time_text = $meta;
+                    break;
+                }
+            }
+
+            if ( ! empty( $delivery_time_text ) ) {
+                // Exemplo: "(4 a 5 dias úteis)"
+                // Remove parênteses e as palavras "dias úteis", "dias corridos" ou "dias"
+                $clean = trim( str_replace( ['dias úteis', 'dias corridos', 'dias'], '', $delivery_time_text ), '() ' );
+                
+                // Captura os dois números (mínimo e máximo)
+                if ( preg_match('/(\d+)\s*a\s*(\d+)/', $clean, $matches) ) {
+                    $base_min = intval( $matches[1] );
+                    $base_max = intval( $matches[2] );
+                    
+                    // Função auxiliar para contar finais de semana e feriados entre hoje e uma data final
+                    $count_additional_days = function( $base_days ) use ( $start_date ) {
+                        $end_date = clone $start_date;
+                        $end_date->modify("+{$base_days} days");
+                        $additional = 0;
+                        // Contagem de finais de semana
+                        $interval = new DateInterval('P1D');
+                        $period = new DatePeriod( $start_date, $interval, $end_date );
+                        foreach ( $period as $dt ) {
+                            if ( in_array( $dt->format('N'), [6,7] ) ) {
+                                $additional++;
+                            }
+                        }
+                        // Contagem de feriados
+                        $year = $start_date->format('Y');
+                        $transient_key = 'custom_holidays_' . $year;
+                        $holidays = get_transient( $transient_key );
+                        if ( false === $holidays ) {
+                            $response = wp_remote_get( "https://brasilapi.com.br/api/feriados/v1/{$year}" );
+                            if ( ! is_wp_error( $response ) ) {
+                                $holidays = json_decode( wp_remote_retrieve_body( $response ), true );
+                            } else {
+                                $holidays = [];
+                            }
+                            set_transient( $transient_key, $holidays, DAY_IN_SECONDS );
+                        }
+                        foreach ( $holidays as $holiday ) {
+                            if ( isset( $holiday['date'] ) ) {
+                                $holiday_date = DateTime::createFromFormat('Y-m-d', $holiday['date']);
+                                if ( $holiday_date && $holiday_date >= $start_date && $holiday_date < $end_date ) {
+                                    $additional++;
+                                }
+                            }
+                        }
+                        return $additional;
+                    };
+            
+                    $additional_min = $count_additional_days( $base_min );
+                    $additional_max = $count_additional_days( $base_max );
+            
+                    $adjusted_min = $base_min + $additional_min;
+                    $adjusted_max = $base_max + $additional_max;
+            
+                    // Atualiza o label removendo o texto entre parênteses original
+                    $original_label = $rates[$rate_id]->get_label();
+                    $original_label = preg_replace('/\s*\(.*?\)$/', '', $original_label);
+                    $new_label = sprintf( __( 'Entrega em aproximadamente de %s a %s dias', 'aireset-default' ), $adjusted_min, $adjusted_max );
+                    $rates[$rate_id]->set_label( $original_label . ' (' . $new_label . ')' );
+            
+                    // Opcional: atualizar o meta "delivery_time" para o novo formato
+                    // foreach ( $rate->get_meta_data() as $key => $meta_item ) {
+                    //     if ( isset( $key ) && $key === 'delivery_time' ) {
+                    //         // $rates[$rate_id]->update_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                    //         dump($rates[$rate_id]->ste_meta_data['delivery_time']);
+                    //         $rates[$rate_id]->add_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                    //         // $rates[$rate_id]->meta_data['delivery_time'] = sprintf( '%s a %s dias', $adjusted_min, $adjusted_max );
+                    //         dump($rates[$rate_id]->meta_data['delivery_time']);
+                    //         break;
+                    //     }
+                    // }
+                    // Atualiza a meta "delivery_time" para o novo formato
+                    // $rate->update_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                }
+            }
+            // dump($rates);
+            // die;
+        }
+        return $rates;
+    }

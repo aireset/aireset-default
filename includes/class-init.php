@@ -48,14 +48,14 @@ class Init {
 
 		// Verifica se NÃO estamos no admin e NÃO é uma chamada AJAX
 		// if ( ! is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-		if ( ! is_admin() ) {
+		// if ( ! is_admin() ) {
 			// load shipping calculator in single product page
+			include_once AIRESET_DEFAULT_INC_PATH . 'classes/shipping/management-custom-colors.php';
 			if ( Init::get_setting( 'aireset_default_enable_shipping_calculator' ) === 'yes' ) {
 				include_once AIRESET_DEFAULT_INC_PATH . 'classes/shipping/management-calculator.php';
-				include_once AIRESET_DEFAULT_INC_PATH . 'classes/shipping/management-custom-colors.php';
 				// wp_enqueue_script( 'hubgo-shipping-management-wc-front-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/shipping-management-front-scripts.js', array( 'jquery' ), AIRESET_DEFAULT_VERSION );
 			}
-		}
+		// }
 
 	}
 

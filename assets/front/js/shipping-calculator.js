@@ -42,7 +42,6 @@ jQuery(document).ready(function($) {
             
             // Seleciona o input de CEP dentro do container
             var $postcodeInput = $container.find('.aireset-postcode');
-			console.log($postcodeInput)
             
             if ($postcodeInput.val().length < 3) {
                 $postcodeInput.focus();

@@ -13,6 +13,7 @@ class Shipping_Management_Shipping_Calculator {
     public function __construct() {
         add_action( 'wp_ajax_aireset_ajax_postcode', array( $this, 'aireset_ajax_postcode' ) );
 		add_action( 'wp_ajax_nopriv_aireset_ajax_postcode', array( $this, 'aireset_ajax_postcode' ) );
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		
 		// display form shipping calc on page product
@@ -55,9 +56,7 @@ class Shipping_Management_Shipping_Calculator {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	public function aireset_ajax_postcode() {
-		error_log('Shipping_Calculator: aireset_ajax_postcode chamado');
-		
+	public function aireset_ajax_postcode() {		
 		check_ajax_referer( 'aireset-shipping-calc-nonce', 'nonce' );
 
 		$data = $_POST;
@@ -111,9 +110,9 @@ class Shipping_Management_Shipping_Calculator {
 			return __('Não foi possível calcular a entrega deste produto', 'aireset-shipping-management-wc');
 		}
 	        
-	    if ( !$product->is_in_stock() ) {
-			return __('Não foi possível calcular a entrega deste produto, pois o mesmo não está disponível.', 'aireset-shipping-management-wc');
-		}
+	    // if ( !$product->is_in_stock() ) {
+		// 	return __('Não foi possível calcular a entrega deste produto, pois o mesmo não está disponível.', 'aireset-shipping-management-wc');
+		// }
 
 	    if ( !WC_Validation::is_postcode( $request['postcode'], WC()->customer->get_shipping_country() ) ) {
 			return __('Por favor, insira um CEP válido.', 'aireset-shipping-management-wc');
@@ -133,6 +132,10 @@ class Shipping_Management_Shipping_Calculator {
 	    } else {
 	        $destination = wc_get_customer_default_location();
 	    }
+
+		$quantity = isset( $request['qty'] ) ? floatval( $request['qty'] ) : 1;
+		$price    = floatval( $product->get_price_excluding_tax() );
+		$tax      = floatval( $product->get_price_including_tax() ) - $price;
 
 	    $package = [
 	        'destination' => $destination,
@@ -172,10 +175,23 @@ class Shipping_Management_Shipping_Calculator {
 				}, 10, 4 ); 
 			}
 		    
-			$methods = WC_Shipping::instance()->load_shipping_methods($package);
+			/* --- NOVO: Filtrar métodos ativos na zona de envio --- */
+			$zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+			$active_methods = [];
+			foreach ( $zone->get_shipping_methods() as $method ) {
+				if ( 'yes' === $method->enabled ) {
+					$active_methods[] = $method;
+				}
+			}
 
-	        foreach ( $methods as $key => $method ) {
+			// dump($zone);
+			// dump($active_methods);
+			// dump($package);
+
+	        foreach ( $active_methods as $key => $method ) {
 	        	if ( "free_shipping" == $method->id && 'yes' == $method->enabled ) {
+					// dump($method);
+
 	        		$GLOBALS['method'] = $method;
 	        		$has_coupon = $has_met_min_amount = false;
 
@@ -192,56 +208,82 @@ class Shipping_Management_Shipping_Calculator {
 			        }
 
 			        if ( in_array( $method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
-						$_total = floatval($price) * floatval($request['qty']);
-						if ( $_total >= floatval($method->min_amount) ) {
+						$total = floatval($price) * floatval($quantity);
+						if ( $total >= floatval( $method->get_option('min_amount') ) ) {
 							$has_met_min_amount = true;
 						}
 					}
+					
 
 			        switch ( $method->requires ) {
 			            case 'min_amount' :
-			                $is_available = $has_met_min_amount;
+			                $has_freeshipping = $has_met_min_amount;
 			                break;
 			            case 'coupon' :
-			                $is_available = $has_coupon;
+			                $has_freeshipping = $has_coupon;
 			                break;
 			            case 'both' :
-			                $is_available = $has_met_min_amount && $has_coupon;
+			                $has_freeshipping = $has_met_min_amount && $has_coupon;
 			                break;
 			            case 'either' :
-			                $is_available = $has_met_min_amount || $has_coupon;
+			                $has_freeshipping = $has_met_min_amount || $has_coupon;
 			                break;
 			            default :
-			                $is_available = false;
+			                $has_freeshipping = false;
 			                break;
 			        }
 
 	        		break;
 	        	}
 	        }
+			/* --- Fim do trecho para métodos ativos --- */
 
 			$rates = array();
 
-	        if ( $is_available ) {
+	        if ( $has_freeshipping === true ) {
 	        	$rates[] = (object) [
 	        		'cost' => 0,
 	        		'label' => $method->method_title
 	        	];
 	        }
 
-	        $packageRates = WC_Shipping::instance()->calculate_shipping_for_package( $package );
+	        // $packageRates = WC_Shipping::instance()->calculate_shipping_for_package( $package );
+
+			// foreach ( $packageRates['rates'] as $rate ) {
+			// 	$meta = $rate->get_meta_data();
+			
+			// 	if ( isset( $meta['_delivery_forecast'] ) ) {
+			// 		$delivery_forecast = $meta['_delivery_forecast'];
+			// 		$translated_delivery_forecast = sprintf( __('(Entrega em %s dias úteis)', 'aireset-shipping-management-wc'), $delivery_forecast );
+			// 		$rate->set_label( $rate->get_label() . ' ' . $translated_delivery_forecast );
+			// 	}
+			
+			// 	$rates[] = $rate;
+			// }
+
+			// dump($package);
+
+			// Trecho novo:
+			$packageRates = WC_Shipping::instance()->calculate_shipping_for_package( $package );
+			$active_method_ids = wp_list_pluck( $active_methods, 'id' );
+			$rates = array();
 
 			foreach ( $packageRates['rates'] as $rate ) {
-				$meta = $rate->get_meta_data();
-			
-				if ( isset( $meta['_delivery_forecast'] ) ) {
-					$delivery_forecast = $meta['_delivery_forecast'];
-					$translated_delivery_forecast = sprintf( __('(Entrega em %s dias úteis)', 'aireset-shipping-management-wc'), $delivery_forecast );
-					$rate->set_label( $rate->get_label() . ' ' . $translated_delivery_forecast );
+				// Inclui somente os rates cujo método está entre os ativos
+				if ( in_array( $rate->method_id, $active_method_ids ) ) {
+					$meta = $rate->get_meta_data();
+					if ( isset( $meta['_delivery_forecast'] ) ) {
+						$delivery_forecast = $meta['_delivery_forecast'];
+						// Altera de "dias úteis" para "dias corridos"
+						$translated_delivery_forecast = sprintf( __( '(Entrega em %s dias)', 'aireset-shipping-management-wc' ), $delivery_forecast );
+						$rate->set_label( $rate->get_label() . ' ' . $translated_delivery_forecast );
+					}
+					$rates[] = $rate;
 				}
-			
-				$rates[] = $rate;
 			}
+
+			dump($rates);
+			die;
 
 	        if ( isset( $rates ) ) {
 				WC()->customer->set_shipping_postcode( $request['postcode'] );
@@ -293,7 +335,6 @@ class Shipping_Management_Shipping_Calculator {
 			<div class="aireset-response"></div>
 		</div>';
 	}
-
 
 	/**
 	 * Create form shipping calc shortcode

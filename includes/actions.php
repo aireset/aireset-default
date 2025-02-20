@@ -679,7 +679,7 @@
         }
         $active_method_ids = wp_list_pluck( $active_methods, 'id' );
 
-        dump($rates);
+        // dump($rates);
 
         // Itera pelos rates para ajustar o prazo de entrega
         foreach ( $rates as $rate_id => $rate ) {

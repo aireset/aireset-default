@@ -282,8 +282,8 @@ class Shipping_Management_Shipping_Calculator {
 				}
 			}
 
-			dump($rates);
-			die;
+			// dump($rates);
+			// die;
 
 	        if ( isset( $rates ) ) {
 				WC()->customer->set_shipping_postcode( $request['postcode'] );

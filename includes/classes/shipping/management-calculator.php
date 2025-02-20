@@ -192,12 +192,11 @@ class Shipping_Management_Shipping_Calculator {
 			        }
 
 			        if ( in_array( $method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
-			            $_total = $price * $request['qty'];
-
-			            if ( $_total >= $method->min_amount ) {
-			                $has_met_min_amount = true;
-			            }
-			        }
+						$_total = floatval($price) * floatval($request['qty']);
+						if ( $_total >= floatval($method->min_amount) ) {
+							$has_met_min_amount = true;
+						}
+					}
 
 			        switch ( $method->requires ) {
 			            case 'min_amount' :

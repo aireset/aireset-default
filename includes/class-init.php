@@ -47,7 +47,8 @@ class Init {
 		// }
 
 		// Verifica se NÃO estamos no admin e NÃO é uma chamada AJAX
-		if ( ! is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+		// if ( ! is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+		if ( ! is_admin() ) {
 			// load shipping calculator in single product page
 			if ( Init::get_setting( 'aireset_default_enable_shipping_calculator' ) === 'yes' ) {
 				include_once AIRESET_DEFAULT_INC_PATH . 'classes/shipping/management-calculator.php';

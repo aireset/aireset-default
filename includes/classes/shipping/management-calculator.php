@@ -11,8 +11,8 @@ defined( 'ABSPATH' ) || exit;
 class Shipping_Management_Shipping_Calculator {
 
     public function __construct() {
-        add_action( 'wp_ajax_ajax_postcode', array( $this,'ajax_postcode' ) );
-		add_action( 'wp_ajax_nopriv_ajax_postcode', array( $this,'ajax_postcode' ) );
+        add_action( 'wp_ajax_aireset_ajax_postcode', array( $this, 'aireset_ajax_postcode' ) );
+		add_action( 'wp_ajax_nopriv_aireset_ajax_postcode', array( $this, 'aireset_ajax_postcode' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		
 		// display form shipping calc on page product
@@ -56,6 +56,8 @@ class Shipping_Management_Shipping_Calculator {
 	 * @return void
 	 */
 	public function aireset_ajax_postcode() {
+		error_log('Shipping_Calculator: aireset_ajax_postcode chamado');
+		
 		check_ajax_referer( 'aireset-shipping-calc-nonce', 'nonce' );
 
 		$data = $_POST;
@@ -278,18 +280,18 @@ class Shipping_Management_Shipping_Calculator {
 	 * @return void
 	 */
 	public function form_shipping_calc() {
-		echo '<div id="aireset-shipping-calc">
-		<span class="aireset-info-shipping-calc">'. Aireset\Default\Init::get_setting( 'aireset_default_text_info_before_input_shipping_calc' ) .'</span>
-		
-		<div class="aireset-form-group">
-			<input id="aireset-postcode" placeholder="'. Aireset\Default\Init::get_setting( 'aireset_default_text_placeholder_input_shipping_calc' ) .'" name="aireset-postcode">
-			<button id="aireset-shipping-calc-button">
-				<span class="aireset-shipping-calc-button-title">'. Aireset\Default\Init::get_setting( 'aireset_default_text_button_shipping_calc' ) .'</span>
-			</button>
-		</div>
-		
-		<a class="aireset-postcode-search" href="https://buscacepinter.correios.com.br/app/endereco/" target="_blank">'. esc_html__( 'Não sei meu CEP', 'aireset-shipping-management-wc' ) .'</a>
-		<div id="aireset-response"></div>
+		echo '<div class="aireset-shipping-calc">
+			<span class="aireset-info-shipping-calc">'. Aireset\Default\Init::get_setting( 'aireset_default_text_info_before_input_shipping_calc' ) .'</span>
+			
+			<div class="aireset-form-group">
+				<input class="aireset-postcode" placeholder="'. Aireset\Default\Init::get_setting( 'aireset_default_text_placeholder_input_shipping_calc' ) .'" name="aireset-postcode">
+				<button class="aireset-shipping-calc-button">
+					<span class="aireset-shipping-calc-button-title">'. Aireset\Default\Init::get_setting( 'aireset_default_text_button_shipping_calc' ) .'</span>
+				</button>
+			</div>
+			
+			<a class="aireset-postcode-search" href="https://buscacepinter.correios.com.br/app/endereco/" target="_blank">'. esc_html__( 'Não sei meu CEP', 'aireset-shipping-management-wc' ) .'</a>
+			<div class="aireset-response"></div>
 		</div>';
 	}
 

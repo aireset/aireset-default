@@ -25,16 +25,16 @@ class Shipping_Management_Custom_Colors {
     $primary_color = Aireset\Default\Init::get_setting( 'aireset_default_primary_main_color' );
     $hover_color = $this->generate_rgba_color($primary_color, 80);
   
-    $css = '#aireset-postcode:focus {';
+    $css = '.aireset-postcode:focus {';
       $css .= 'border-color:'. $primary_color .' !important;';
     $css .= '}';
 
-    $css .= '#aireset-shipping-calc-button {';
+    $css .= '.aireset-shipping-calc-button {';
       $css .= 'background-color:'. $primary_color .' !important;';
       $css .= 'border-color:'. $primary_color .' !important;';
     $css .= '}';
 
-    $css .= '#aireset-shipping-calc-button:hover {';
+    $css .= '.aireset-shipping-calc-button:hover {';
       $css .= 'background-color:'. $hover_color .' !important;';
       $css .= 'border-color:'. $hover_color .' !important;';
     $css .= '}';
@@ -43,7 +43,7 @@ class Shipping_Management_Custom_Colors {
       $css .= 'color:'. $primary_color .';';
     $css .= '}';
 
-    $css .= '#aireset-response table .aireset-shipping-header th {';
+    $css .= '.aireset-response table .aireset-shipping-header th {';
       $css .= 'background-color:'. $primary_color .' !important;';
     $css .= '}';
 

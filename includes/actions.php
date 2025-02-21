@@ -583,7 +583,7 @@
     add_action('admin_enqueue_scripts', function() {
         global $pagenow;
 
-        var_dump($pagenow);
+        // var_dump($pagenow);
 
         if(is_admin()
             && in_array($pagenow, ['post.php', 'post-new.php'])
@@ -783,3 +783,9 @@
         }
         return $rates;
     }
+    // add_action('elementor/dynamic_tags/register_tags', function($dynamic_tags) {
+    //     require_once AIRESET_DEFAULT_INC_PATH . 'elementor-dynamic-tags.php';
+
+    //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_Text_Tag');
+    //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_URL_Tag');
+    // });

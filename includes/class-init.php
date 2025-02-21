@@ -46,6 +46,8 @@ class Init {
 		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
 		// }
 
+		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-custom-fields.php';
+
 		// Verifica se NÃO estamos no admin e NÃO é uma chamada AJAX
 		// if ( ! is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 		// if ( ! is_admin() ) {
@@ -57,6 +59,10 @@ class Init {
 			}
 		// }
 
+		// Maybe enable Elementor integration
+		if ( in_array( 'elementor/elementor.php', get_option( 'active_plugins', array() ) ) ) {
+			require_once AIRESET_DEFAULT_INC_PATH . 'elementor-dynamic-tags/elementor.php';
+		}
 	}
 
 

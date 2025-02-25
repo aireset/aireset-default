@@ -581,7 +581,7 @@
             && in_array($pagenow, ['post.php', 'post-new.php'])
             && ($_GET['post_type'] ?: 'shop_order') === 'shop_order')
         {
-            wp_enqueue_script('shipping-calc_js', plugins_url('admin/js/shipping-calc.js', __FILE__));
+            wp_enqueue_script('shipping-calc_js', plugins_url('admin/js/shipping-calc.js', __FILE__), array('jquery'), AIRESET_DEFAULT_VERSION);
             wp_localize_script( 'shipping-calc_js', 'shipping_calc', array(
                     'url' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('admin_shipping_calculate')
@@ -589,31 +589,6 @@
             );
         }
     });
-
-    if ( ! function_exists( 'aireset_custom_styles' ) ) {
-        function aireset_custom_styles() {
-            if(!is_admin()){
-                // Enqueue estilo personalizado
-                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css' );
-                wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js' );
-            }
-        }
-        // Adiciona o hook para carregar o estilo na área administrativa
-        add_action('wp_enqueue_scripts', 'aireset_custom_styles');
-    }
-    
-    if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
-        if ( ! function_exists( 'aireset_custom_styles' ) ) {
-            function aireset_custom_styles() {
-                if(!is_admin()){
-                    // Enqueue estilo personalizado
-                    wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js' );
-                }
-            }
-            // Adiciona o hook para carregar o estilo na área administrativa
-            add_action('wp_enqueue_scripts', 'aireset_custom_styles');
-        }
-    }
 
     /**
      * REST API
@@ -809,6 +784,31 @@
     //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_Text_Tag');
     //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_URL_Tag');
     // });
+
+    if ( ! function_exists( 'aireset_custom_styles' ) ) {
+        function aireset_custom_styles() {
+            if(!is_admin()){
+                // Enqueue estilo personalizado
+                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css', array(), AIRESET_DEFAULT_VERSION);
+                wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+            }
+        }
+        // Adiciona o hook para carregar o estilo na área administrativa
+        add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+    }
+    
+    if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
+        if ( ! function_exists( 'aireset_custom_styles' ) ) {
+            function aireset_custom_styles() {
+                if(!is_admin()){
+                    // Enqueue estilo personalizado
+                    wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+                }
+            }
+            // Adiciona o hook para carregar o estilo na área administrativa
+            add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+        }
+    }
     
     // Adicionar o botão "Criar Cliente" na página de edição do pedido no admin
     if ( ! function_exists( 'add_create_customer_button' ) ) {

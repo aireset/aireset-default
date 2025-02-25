@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
     'use strict';
     
-    console.log("Script carregado");
+    // console.log("Script carregado");
     
     // Para cada instância do shipping calculator (container com classe .aireset-shipping-calc)
     $('.aireset-shipping-calc').each(function() {

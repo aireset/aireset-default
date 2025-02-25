@@ -46,6 +46,8 @@ class Init {
 		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
 		// }
 
+		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-elementor-form-input-class.php'; // Elementor Forms Input Classes
+		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-elementor-form-input-custom-attributes.php'; // Elementor Forms Input Custom Attributes
 		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-custom-fields.php';
 
 		// Verifica se NÃO estamos no admin e NÃO é uma chamada AJAX

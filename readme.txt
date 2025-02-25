@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset
-Stable tag: 1.2.0
+Stable tag: 1.2.6
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,31 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+= 1.2.6 (25/02/2025) =
+* Inclusão de botão pra criar novos clientes direto do pedido no painel administrativo
+* Inclusão de Classe para adicionar o atributo de classes nos campos de formulário no elementor
+* Inclusão de Classe para adicionar atributos customizados nos campos de formulário no elementor
+* Inclusão de sistema de máscaras e atalhos de classes para as máscaras no formulários do elementor
+* Inclusão de Label Flutuante para formulários do elementor
+* Inclusão do Intel Input para formulários do elementor (beta)
+
+= 1.2.5 (20/02/2025) =
+* Melhoria no delivery_time
+* Criaçao da página fixa de dados da empresa
+* Inclusão do sistema para usar no elementor tags dinamicas
+
+= 1.2.4 (20/02/2025) =
+* Remoção de dumps nos calculos de frete
+
+= 1.2.3 (20/02/2025) =
+* Inclusao de dump e melhoria na mensagem, adicionado validacao de final de semana e de feriados
+
+= 1.2.2 (19/02/2025) =
+* Inclusão e finalização de da calculadora de frete
+
+= 1.2.1 (19/02/2025) =
+* Fazendo novas funções	e Navegação funcionarem
 
 = 1.2.0 (11/02/2025) =
 * Nova versao

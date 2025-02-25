@@ -6,43 +6,46 @@
         exit; // Exit if accessed directly.
     }
 
-    function whatsapp_link_shortcode($atts) {
-        // Atributos padrão
-        $atts = shortcode_atts(
-            array(
-                'number' => '',  // Número de telefone formatado
-                'message' => ''  // Mensagem personalizada
-            ),
-            $atts,
-            'whatsapp_link'
-        );
     
-        // Remove espaços, parênteses, traços e outros caracteres não numéricos
-        $phone_number = preg_replace('/\D+/', '', $atts['number']);
-    
-        // Obter o título da página ou do produto
-        $page_title = get_the_title();
+    if ( ! function_exists( 'whatsapp_link_shortcode' ) ) {
+        function whatsapp_link_shortcode($atts) {
+            // Atributos padrão
+            $atts = shortcode_atts(
+                array(
+                    'number' => '',  // Número de telefone formatado
+                    'message' => ''  // Mensagem personalizada
+                ),
+                $atts,
+                'whatsapp_link'
+            );
         
-        // Verificar se é um produto e obter o título do produto
-        $produto_title = function_exists('wc_get_product') ? get_the_title() : '';
-    
-        // Mensagem padrão
-        if (empty($atts['message'])) {
-            $message = "Olá, estou na página {title} e gostaria de mais informações.";
-        } else {
-            $message = $atts['message'];
+            // Remove espaços, parênteses, traços e outros caracteres não numéricos
+            $phone_number = preg_replace('/\D+/', '', $atts['number']);
+        
+            // Obter o título da página ou do produto
+            $page_title = get_the_title();
+            
+            // Verificar se é um produto e obter o título do produto
+            $produto_title = function_exists('wc_get_product') ? get_the_title() : '';
+        
+            // Mensagem padrão
+            if (empty($atts['message'])) {
+                $message = "Olá, estou na página {title} e gostaria de mais informações.";
+            } else {
+                $message = $atts['message'];
+            }
+        
+            // Substituir os marcadores {title} e {produto_title} pela informação correspondente
+            $message = str_replace('{title}', $page_title, $message);
+            $message = str_replace('{produto_title}', $produto_title, $message);
+            $whatsapp_message = urlencode($message);
+        
+            $whatsapp_link = "https://wa.me/{$phone_number}?text={$whatsapp_message}";
+        
+            return $whatsapp_link;
         }
-    
-        // Substituir os marcadores {title} e {produto_title} pela informação correspondente
-        $message = str_replace('{title}', $page_title, $message);
-        $message = str_replace('{produto_title}', $produto_title, $message);
-        $whatsapp_message = urlencode($message);
-    
-        $whatsapp_link = "https://wa.me/{$phone_number}?text={$whatsapp_message}";
-    
-        return $whatsapp_link;
+        add_shortcode('whatsapp_link', 'whatsapp_link_shortcode');
     }
-    add_shortcode('whatsapp_link', 'whatsapp_link_shortcode');
 
     if ( Init::get_setting('aireset_default_disable_add_to_cart_message') === 'yes' ) {
         // Desativar mensagens de "Adicionar ao Carrinho"
@@ -323,15 +326,6 @@
             add_filter( 'wc_order_statuses', 'aireset_edit_default_order_status_titles' );
         }
     
-        if ( ! function_exists( 'aireset_custom_styles' ) ) {
-            function aireset_custom_styles() {
-                // Enqueue estilo personalizado
-                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css' );
-            }
-            // Adiciona o hook para carregar o estilo na área administrativa
-            add_action('wp_enqueue_scripts', 'aireset_custom_styles');
-        }
-    
         if ( ! function_exists( 'aireset_custom_order_status_color' ) ) {
             /**
              * Adiciona cores personalizadas para os status de pedidos
@@ -574,9 +568,7 @@
         // }
         // add_filter( 'woocommerce_email_enabled', 'disable_specific_woocommerce_emails', 10, 2 );    
     }
-
         
-
     /**
      * Load JavaScript for our administration
      */
@@ -597,6 +589,31 @@
             );
         }
     });
+
+    if ( ! function_exists( 'aireset_custom_styles' ) ) {
+        function aireset_custom_styles() {
+            if(!is_admin()){
+                // Enqueue estilo personalizado
+                wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css' );
+                wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js' );
+            }
+        }
+        // Adiciona o hook para carregar o estilo na área administrativa
+        add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+    }
+    
+    if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
+        if ( ! function_exists( 'aireset_custom_styles' ) ) {
+            function aireset_custom_styles() {
+                if(!is_admin()){
+                    // Enqueue estilo personalizado
+                    wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js' );
+                }
+            }
+            // Adiciona o hook para carregar o estilo na área administrativa
+            add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+        }
+    }
 
     /**
      * REST API
@@ -665,123 +682,126 @@
         ]);
     });
 
-    add_filter( 'woocommerce_package_rates', 'custom_adjust_shipping_rates', 10, 2 );
-    function custom_adjust_shipping_rates( $rates, $package ) {
-        // Define a data inicial (hoje)
-        $start_date = new DateTime();
-        // Recupera os métodos ativos da zona de envio
-        $zone = WC_Shipping_Zones::get_zone_matching_package( $package );
-        $active_methods = [];
-        foreach ( $zone->get_shipping_methods() as $method ) {
-            if ( 'yes' === $method->enabled ) {
-                $active_methods[] = $method;
-            }
-        }
-        $active_method_ids = wp_list_pluck( $active_methods, 'id' );
-
-        // dump($rates);
-
-        // Itera pelos rates para ajustar o prazo de entrega
-        foreach ( $rates as $rate_id => $rate ) {
-            // Se o rate não pertencer a um método ativo, ignora-o
-            if ( ! in_array( $rate->method_id, $active_method_ids ) ) {
-                continue;
-            }
-
-            // Tenta recuperar a previsão de entrega a partir do meta 'delivery_time'
-            $meta_data = $rate->get_meta_data();
-            $delivery_time_text = '';
-            foreach ( $meta_data as $key => $meta ) {
-                if ( $key === 'delivery_time' ) {
-                    $delivery_time_text = $meta;
-                    break;
+    
+    if ( ! function_exists( 'custom_adjust_shipping_rates' ) ) {
+        add_filter( 'woocommerce_package_rates', 'custom_adjust_shipping_rates', 10, 2 );
+        function custom_adjust_shipping_rates( $rates, $package ) {
+            // Define a data inicial (hoje)
+            $start_date = new DateTime();
+            // Recupera os métodos ativos da zona de envio
+            $zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+            $active_methods = [];
+            foreach ( $zone->get_shipping_methods() as $method ) {
+                if ( 'yes' === $method->enabled ) {
+                    $active_methods[] = $method;
                 }
             }
+            $active_method_ids = wp_list_pluck( $active_methods, 'id' );
 
-            if ( ! empty( $delivery_time_text ) ) {
-                // Exemplo: "(4 a 5 dias úteis)"
-                // Remove parênteses e as palavras "dias úteis", "dias corridos" ou "dias"
-                $clean = trim( str_replace( ['dias úteis', 'dias corridos', 'dias'], '', $delivery_time_text ), '() ' );
-                
-                // Captura os dois números (mínimo e máximo)
-                if ( preg_match('/(\d+)\s*a\s*(\d+)/', $clean, $matches) ) {
-                    $base_min = intval( $matches[1] );
-                    $base_max = intval( $matches[2] );
+            // dump($rates);
+
+            // Itera pelos rates para ajustar o prazo de entrega
+            foreach ( $rates as $rate_id => $rate ) {
+                // Se o rate não pertencer a um método ativo, ignora-o
+                if ( ! in_array( $rate->method_id, $active_method_ids ) ) {
+                    continue;
+                }
+
+                // Tenta recuperar a previsão de entrega a partir do meta 'delivery_time'
+                $meta_data = $rate->get_meta_data();
+                $delivery_time_text = '';
+                foreach ( $meta_data as $key => $meta ) {
+                    if ( $key === 'delivery_time' ) {
+                        $delivery_time_text = $meta;
+                        break;
+                    }
+                }
+
+                if ( ! empty( $delivery_time_text ) ) {
+                    // Exemplo: "(4 a 5 dias úteis)"
+                    // Remove parênteses e as palavras "dias úteis", "dias corridos" ou "dias"
+                    $clean = trim( str_replace( ['dias úteis', 'dias corridos', 'dias'], '', $delivery_time_text ), '() ' );
                     
-                    // Função auxiliar para contar finais de semana e feriados entre hoje e uma data final
-                    $count_additional_days = function( $base_days ) use ( $start_date ) {
-                        $end_date = clone $start_date;
-                        $end_date->modify("+{$base_days} days");
-                        $additional = 0;
-                        // Contagem de finais de semana
-                        $interval = new DateInterval('P1D');
-                        $period = new DatePeriod( $start_date, $interval, $end_date );
-                        foreach ( $period as $dt ) {
-                            if ( in_array( $dt->format('N'), [6,7] ) ) {
-                                $additional++;
-                            }
-                        }
-                        // Contagem de feriados
-                        $year = $start_date->format('Y');
-                        $transient_key = 'custom_holidays_' . $year;
-                        $holidays = get_transient( $transient_key );
-                        if ( false === $holidays ) {
-                            $response = wp_remote_get( "https://brasilapi.com.br/api/feriados/v1/{$year}" );
-                            if ( ! is_wp_error( $response ) ) {
-                                $holidays = json_decode( wp_remote_retrieve_body( $response ), true );
-                            } else {
-                                $holidays = [];
-                            }
-                            set_transient( $transient_key, $holidays, DAY_IN_SECONDS );
-                        }
-                        foreach ( $holidays as $holiday ) {
-                            if ( isset( $holiday['date'] ) ) {
-                                $holiday_date = DateTime::createFromFormat('Y-m-d', $holiday['date']);
-                                if ( $holiday_date && $holiday_date >= $start_date && $holiday_date < $end_date ) {
+                    // Captura os dois números (mínimo e máximo)
+                    if ( preg_match('/(\d+)\s*a\s*(\d+)/', $clean, $matches) ) {
+                        $base_min = intval( $matches[1] );
+                        $base_max = intval( $matches[2] );
+                        
+                        // Função auxiliar para contar finais de semana e feriados entre hoje e uma data final
+                        $count_additional_days = function( $base_days ) use ( $start_date ) {
+                            $end_date = clone $start_date;
+                            $end_date->modify("+{$base_days} days");
+                            $additional = 0;
+                            // Contagem de finais de semana
+                            $interval = new DateInterval('P1D');
+                            $period = new DatePeriod( $start_date, $interval, $end_date );
+                            foreach ( $period as $dt ) {
+                                if ( in_array( $dt->format('N'), [6,7] ) ) {
                                     $additional++;
                                 }
                             }
-                        }
-                        return $additional;
-                    };
-            
-                    $additional_min = $count_additional_days( $base_min );
-                    $additional_max = $count_additional_days( $base_max );
-            
-                    $adjusted_min = $base_min + $additional_min;
-                    $adjusted_max = $base_max + $additional_max;
-            
-                    // Atualiza o label removendo o texto entre parênteses original
-                    $original_label = $rates[$rate_id]->get_label();
-                    $original_label = preg_replace('/\s*\(.*?\)$/', '', $original_label);
-                    $new_label = sprintf( __( 'Entrega em aproximadamente de %s a %s dias', 'aireset-default' ), $adjusted_min, $adjusted_max );
-                    
-                    $rates[$rate_id]->set_label( $original_label . ' (' . $new_label . ')' );
-                    // $rates[$rate_id]->delivery_time = $new_label;
-                    
-                    // Atualiza a meta "delivery_time" para o novo formato
-                    $rate->add_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                            // Contagem de feriados
+                            $year = $start_date->format('Y');
+                            $transient_key = 'custom_holidays_' . $year;
+                            $holidays = get_transient( $transient_key );
+                            if ( false === $holidays ) {
+                                $response = wp_remote_get( "https://brasilapi.com.br/api/feriados/v1/{$year}" );
+                                if ( ! is_wp_error( $response ) ) {
+                                    $holidays = json_decode( wp_remote_retrieve_body( $response ), true );
+                                } else {
+                                    $holidays = [];
+                                }
+                                set_transient( $transient_key, $holidays, DAY_IN_SECONDS );
+                            }
+                            foreach ( $holidays as $holiday ) {
+                                if ( isset( $holiday['date'] ) ) {
+                                    $holiday_date = DateTime::createFromFormat('Y-m-d', $holiday['date']);
+                                    if ( $holiday_date && $holiday_date >= $start_date && $holiday_date < $end_date ) {
+                                        $additional++;
+                                    }
+                                }
+                            }
+                            return $additional;
+                        };
+                
+                        $additional_min = $count_additional_days( $base_min );
+                        $additional_max = $count_additional_days( $base_max );
+                
+                        $adjusted_min = $base_min + $additional_min;
+                        $adjusted_max = $base_max + $additional_max;
+                
+                        // Atualiza o label removendo o texto entre parênteses original
+                        $original_label = $rates[$rate_id]->get_label();
+                        $original_label = preg_replace('/\s*\(.*?\)$/', '', $original_label);
+                        $new_label = sprintf( __( 'Entrega em aproximadamente de %s a %s dias', 'aireset-default' ), $adjusted_min, $adjusted_max );
+                        
+                        $rates[$rate_id]->set_label( $original_label . ' (' . $new_label . ')' );
+                        // $rates[$rate_id]->delivery_time = $new_label;
+                        
+                        // Atualiza a meta "delivery_time" para o novo formato
+                        $rate->add_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
 
-            
-                    // Opcional: atualizar o meta "delivery_time" para o novo formato
-                    // foreach ( $rate->get_meta_data() as $key => $meta_item ) {
-                    //     if ( isset( $key ) && $key === 'delivery_time' ) {
-                    //         // $rates[$rate_id]->update_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
-                    //         dump($rates[$rate_id]->ste_meta_data['delivery_time']);
-                    //         $rates[$rate_id]->add_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
-                    //         // $rates[$rate_id]->meta_data['delivery_time'] = sprintf( '%s a %s dias', $adjusted_min, $adjusted_max );
-                    //         dump($rates[$rate_id]->meta_data['delivery_time']);
-                    //         break;
-                    //     }
-                    // }
-                    // Atualiza a meta "delivery_time" para o novo formato
-                    // $rate->update_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                
+                        // Opcional: atualizar o meta "delivery_time" para o novo formato
+                        // foreach ( $rate->get_meta_data() as $key => $meta_item ) {
+                        //     if ( isset( $key ) && $key === 'delivery_time' ) {
+                        //         // $rates[$rate_id]->update_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                        //         dump($rates[$rate_id]->ste_meta_data['delivery_time']);
+                        //         $rates[$rate_id]->add_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                        //         // $rates[$rate_id]->meta_data['delivery_time'] = sprintf( '%s a %s dias', $adjusted_min, $adjusted_max );
+                        //         dump($rates[$rate_id]->meta_data['delivery_time']);
+                        //         break;
+                        //     }
+                        // }
+                        // Atualiza a meta "delivery_time" para o novo formato
+                        // $rate->update_meta_data( 'delivery_time', sprintf( '%s a %s dias', $adjusted_min, $adjusted_max ) );
+                    }
                 }
+                // dump($rates);
+                // die;
             }
-            // dump($rates);
-            // die;
+            return $rates;
         }
-        return $rates;
     }
     // add_action('elementor/dynamic_tags/register_tags', function($dynamic_tags) {
     //     require_once AIRESET_DEFAULT_INC_PATH . 'elementor-dynamic-tags.php';
@@ -789,3 +809,76 @@
     //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_Text_Tag');
     //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_URL_Tag');
     // });
+    
+    // Adicionar o botão "Criar Cliente" na página de edição do pedido no admin
+    if ( ! function_exists( 'add_create_customer_button' ) ) {
+        // Adicionar botão na página de edição do pedido no admin
+        add_action( 'woocommerce_order_actions', 'add_create_customer_button' );
+
+        function add_create_customer_button( $actions ) {
+            global $theorder;
+
+            // Verificar se o pedido foi feito por um visitante (sem ID de usuário)
+            if ( $theorder->get_user_id() == 0 ) {
+                // Adicionar a ação "Criar Cliente" se for um visitante
+                $actions['create_customer'] = __( 'Criar Cliente e Vincular', 'woocommerce' );
+            }
+
+            return $actions;
+        }
+    }
+
+    // Adicionar o processamento da ação ao clicar no botão "Criar Cliente"
+    if ( ! function_exists( 'process_create_customer_from_order' ) ) {
+        // Processar a ação ao clicar no botão
+        add_action( 'woocommerce_order_action_create_customer', 'process_create_customer_from_order' );
+
+        function process_create_customer_from_order( $order ) {
+            $billing_email = $order->get_billing_email();
+            $billing_first_name = $order->get_billing_first_name();
+            $billing_last_name = $order->get_billing_last_name();
+
+            // Verificar se já existe um usuário com o mesmo e-mail
+            if ( !email_exists( $billing_email ) ) {
+                // Gerar um nome de usuário baseado no e-mail
+                $username = sanitize_user( current( explode( '@', $billing_email ) ), true );
+
+                // Gerar uma senha aleatória
+                $password = wp_generate_password();
+
+                // Criar o novo usuário
+                $user_id = wp_create_user( $username, $password, $billing_email );
+
+                if ( !is_wp_error( $user_id ) ) {
+                    // Atualizar as informações do usuário com os detalhes do pedido
+                    wp_update_user( array(
+                        'ID' => $user_id,
+                        'first_name' => $billing_first_name,
+                        'last_name' => $billing_last_name
+                    ));
+
+                    // Atribuir o papel de "customer" (cliente)
+                    $user = new WP_User( $user_id );
+                    $user->set_role( 'customer' );
+
+                    // Atualizar o pedido para vincular ao novo usuário
+                    $order->set_customer_id( $user_id );
+                    $order->save();
+
+                    // Exibir uma mensagem de sucesso no admin
+                    wc_add_notice( __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ), 'success' );
+                } else {
+                    // Exibir uma mensagem de erro no admin
+                    wc_add_notice( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $user_id->get_error_message(), 'error' );
+                }
+            } else {
+                // Se o cliente já existir, vincule o pedido a ele
+                $user = get_user_by( 'email', $billing_email );
+                $order->set_customer_id( $user->ID );
+                $order->save();
+
+                // Exibir uma mensagem de sucesso no admin
+                wc_add_notice( __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ), 'success' );
+            }
+        }
+    }

@@ -42,33 +42,146 @@ body .flexify-step #order_review tr.cart_item td.product-total {
 }
 
 
-/*###
-### Aireset
-###*/
+/* Floating Label */
 
-#wpbody-content .yith-plugin-upgrade-licence-banner {
+/* .elementor-select-wrapper .select-caret-down-wrapper {
+	display: none;
+} */
+
+.floating-input.elementor-field-group {
+    position: relative;
+}
+
+.floating-input.elementor-field-group .elementor-field {
+    padding: 20px 10px 10px;
+    min-height: 40px;
+	margin: 0;
+}
+
+.floating-input.elementor-field-group .elementor-select-wrapper{
+    padding: 0;
+}
+
+.hide-label label{
 	display: none;
 }
 
-#wpbody-content .yith-plugin-fw-wp-page-wrapper .notice {
-	display: none;
+.floating-input .elementor-field-label, 
+.floating-input .elementor-labels-above .elementor-field-group > label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    z-index: 1;
+    transition: font-size 150ms ease-out, -webkit-transform 150ms ease-out;
+    transition: transform 150ms ease-out, font-size 150ms ease-out;
+    transition: transform 150ms ease-out, font-size 150ms ease-out, -webkit-transform 150ms ease-out;
+    /*font-weight: 300;
+    font-size: 1rem;*/
+	font-size: 100%;
+    letter-spacing: 1px;
+	transform: translateY(-50%);
+	margin: 0;
+    padding: 4px 0 !important;
 }
 
-body.woocommerce-admin-page blockquote, 
-body.woocommerce-admin-page ol, 
-body.woocommerce-admin-page p, 
-body.woocommerce-admin-page ul {
-	float: unset;
-	
+.floating-input.focused .elementor-field-label, 
+.floating-input .elementor-labels-above .focused.elementor-field-group > label {
+     /*background-color: #fff;*/
+    line-height:1.5;
+    -webkit-transform: translateY(-1000%);
+      transform: translateY(-100%);
+    font-size: 0.80rem;
+    top: 28px
 }
 
-body.post-type-shop_order.acp-overflow-table .acp-hts-wrapper table, 
-body.post-type-shop_subscription.acp-overflow-table .acp-hts-wrapper table {
-	min-width: 100%;
+.floating-input.elementor-field-group.elementor-field-type-select .elementor-field-label,
+.floating-input .elementor-labels-above .elementor-field-group.elementor-field-type-select > label {
+    display: none;
 }
 
-body .search-box input[name="s"], 
-body .tablenav .search-plugins input[name="s"], 
-body .tagsdiv .newtag {
-	flex-grow: 1;
+.floating-input .elementor-field-group.elementor-field-type-dce_wysiwyg .elementor-field-label-description,
+.floating-input .elementor-labels-above .elementor-field-group.elementor-field-type-dce_wysiwyg > label {
+    position: relative;
+    top: unset;
+    left: unset;
+    color: #fff;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    
 }
+
+
+.floating-input .elementor-field-group.elementor-field-type-select .elementor-field-label-description,
+.floating-input .elementor-field-group.elementor-field-type-select .elementor-field-label-description > label {
+    position: relative;
+    top: unset;
+    left: unset;
+    color: #fff;
+    display: none;
+}
+
+
+.floating-input .elementor-field-group .elementor-field-label-description,
+.floating-input .elementor-field-group .elementor-field-label-description > label {
+    position: relative;
+    top: unset;
+    left: unset;
+    color: #fff;
+    display: none;
+}
+
+.elementor-field-group .elementor-select-wrapper select {
+    padding: 6px 32px 6px 10px;
+    min-height: 50px;
+	margin: 0;
+}
+
+.floating-input.elementor-field-group .elementor-field-label-description:after {
+    content: "";
+    display: none;
+}
+
+.floating-input.elementor-field-group.elementor-field-type-recaptcha_v3 {
+    background: none;
+    padding: 0;
+    min-height: unset;
+}
+.elementor-field-group.elementor-field-type-recaptcha_v3 .elementor-field {
+    background: none;
+    padding: 0;
+    min-height: unset;
+}
+
+.floating-input .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+}
+
+
+.elementor-field-group.elementor-field-type-recaptcha_v3 {
+    background: none;
+    padding: 0;
+    min-height: unset;
+}
+.elementor-field-group.elementor-field-type-recaptcha_v3 .elementor-field {
+    background: none;
+    padding: 0;
+    min-height: unset;
+    
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+}
+/* Floating Label */
+
+
+
+/** 
+ * Máscaras de Telefone com Bandeira
+*/
+.iti {
+	width: 100%;
+}
+/** 
+ * Máscaras de Telefone com Bandeira
+*/

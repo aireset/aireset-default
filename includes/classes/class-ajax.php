@@ -28,92 +28,92 @@ class Ajax {
 	 * @return void
 	 */
 	public function __construct() {
-		// get AJAX call on check inline errors
-		add_action( 'wp_ajax_flexify_check_for_inline_error', array( __CLASS__, 'check_for_inline_error' ) );
+		// // get AJAX call on check inline errors
+		// add_action( 'wp_ajax_flexify_check_for_inline_error', array( __CLASS__, 'check_for_inline_error' ) );
 	
-		// get AJAX call on check inline errors for not logged users
-		add_action( 'wp_ajax_nopriv_flexify_check_for_inline_error', array( __CLASS__, 'check_for_inline_error' ) );
+		// // get AJAX call on check inline errors for not logged users
+		// add_action( 'wp_ajax_nopriv_flexify_check_for_inline_error', array( __CLASS__, 'check_for_inline_error' ) );
 
-		// get AJAX call on check error on proceed step
-		add_action( 'wp_ajax_flexify_check_for_inline_errors', array( __CLASS__, 'check_for_inline_errors' ) );
+		// // get AJAX call on check error on proceed step
+		// add_action( 'wp_ajax_flexify_check_for_inline_errors', array( __CLASS__, 'check_for_inline_errors' ) );
 
-		// get AJAX call on check error on proceed step for not logged users
-		add_action( 'wp_ajax_nopriv_flexify_check_for_inline_errors', array( __CLASS__, 'check_for_inline_errors' ) );
+		// // get AJAX call on check error on proceed step for not logged users
+		// add_action( 'wp_ajax_nopriv_flexify_check_for_inline_errors', array( __CLASS__, 'check_for_inline_errors' ) );
 
-		// get AJAX call on login event
-		add_action( 'wp_ajax_flexify_login', array( __CLASS__, 'login' ) );
+		// // get AJAX call on login event
+		// add_action( 'wp_ajax_flexify_login', array( __CLASS__, 'login' ) );
 
-		// get AJAX call on login event for not logged users
-		add_action( 'wp_ajax_nopriv_flexify_login', array( __CLASS__, 'login' ) );
+		// // get AJAX call on login event for not logged users
+		// add_action( 'wp_ajax_nopriv_flexify_login', array( __CLASS__, 'login' ) );
 
 		// get AJAX calls on change options
 		add_action( 'wp_ajax_aireset_default_admin_ajax_save_options', array( $this, 'ajax_save_options_callback' ) );
 	
-		// get AJAX call from add new font
-		add_action( 'wp_ajax_add_new_font_action', array( $this, 'add_new_font_action_callback' ) );
+		// // get AJAX call from add new font
+		// add_action( 'wp_ajax_add_new_font_action', array( $this, 'add_new_font_action_callback' ) );
 	
-		// get AJAX call for query products search
-		add_action( 'wp_ajax_get_woo_products_ajax', array( $this, 'get_woo_products_callback' ) );
+		// // get AJAX call for query products search
+		// add_action( 'wp_ajax_get_woo_products_ajax', array( $this, 'get_woo_products_callback' ) );
 	
-		// get AJAX call for query products categories
-		add_action( 'wp_ajax_get_woo_categories_ajax', array( $this, 'get_woo_categories_callback' ) );
+		// // get AJAX call for query products categories
+		// add_action( 'wp_ajax_get_woo_categories_ajax', array( $this, 'get_woo_categories_callback' ) );
 		
-		// get AJAX call for query products categories
-		add_action( 'wp_ajax_get_woo_attributes_ajax', array( $this, 'get_woo_attributes_callback' ) );
+		// // get AJAX call for query products categories
+		// add_action( 'wp_ajax_get_woo_attributes_ajax', array( $this, 'get_woo_attributes_callback' ) );
 	
-		// get AJAX call for query WP users
-		add_action( 'wp_ajax_search_users_ajax', array( $this, 'search_users_ajax_callback' ) );
+		// // get AJAX call for query WP users
+		// add_action( 'wp_ajax_search_users_ajax', array( $this, 'search_users_ajax_callback' ) );
 	
-		// get AJAX call from add new condition
-		add_action( 'wp_ajax_add_new_checkout_condition', array( $this, 'add_new_checkout_condition_callback' ) );
+		// // get AJAX call from add new condition
+		// add_action( 'wp_ajax_add_new_checkout_condition', array( $this, 'add_new_checkout_condition_callback' ) );
 	
-		// get AJAX call from exclude condition item
-		add_action( 'wp_ajax_exclude_condition_item', array( $this, 'exclude_condition_item_callback' ) );
+		// // get AJAX call from exclude condition item
+		// add_action( 'wp_ajax_exclude_condition_item', array( $this, 'exclude_condition_item_callback' ) );
 	
-		// get AJAX call from add new email provider
-		add_action( 'wp_ajax_add_new_email_provider', array( $this, 'add_new_email_provider_callback' ) );
+		// // get AJAX call from add new email provider
+		// add_action( 'wp_ajax_add_new_email_provider', array( $this, 'add_new_email_provider_callback' ) );
 	
-		// get AJAX call from remove email provider item
-		add_action( 'wp_ajax_remove_email_provider', array( $this, 'remove_email_provider_callback' ) );
+		// // get AJAX call from remove email provider item
+		// add_action( 'wp_ajax_remove_email_provider', array( $this, 'remove_email_provider_callback' ) );
 
-		// dismiss billing country notice
-		add_action( 'wp_ajax_dismiss_billing_country_warning', array( __CLASS__, 'dismiss_billing_country_warning' ) );
+		// // dismiss billing country notice
+		// add_action( 'wp_ajax_dismiss_billing_country_warning', array( __CLASS__, 'dismiss_billing_country_warning' ) );
 
-		// on deactive license process
-		add_action( 'wp_ajax_deactive_license_action', array( $this, 'deactive_license_callback' ) );
+		// // on deactive license process
+		// add_action( 'wp_ajax_deactive_license_action', array( $this, 'deactive_license_callback' ) );
 
-		// clear activation cache
-		add_action( 'wp_ajax_clear_activation_cache_action', array( $this, 'clear_activation_cache_callback' ) );
+		// // clear activation cache
+		// add_action( 'wp_ajax_clear_activation_cache_action', array( $this, 'clear_activation_cache_callback' ) );
 
-		// reset settings to default
-		add_action( 'wp_ajax_aireset_default_reset_plugin_action', array( $this, 'reset_plugin_callback' ) );
+		// // reset settings to default
+		// add_action( 'wp_ajax_aireset_default_reset_plugin_action', array( $this, 'reset_plugin_callback' ) );
 
-		// check field available on create new field
-		add_action( 'wp_ajax_check_field_availability', array( $this, 'check_field_availability_callback' ) );
+		// // check field available on create new field
+		// add_action( 'wp_ajax_check_field_availability', array( $this, 'check_field_availability_callback' ) );
 
-		// remove option from select
-		add_action( 'wp_ajax_remove_select_option', array( $this, 'remove_select_option_callback' ) );
+		// // remove option from select
+		// add_action( 'wp_ajax_remove_select_option', array( $this, 'remove_select_option_callback' ) );
 
-		// add new select option live
-		add_action( 'wp_ajax_add_new_option_select_live', array( $this, 'add_new_option_select_live_callback' ) );
+		// // add new select option live
+		// add_action( 'wp_ajax_add_new_option_select_live', array( $this, 'add_new_option_select_live_callback' ) );
 
-		// set customer data on checkout session
-		add_action( 'wp_ajax_get_checkout_session_data', array( $this, 'get_checkout_session_data_callback' ) );
-		add_action( 'wp_ajax_nopriv_get_checkout_session_data', array( $this, 'get_checkout_session_data_callback' ) );
+		// // set customer data on checkout session
+		// add_action( 'wp_ajax_get_checkout_session_data', array( $this, 'get_checkout_session_data_callback' ) );
+		// add_action( 'wp_ajax_nopriv_get_checkout_session_data', array( $this, 'get_checkout_session_data_callback' ) );
 
-		// set cart items data on checkout session
-		add_action( 'wp_ajax_get_product_cart_session_data', array( $this, 'get_product_cart_session_data_callback' ) );
-		add_action( 'wp_ajax_nopriv_get_product_cart_session_data', array( $this, 'get_product_cart_session_data_callback' ) );
+		// // set cart items data on checkout session
+		// add_action( 'wp_ajax_get_product_cart_session_data', array( $this, 'get_product_cart_session_data_callback' ) );
+		// add_action( 'wp_ajax_nopriv_get_product_cart_session_data', array( $this, 'get_product_cart_session_data_callback' ) );
 
-		// set entry time on checkout session
-		add_action( 'wp_ajax_set_checkout_entry_time', array( $this, 'set_checkout_entry_time_callback' ) );
-		add_action( 'wp_ajax_nopriv_set_checkout_entry_time', array( $this, 'set_checkout_entry_time_callback' ) );
+		// // set entry time on checkout session
+		// add_action( 'wp_ajax_set_checkout_entry_time', array( $this, 'set_checkout_entry_time_callback' ) );
+		// add_action( 'wp_ajax_nopriv_set_checkout_entry_time', array( $this, 'set_checkout_entry_time_callback' ) );
 
-		// enable AJAX request for autofill company field on digit CNPJ
-		if ( Init::get_setting('enable_autofill_company_info') === 'yes' && License::is_valid() ) {
-			add_action( 'wp_ajax_cnpj_autofill_query', array( __CLASS__, 'cnpj_autofill_query_callback' ) );
-			add_action( 'wp_ajax_nopriv_cnpj_autofill_query', array( __CLASS__, 'cnpj_autofill_query_callback' ) );
-		}
+		// // enable AJAX request for autofill company field on digit CNPJ
+		// if ( Init::get_setting('enable_autofill_company_info') === 'yes' && License::is_valid() ) {
+		// 	add_action( 'wp_ajax_cnpj_autofill_query', array( __CLASS__, 'cnpj_autofill_query_callback' ) );
+		// 	add_action( 'wp_ajax_nopriv_cnpj_autofill_query', array( __CLASS__, 'cnpj_autofill_query_callback' ) );
+		// }
 	}	
 
 

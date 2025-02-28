@@ -89,7 +89,7 @@ class Init {
 			'aireset_default_enable_auto_shipping_calculator' => 'yes',
 			
 			'aireset_default_primary_main_color' => '#000000',
-			'aireset_default_hook_display_shipping_calculator' => 'after_cart',
+			'aireset_default_hook_display_shipping_calculator' => 'shortcode',
 			'aireset_default_text_info_before_input_shipping_calc' => 'Consultar prazo e valor da entrega',
 			'aireset_default_text_button_shipping_calc' => 'Calcular',
 			'aireset_default_text_header_ship' => 'Entrega',

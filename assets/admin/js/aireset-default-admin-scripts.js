@@ -125,6 +125,54 @@
 								});
 							}, 3000);
 						}
+						if (response.status === 'warning') {
+							original_values = settings_form.serialize();
+	
+							$('.aireset-default-wrapper').before(`
+								<div class="toast toast-save-options toast-warning show">
+									<div class="toast-header bg-warning text-white">
+										<span class="me-auto">${response.toast_header_title}</span>
+										<button class="btn-close btn-close-white ms-2 hide-toast" type="button"></button>
+									</div>
+									<div class="toast-body">${response.toast_body_title}</div>
+								</div>
+							`);
+	
+							if (notification_delay) {
+								clearTimeout(notification_delay);
+							}
+	
+							notification_delay = setTimeout(function() {
+								$('.toast-save-options').fadeOut('fast', function() {
+									$(this).remove();
+								});
+							}, 3000);
+
+						}
+						if (response.status === 'error') {
+							original_values = settings_form.serialize();
+	
+							$('.aireset-default-wrapper').before(`
+								<div class="toast toast-save-options toast-error show">
+									<div class="toast-header bg-error text-white">
+										<span class="me-auto">${response.toast_header_title}</span>
+										<button class="btn-close btn-close-white ms-2 hide-toast" type="button"></button>
+									</div>
+									<div class="toast-body">${response.toast_body_title}</div>
+								</div>
+							`);
+	
+							if (notification_delay) {
+								clearTimeout(notification_delay);
+							}
+	
+							notification_delay = setTimeout(function() {
+								$('.toast-save-options').fadeOut('fast', function() {
+									$(this).remove();
+								});
+							}, 3000);
+
+						}
 					} catch (error) {
 						console.log(error);
 					}

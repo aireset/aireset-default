@@ -82,7 +82,7 @@
 			let changed_data = {};
 	
 			// Verifica quais campos foram alterados comparando com os valores originais
-			$.each(form_data, function(_, field) {
+			/*$.each(form_data, function(_, field) {
 				if (original_values.indexOf(field.name + "=" + encodeURIComponent(field.value)) === -1) {
 					changed_data[field.name] = field.value;
 				}
@@ -91,7 +91,7 @@
 			// Se nenhum campo foi alterado, não envia AJAX
 			if ($.isEmptyObject(changed_data)) {
 				return;
-			}
+			}*/
 	
 			$.ajax({
 				url: aireset_default_params.ajax_url,

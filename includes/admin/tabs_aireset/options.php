@@ -18,6 +18,18 @@ defined('ABSPATH') || exit; ?>
 
       <tr>
          <th>
+            <?php echo esc_html__( 'Força evitar zoom de navegador?', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que as pessoas não possam mexer no zoom do site.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="aireset_default_fixed_viewport" name="aireset_default_fixed_viewport" value="yes" <?php checked( Init::get_setting( 'aireset_default_fixed_viewport') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+
+      <tr>
+         <th>
             <?php echo esc_html__( 'Desativar mensagem padrão de "Produto Adicionado ao Carrinho"?', 'aireset-default' ) ?>
             <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que as pessoas possam pagar sem ter que Logar no Woocomerce.', 'aireset-default' ) ?></span>
          </th>

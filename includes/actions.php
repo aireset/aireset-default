@@ -53,6 +53,14 @@
         add_filter( 'woocommerce_notice_types', '__return_empty_array' );
         add_filter( 'woocommerce_order_email_verification_required', '__return_false', 9999 );
     } 
+    
+    if ( Init::get_setting('aireset_default_fixed_viewport') === 'yes' ) {
+        add_action('wp_head', 'aireset_disable_mobile_zoom');
+        function aireset_disable_mobile_zoom() {
+            echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
+        }
+    } 
+    
 
     if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
 

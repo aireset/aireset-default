@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,10 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+= 1.2.7 (08/05/2025) =
+* Melhoria no sistema de ajax do plugin
+* Meta tag para desativar zoom no mobile
 
 = 1.2.6 (25/02/2025) =
 * Inclusão de botão pra criar novos clientes direto do pedido no painel administrativo

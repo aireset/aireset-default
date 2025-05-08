@@ -1,20 +1,20 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'aireset/default',
         'pretty_version' => '1.2.0.x-dev',
         'version' => '1.2.0.9999999-dev',
-        'reference' => 'e98a11c8123c96346db3660efcd30f94e68a1d7e',
-        'type' => 'library',
+        'reference' => 'a09121baed160ef6fc7baec1f99a06dfab25271e',
+        'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'aireset/default' => array(
             'pretty_version' => '1.2.0.x-dev',
             'version' => '1.2.0.9999999-dev',
-            'reference' => 'e98a11c8123c96346db3660efcd30f94e68a1d7e',
-            'type' => 'library',
+            'reference' => 'a09121baed160ef6fc7baec1f99a06dfab25271e',
+            'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,

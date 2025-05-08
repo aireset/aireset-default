@@ -77,7 +77,8 @@ class Init {
 	 */
 	public function set_default_data_options() {
 		$options = [ 
-			'aireset_default_disable_add_to_cart_message' => 'yes',
+			'aireset_default_fixed_viewport' => 'yes',
+			'aireset_default_disable_add_to_cart_message' => 'no',
 			'aireset_default_order_pay_without_login' => 'yes',
 			'aireset_default_status_woocommerce' => 'yes',
 			'aireset_default_auto_create_or_assign_customer_to_order' => 'yes',
@@ -89,7 +90,7 @@ class Init {
 			'aireset_default_enable_auto_shipping_calculator' => 'yes',
 			
 			'aireset_default_primary_main_color' => '#000000',
-			'aireset_default_hook_display_shipping_calculator' => 'shortcode',
+			'aireset_default_hook_display_shipping_calculator' => 'after_cart',
 			'aireset_default_text_info_before_input_shipping_calc' => 'Consultar prazo e valor da entrega',
 			'aireset_default_text_button_shipping_calc' => 'Calcular',
 			'aireset_default_text_header_ship' => 'Entrega',

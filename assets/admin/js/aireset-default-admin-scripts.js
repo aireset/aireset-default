@@ -73,13 +73,36 @@
 		let original_values = settings_form.serialize();
 		var notification_delay;
 		var debounce_timeout;
+		let form_data = settings_form.serializeArray();
+		let changed_data = {};
 	
 		/**
 		 * Salva apenas os campos alterados via AJAX
 		 */
 		function ajax_save_options() {
-			let form_data = settings_form.serializeArray();
-			let changed_data = {};
+			form_data = settings_form.serializeArray();
+			changed_data = {};
+
+			// 2) Garante que todo .toggle-switch apareça em form_data
+			settings_form.find('.toggle-switch').each(function() {
+				const name  = this.name;
+				const value = this.checked ? 'yes' : 'no';
+
+				// console.log(name)
+				// console.log(value)
+		
+				// procura no array se já existe
+				const existing = form_data.find(field => field.name === name);
+				if ( existing ) {
+					// se existe (estava marcado), atualiza o valor
+					existing.value = value;
+				} else {
+					// se não existe (estava desmarcado), adiciona com “no”
+					form_data.push({ name: name, value: value });
+				}
+			});
+
+			// console.log(form_data)
 	
 			// Verifica quais campos foram alterados comparando com os valores originais
 			/*$.each(form_data, function(_, field) {
@@ -87,6 +110,7 @@
 					changed_data[field.name] = field.value;
 				}
 			});
+			console.log(changed_data)
 	
 			// Se nenhum campo foi alterado, não envia AJAX
 			if ($.isEmptyObject(changed_data)) {
@@ -98,6 +122,7 @@
 				type: 'POST',
 				data: {
 					action: 'aireset_default_admin_ajax_save_options',
+					// form_data: changed_data,
 					form_data: form_data,
 				},
 				success: function(response) {

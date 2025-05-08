@@ -55,10 +55,10 @@
     } 
     
     if ( Init::get_setting('aireset_default_fixed_viewport') === 'yes' ) {
-        add_action('wp_head', 'aireset_disable_mobile_zoom');
-        function aireset_disable_mobile_zoom() {
-            echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
-        }
+        // add_action('wp_head', 'aireset_disable_mobile_zoom');
+        // function aireset_disable_mobile_zoom() {
+        //     // echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
+        // }
     } 
     
 
@@ -81,6 +81,40 @@
                     }
                 }
                 return $allcaps;
+            }
+            /**
+             * Permitir seleção de métodos de pagamento mesmo que o pedido não tenha um usuário associado
+             */
+            add_filter( 'woocommerce_available_payment_gateways', 'aireset_allow_payment_gateways_without_user', 10, 1 );
+
+            function aireset_allow_payment_gateways_without_user( $gateways ) {
+                if ( ! is_checkout_pay_page() ) {
+                    return $gateways;
+                }
+
+                // Detecta o pedido pela query string /order-pay/ID/?key=...
+                $order_id = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
+                if ( ! $order_id && isset( $GLOBALS['wp'] ) && ! empty( $GLOBALS['wp']->query_vars['order-pay'] ) ) {
+                    $order_id = absint( $GLOBALS['wp']->query_vars['order-pay'] );
+                }
+
+                if ( ! $order_id ) {
+                    return $gateways;
+                }
+
+                $order = wc_get_order( $order_id );
+                if ( ! $order ) {
+                    return $gateways;
+                }
+
+                // Se o pedido estiver sem usuário, forçamos os gateways a aparecer
+                if ( $order->get_user_id() == 0 ) {
+                    foreach ( $gateways as $gateway ) {
+                        $gateway->enabled = 'yes';
+                    }
+                }
+
+                return $gateways;
             }
         } 
     }

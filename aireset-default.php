@@ -52,7 +52,7 @@ class Aireset_General_Plugin {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public static $version = '1.2.7';
+	public static $version = '1.2.8';
 
     public function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
@@ -112,7 +112,9 @@ class Aireset_General_Plugin {
         // add_action('admin_menu', array( $this, 'add_admin_menu' ));
 
         // Enqueue scripts and styles
-        // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+        // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets_admin' ) );// preciso fazer o mesmo para frontend
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets_frontend' ) );
 
 		// check if WooCommerce is active
 		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
@@ -266,7 +268,41 @@ class Aireset_General_Plugin {
     /**
      * Enqueue scripts and styles.
      */
-    public function enqueue_assets() {
+    public function enqueue_assets_admin() {
+        // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );
+        // wp_enqueue_script( 'aireset-scripts', $this->get_assets_url() . 'js/script.js', array('jquery'), null, true );
+
+        // Carrega o estilo CSS do plugin
+        // wp_enqueue_style(
+        //     'aireset-style',
+        //     $this->get_assets_url() . 'css/style.css',
+        //     array(),
+        //     '1.0.0'
+        // );
+
+        // // Carrega Vue.js via CDN (ou localmente se preferir)
+        // wp_enqueue_script(
+        //     'vue-js',
+        //     'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
+        //     array(),
+        //     '2.6.14',
+        //     true
+        // );
+
+        // // Carrega o script principal do Vue
+        // wp_enqueue_script(
+        //     'aireset-app',
+        //     $this->get_assets_url() . 'js/app.js',
+        //     array('vue-js'),
+        //     '1.0.0',
+        //     true
+        // );
+    }
+    public function enqueue_assets_frontend() {
+		
+		if ( is_plugin_active( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php' ) ) {
+			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
+		}
         // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );
         // wp_enqueue_script( 'aireset-scripts', $this->get_assets_url() . 'js/script.js', array('jquery'), null, true );
 

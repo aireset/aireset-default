@@ -47,6 +47,10 @@ Lançamos versões regularmente com melhorias, correções e atualizações.
 * Melhoria no sistema de ajax do plugin
 * Meta tag para desativar zoom no mobile
 
+= 1.2.7 (08/05/2025) =
+* Melhoria no sistema de ajax do plugin
+* Meta tag para desativar zoom no mobile
+
 = 1.2.6 (25/02/2025) =
 * Inclusão de botão pra criar novos clientes direto do pedido no painel administrativo
 * Inclusão de Classe para adicionar o atributo de classes nos campos de formulário no elementor

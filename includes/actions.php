@@ -908,10 +908,10 @@
                     $order->save();
 
                     // Exibir uma mensagem de sucesso no admin
-                    wc_add_notice( __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ), 'success' );
+                    WC_Admin_Meta_Boxes::add_message( __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ), 'success' );
                 } else {
                     // Exibir uma mensagem de erro no admin
-                    wc_add_notice( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $user_id->get_error_message(), 'error' );
+                    WC_Admin_Meta_Boxes::add_error( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $user_id->get_error_message(), 'error' );
                 }
             } else {
                 // Se o cliente já existir, vincule o pedido a ele
@@ -920,7 +920,7 @@
                 $order->save();
 
                 // Exibir uma mensagem de sucesso no admin
-                wc_add_notice( __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ), 'success' );
+                WC_Admin_Meta_Boxes::add_message( __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ), 'success' );
             }
         }
     }

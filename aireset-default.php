@@ -6,7 +6,7 @@ namespace Aireset\Default;
  * Plugin Name: Aireset - Geral
  * Plugin URI: https://github.com/aireset/aireset-default
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
- * Version: 1.2.8
+ * Version: 1.3.0
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
@@ -26,6 +26,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
+
+if ( ! class_exists( 'Puc_v4_Factory' ) ) {
+    require_once __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
+}
+
+use Puc_v4_Factory;
+
+// URL da sua API de releases no GitHub (sem “releases/latest”)
+$repositoryUrl = 'https://api.github.com/repos/aireset/aireset-default';
+
+// Cria o checador de atualizações
+$updateChecker = Puc_v4_Factory::buildUpdateChecker(
+    $repositoryUrl,
+    __FILE__,               // este arquivo principal do plugin
+    'aireset-default'       // o “slug” do plugin (pasta/nome-do-arquivo)
+);
+
+// Opcional: se você usa uma branch diferente da “master”:
+// $updateChecker->setBranch('master');
+
+// Opcional: para lidar com limitações do GitHub API, defina um token pessoal:
+// $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
+
+// Habilita downloads dos assets (arquivos ZIP de release)
+$updateChecker->getVcsApi()->enableReleaseAssets();
 
 class Aireset_General_Plugin {
 

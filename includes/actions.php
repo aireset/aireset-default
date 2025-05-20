@@ -62,31 +62,25 @@
     } 
     
 
-    if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
-
-        /**
-         * Permitir pagamento de pedidos se o usuário estiver desconectado - WooCommerce
-         */
+   if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
+        // Permitir pagamento de pedidos se o usuário estiver desconectado
         add_filter( 'user_has_cap', 'aireset_order_pay_without_login', 9999, 3 );
-
         if ( ! function_exists( 'aireset_order_pay_without_login' ) ) {
             function aireset_order_pay_without_login( $allcaps, $caps, $args ) {
-                if ( isset( $caps[0], $_GET['key'] ) ) {
-                    if ( $caps[0] === 'pay_for_order' ) {
-                        $order_id = isset( $args[2] ) ? $args[2] : null;
-                        $order = wc_get_order( $order_id );
-                        if ( $order ) {
-                            $allcaps['pay_for_order'] = true;
-                        }
+                if ( isset( $caps[0], $_GET['key'] ) && $caps[0] === 'pay_for_order' ) {
+                    $order_id = isset( $args[2] ) ? $args[2] : null;
+                    $order = wc_get_order( $order_id );
+                    if ( $order ) {
+                        $allcaps['pay_for_order'] = true;
                     }
                 }
                 return $allcaps;
             }
-            /**
-             * Permitir seleção de métodos de pagamento mesmo que o pedido não tenha um usuário associado
-             */
-            add_filter( 'woocommerce_available_payment_gateways', 'aireset_allow_payment_gateways_without_user', 10, 1 );
+        }
 
+        // Permitir seleção de métodos de pagamento mesmo sem usuário vinculado
+        add_filter( 'woocommerce_available_payment_gateways', 'aireset_allow_payment_gateways_without_user', 10, 1 );
+        if ( ! function_exists( 'aireset_allow_payment_gateways_without_user' ) ) {
             function aireset_allow_payment_gateways_without_user( $gateways ) {
                 if ( ! is_checkout_pay_page() ) {
                     return $gateways;
@@ -116,7 +110,19 @@
 
                 return $gateways;
             }
-        } 
+        }
+
+        // Permitir checkout sem cliente vinculado (impede bloqueio por ausência de user_id)
+        add_filter( 'woocommerce_checkout_customer_id', 'aireset_checkout_allow_no_customer', 10, 2 );
+        if ( ! function_exists( 'aireset_checkout_allow_no_customer' ) ) {
+            function aireset_checkout_allow_no_customer( $customer_id, $checkout ) {
+                // Se não houver usuário logado, retorna 0 (sem cliente)
+                if ( ! is_user_logged_in() ) {
+                    return 0;
+                }
+                return $customer_id;
+            }
+        }
     }
 
     if ( Init::get_setting('aireset_default_custom_orders_list_column_content') === 'yes' ) {

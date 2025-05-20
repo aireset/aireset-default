@@ -28,6 +28,9 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.0 (20/05/2025) =
+* Auto Update do plugin pelo github
+  
 Versão 1.2.8 (20/05/2025) =
 * Correção ação criar cliente admin
 

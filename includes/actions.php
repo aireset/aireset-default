@@ -870,57 +870,82 @@
         }
     }
 
+    // 1) Registra o hook admin_notices (vai rodar se o callback for adicionado em process_create_customer)
+    add_action( 'admin_notices', 'aireset_admin_notices' );
+    function aireset_admin_notices() {
+        if ( ! did_action( 'aireset_notice' ) ) {
+            return;
+        }
+        // a mensagem ficará disponível em $GLOBALS['aireset_notice']
+        $notice = $GLOBALS['aireset_notice'];
+        printf(
+            '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
+            esc_attr( $notice['type'] ), 
+            wp_kses_post( $notice['msg'] )
+        );
+    }
+
     // Adicionar o processamento da ação ao clicar no botão "Criar Cliente"
     if ( ! function_exists( 'process_create_customer_from_order' ) ) {
         // Processar a ação ao clicar no botão
         add_action( 'woocommerce_order_action_create_customer', 'process_create_customer_from_order' );
-
         function process_create_customer_from_order( $order ) {
-            $billing_email = $order->get_billing_email();
+            $billing_email      = $order->get_billing_email();
             $billing_first_name = $order->get_billing_first_name();
-            $billing_last_name = $order->get_billing_last_name();
+            $billing_last_name  = $order->get_billing_last_name();
 
-            // Verificar se já existe um usuário com o mesmo e-mail
-            if ( !email_exists( $billing_email ) ) {
-                // Gerar um nome de usuário baseado no e-mail
+            if ( ! email_exists( $billing_email ) ) {
                 $username = sanitize_user( current( explode( '@', $billing_email ) ), true );
-
-                // Gerar uma senha aleatória
                 $password = wp_generate_password();
+                $user_id  = wp_create_user( $username, $password, $billing_email );
 
-                // Criar o novo usuário
-                $user_id = wp_create_user( $username, $password, $billing_email );
-
-                if ( !is_wp_error( $user_id ) ) {
-                    // Atualizar as informações do usuário com os detalhes do pedido
-                    wp_update_user( array(
-                        'ID' => $user_id,
+                if ( ! is_wp_error( $user_id ) ) {
+                    // atualiza dados e seta role
+                    wp_update_user([
+                        'ID'         => $user_id,
                         'first_name' => $billing_first_name,
-                        'last_name' => $billing_last_name
-                    ));
+                        'last_name'  => $billing_last_name,
+                    ]);
+                    ( new WP_User( $user_id ) )->set_role( 'customer' );
 
-                    // Atribuir o papel de "customer" (cliente)
-                    $user = new WP_User( $user_id );
-                    $user->set_role( 'customer' );
-
-                    // Atualizar o pedido para vincular ao novo usuário
+                    // vincula ao pedido
                     $order->set_customer_id( $user_id );
                     $order->save();
 
-                    // Exibir uma mensagem de sucesso no admin
-                    WC_Admin_Meta_Boxes::add_message( __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ), 'success' );
+                    // WooCommerce admin meta box
+                    WC_Admin_Meta_Boxes::add_message( __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ) );
+
+                    // Aviso padrão WP
+                    $GLOBALS['my_create_customer_notice'] = [
+                        'type' => 'success',
+                        'msg'  => __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ),
+                    ];
+                    do_action( 'my_create_customer_notice' );
+
                 } else {
-                    // Exibir uma mensagem de erro no admin
-                    WC_Admin_Meta_Boxes::add_error( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $user_id->get_error_message(), 'error' );
+                    $error = $user_id->get_error_message();
+                    WC_Admin_Meta_Boxes::add_error( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $error );
+
+                    $GLOBALS['my_create_customer_notice'] = [
+                        'type' => 'error',
+                        'msg'  => sprintf( __( 'Erro ao criar o cliente: %s', 'woocommerce' ), $error ),
+                    ];
+                    do_action( 'my_create_customer_notice' );
                 }
+
             } else {
-                // Se o cliente já existir, vincule o pedido a ele
+                // cliente já existe
                 $user = get_user_by( 'email', $billing_email );
                 $order->set_customer_id( $user->ID );
                 $order->save();
 
-                // Exibir uma mensagem de sucesso no admin
-                WC_Admin_Meta_Boxes::add_message( __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ), 'success' );
+                WC_Admin_Meta_Boxes::add_message( __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ) );
+
+                $GLOBALS['my_create_customer_notice'] = [
+                    'type' => 'success',
+                    'msg'  => __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ),
+                ];
+                do_action( 'my_create_customer_notice' );
             }
         }
     }

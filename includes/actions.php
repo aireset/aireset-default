@@ -55,10 +55,10 @@
     } 
     
     if ( Init::get_setting('aireset_default_fixed_viewport') === 'yes' ) {
-        // add_action('wp_head', 'aireset_disable_mobile_zoom');
-        // function aireset_disable_mobile_zoom() {
-        //     // echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
-        // }
+        add_action('wp_head', 'aireset_disable_mobile_zoom', 0);
+        function aireset_disable_mobile_zoom() {
+            echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
+        }
     } 
     
 
@@ -870,21 +870,6 @@
         }
     }
 
-    // 1) Registra o hook admin_notices (vai rodar se o callback for adicionado em process_create_customer)
-    add_action( 'admin_notices', 'aireset_admin_notices' );
-    function aireset_admin_notices() {
-        if ( ! did_action( 'aireset_notice' ) ) {
-            return;
-        }
-        // a mensagem ficará disponível em $GLOBALS['aireset_notice']
-        $notice = $GLOBALS['aireset_notice'];
-        printf(
-            '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
-            esc_attr( $notice['type'] ), 
-            wp_kses_post( $notice['msg'] )
-        );
-    }
-
     // Adicionar o processamento da ação ao clicar no botão "Criar Cliente"
     if ( ! function_exists( 'process_create_customer_from_order' ) ) {
         // Processar a ação ao clicar no botão
@@ -949,3 +934,20 @@
             }
         }
     }
+
+    if ( ! function_exists( 'aireset_admin_notices' ) ) {
+        add_action( 'admin_notices', 'aireset_admin_notices' );
+        function aireset_admin_notices() {
+            if ( ! did_action( 'aireset_notice' ) ) {
+                return;
+            }
+            // a mensagem ficará disponível em $GLOBALS['aireset_notice']
+            $notice = $GLOBALS['aireset_notice'];
+            printf(
+                '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
+                esc_attr( $notice['type'] ), 
+                wp_kses_post( $notice['msg'] )
+            );
+        }
+    }
+

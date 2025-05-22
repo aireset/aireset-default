@@ -27,8 +27,16 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-if ( ! class_exists( 'Puc_v4_Factory' ) ) {
-    require_once __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
+// if ( ! class_exists( 'Puc_v4_Factory' ) ) {
+//     require_once __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
+// }
+
+$updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
+if ( file_exists( $updater_path ) ) {
+    require_once $updater_path;
+} else {
+    error_log( 'PUC não encontrado em: ' . $updater_path );
+    return; // cancela setup se não carregar
 }
 
 use Puc_v4_Factory;
@@ -43,6 +51,8 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
     'aireset-default'       // o “slug” do plugin (pasta/nome-do-arquivo)
 );
 
+$updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
+
 // Opcional: se você usa uma branch diferente da “master”:
 // $updateChecker->setBranch('master');
 
@@ -50,7 +60,10 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
 // $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
 
 // Habilita downloads dos assets (arquivos ZIP de release)
-$updateChecker->getVcsApi()->enableReleaseAssets();
+// $updateChecker->getVcsApi()->enableReleaseAssets();
+
+// 3) Habilita downloads de assets das Releases (usa /releases/latest)
+$updateChecker->enableReleaseAssets();
 
 class Aireset_General_Plugin {
 

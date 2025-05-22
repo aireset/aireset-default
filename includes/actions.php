@@ -115,7 +115,7 @@
         // Permitir checkout sem cliente vinculado (impede bloqueio por ausência de user_id)
         add_filter( 'woocommerce_checkout_customer_id', 'aireset_checkout_allow_no_customer', 10, 2 );
         if ( ! function_exists( 'aireset_checkout_allow_no_customer' ) ) {
-            function aireset_checkout_allow_no_customer( $customer_id, $checkout ) {
+            function aireset_checkout_allow_no_customer( $customer_id, $checkout = null ) {
                 // Se não houver usuário logado, retorna 0 (sem cliente)
                 if ( ! is_user_logged_in() ) {
                     return 0;

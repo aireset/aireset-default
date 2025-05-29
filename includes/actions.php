@@ -892,10 +892,10 @@
             global $theorder;
 
             // Verificar se o pedido foi feito por um visitante (sem ID de usuário)
-            if ( $theorder->get_user_id() == 0 ) {
+            // if ( $theorder->get_user_id() == 0 ) {
                 // Adicionar a ação "Criar Cliente" se for um visitante
                 $actions['create_customer'] = __( 'Cria/Atualizar Cliente e Vincular', 'woocommerce' );
-            }
+            // }
 
             return $actions;
         }
@@ -924,13 +924,18 @@
                     ]);
                     ( new WP_User( $user_id ) )->set_role( 'customer' );
                 } else {
+
                     $error = $user_id->get_error_message();
-                    WC_Admin_Meta_Boxes::add_error( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $error );
-                    $GLOBALS['my_create_customer_notice'] = [
+
+                    // Adiciona mensagem de erro como notificação transiente
+                    set_transient('aireset_admin_notice', array(
                         'type' => 'error',
-                        'msg'  => sprintf( __( 'Erro ao criar o cliente: %s', 'woocommerce' ), $error ),
-                    ];
-                    do_action( 'my_create_customer_notice' );
+                        'message' => sprintf( __( 'Erro ao criar o cliente: %s', 'woocommerce' ), $error )
+                    ), 45);
+
+                    // Redireciona de volta para a página de edição do pedido
+                    wp_redirect( admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) );
+                    exit;
                 }
             } else {
                 // cliente já existe
@@ -977,29 +982,31 @@
             $order->set_customer_id( $user_id );
             $order->save();
 
-            // Mensagem de sucesso
-            WC_Admin_Meta_Boxes::add_message( __( 'Cliente criado/atualizado e vinculado ao pedido com sucesso!', 'woocommerce' ) );
-            $GLOBALS['my_create_customer_notice'] = [
+            // Adiciona mensagem de sucesso como notificação transiente
+            set_transient('aireset_admin_notice', array(
                 'type' => 'success',
-                'msg'  => __( 'Cliente criado/atualizado e vinculado ao pedido com sucesso!', 'woocommerce' ),
-            ];
-            do_action( 'my_create_customer_notice' );
+                'message' => __( 'Cliente criado/atualizado e vinculado ao pedido com sucesso!', 'woocommerce' )
+            ), 45);
+
+            // Redireciona de volta para a página de edição do pedido
+            wp_redirect( admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) );
+            exit;
         }
     }
 
+    // Adiciona hook para exibir as notificações admin
     if ( ! function_exists( 'aireset_admin_notices' ) ) {
         add_action( 'admin_notices', 'aireset_admin_notices' );
         function aireset_admin_notices() {
-            if ( ! did_action( 'aireset_notice' ) ) {
-                return;
+            $notice = get_transient('aireset_admin_notice');
+            if ($notice) {
+                printf(
+                    '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
+                    esc_attr( $notice['type'] ),
+                    esc_html( $notice['message'] )
+                );
+                delete_transient('aireset_admin_notice');
             }
-            // a mensagem ficará disponível em $GLOBALS['aireset_notice']
-            $notice = $GLOBALS['aireset_notice'];
-            printf(
-                '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
-                esc_attr( $notice['type'] ), 
-                wp_kses_post( $notice['msg'] )
-            );
         }
     }
 

@@ -209,51 +209,80 @@
     if ( Init::get_setting('aireset_default_auto_create_or_assign_customer_to_order') === 'yes' ) {
         add_action('woocommerce_process_shop_order_meta', 'auto_create_or_assign_customer_to_order', 10, 1);
 
-        function auto_create_or_assign_customer_to_order($order_id) {
-            // Verifica se a opção está ativada
-            if (get_option('aireset_woo_auto_create_customer') != 1) {
-                return; // Se a criação automática de clientes estiver desativada, não faz nada.
-            }
-
-            // Obtém o pedido
-            $order = wc_get_order($order_id);
-
-            // Verifica se o pedido já tem um cliente associado
-            if ($order->get_customer_id() > 0) {
-                return; // Cliente já está vinculado, nada a fazer.
-            }
-
-            // Obtém o e-mail de faturamento do pedido
-            $billing_email = $order->get_billing_email();
-            
-            if (!$billing_email) {
-                return; // Se não houver e-mail de faturamento, interrompe.
-            }
-
-            // Verifica se o cliente com este e-mail já existe
-            $user = get_user_by('email', $billing_email);
-
-            if ($user) {
-                // Se o cliente existe, associa o cliente ao pedido
-                $order->set_customer_id($user->ID);
-            } else {
-                // Se o cliente não existe, cria um novo cliente
-                $username = sanitize_user(current(explode('@', $billing_email)));
-                $password = wp_generate_password();
-                $user_id = wc_create_new_customer($billing_email, $username, $password);
-
-                // Verifica se a criação do cliente foi bem-sucedida
-                if (!is_wp_error($user_id)) {
-                    // Associa o novo cliente ao pedido
-                    $order->set_customer_id($user_id);
-                } else {
-                    error_log('Erro ao criar cliente automaticamente: ' . $user_id->get_error_message());
+        if ( ! function_exists( 'auto_create_or_assign_customer_to_order' ) ) {
+            function auto_create_or_assign_customer_to_order($order_id) {
+                // Verifica se a opção está ativada
+                if (get_option('aireset_woo_auto_create_customer') != 1) {
                     return;
                 }
-            }
 
-            // Salva as alterações do pedido
-            $order->save();
+                $order = wc_get_order($order_id);
+                if ( ! $order ) {
+                    return;
+                }
+
+                $billing_email = $order->get_billing_email();
+                if (!$billing_email) {
+                    return;
+                }
+
+                $user = get_user_by('email', $billing_email);
+
+                if ($user) {
+                    $user_id = $user->ID;
+                    $order->set_customer_id($user_id);
+                } else {
+                    $username = sanitize_user(current(explode('@', $billing_email)));
+                    $password = wp_generate_password();
+                    $user_id = wc_create_new_customer($billing_email, $username, $password);
+
+                    if (is_wp_error($user_id)) {
+                        error_log('Erro ao criar cliente automaticamente: ' . $user_id->get_error_message());
+                        return;
+                    }
+                    $order->set_customer_id($user_id);
+                }
+
+                // Atualiza SEMPRE os dados do usuário com base no pedido
+                update_user_meta($user_id, 'first_name', $order->get_billing_first_name());
+                update_user_meta($user_id, 'last_name', $order->get_billing_last_name());
+                update_user_meta($user_id, 'billing_phone', $order->get_billing_phone());
+                update_user_meta($user_id, 'billing_address_1', $order->get_billing_address_1());
+                update_user_meta($user_id, 'billing_address_2', $order->get_billing_address_2());
+                update_user_meta($user_id, 'billing_city', $order->get_billing_city());
+                update_user_meta($user_id, 'billing_postcode', $order->get_billing_postcode());
+                update_user_meta($user_id, 'billing_state', $order->get_billing_state());
+                update_user_meta($user_id, 'billing_country', $order->get_billing_country());
+                update_user_meta($user_id, 'billing_company', $order->get_billing_company());
+                update_user_meta($user_id, 'shipping_first_name', $order->get_shipping_first_name());
+                update_user_meta($user_id, 'shipping_last_name', $order->get_shipping_last_name());
+                update_user_meta($user_id, 'shipping_address_1', $order->get_shipping_address_1());
+                update_user_meta($user_id, 'shipping_address_2', $order->get_shipping_address_2());
+                update_user_meta($user_id, 'shipping_city', $order->get_shipping_city());
+                update_user_meta($user_id, 'shipping_postcode', $order->get_shipping_postcode());
+                update_user_meta($user_id, 'shipping_state', $order->get_shipping_state());
+                update_user_meta($user_id, 'shipping_country', $order->get_shipping_country());
+                update_user_meta($user_id, 'shipping_company', $order->get_shipping_company());
+
+                // Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
+                if ( ! function_exists( 'is_plugin_active' ) ) {
+                    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+                }
+                if ( is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php') ) {
+                    update_user_meta($user_id, 'billing_persontype', $order->get_meta('_billing_persontype'));
+                    update_user_meta($user_id, 'billing_cpf', $order->get_meta('_billing_cpf'));
+                    update_user_meta($user_id, 'billing_cnpj', $order->get_meta('_billing_cnpj'));
+                    update_user_meta($user_id, 'billing_ie', $order->get_meta('_billing_ie'));
+                    update_user_meta($user_id, 'billing_birthdate', $order->get_meta('_billing_birthdate'));
+                    update_user_meta($user_id, 'billing_sex', $order->get_meta('_billing_sex'));
+                    update_user_meta($user_id, 'billing_number', $order->get_meta('_billing_number'));
+                    update_user_meta($user_id, 'billing_neighborhood', $order->get_meta('_billing_neighborhood'));
+                    update_user_meta($user_id, 'shipping_number', $order->get_meta('_shipping_number'));
+                    update_user_meta($user_id, 'shipping_neighborhood', $order->get_meta('_shipping_neighborhood'));
+                }
+
+                $order->save();
+            }
         }
     }
 
@@ -869,7 +898,7 @@
             // Verificar se o pedido foi feito por um visitante (sem ID de usuário)
             if ( $theorder->get_user_id() == 0 ) {
                 // Adicionar a ação "Criar Cliente" se for um visitante
-                $actions['create_customer'] = __( 'Criar Cliente e Vincular', 'woocommerce' );
+                $actions['create_customer'] = __( 'Cria/Atualizar Cliente e Vincular', 'woocommerce' );
             }
 
             return $actions;

@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,9 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+Versão 1.3.1 (29/05/2025) =
+* Melhoria no criar e vincular cliente no admin incluindo adicionar os campos no usuario
 
 Versão 1.3.0 (20/05/2025) =
 * Auto Update do plugin pelo github

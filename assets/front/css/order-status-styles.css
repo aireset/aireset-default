@@ -1,0 +1,15 @@
+.order-status.status-wc-on-hold { background: #f7a400; }
+.order-status.status-wc-pending { background: #3d3d3d; }
+.order-status.status-wc-processing { background: #cccc00; }
+.order-status.status-wc-cancelled { background: #e50000; }
+.order-status.status-wc-partial-payed { background: #44ce00; }
+.order-status.status-wc-in-production { background: #214dd1; }
+.order-status.status-wc-in-separation { background: #214dd1; }
+.order-status.status-wc-order-sended { background: #00c130; }
+.order-status.status-wc-order-completed { background: #007fe0; }
+.order-status.status-wc-order-refunded { background: #898989; }
+.order-status.status-wc-order-failed { background: #ea4f4f; }
+.order-status.status-processing {
+    background: #39b54a;
+    color: white;
+}

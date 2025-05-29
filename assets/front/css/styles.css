@@ -1,0 +1,187 @@
+body.single-product .woo-custom-installments-offer{
+	margin-bottom: 1rem !important;
+}
+
+body.single-product.woocommerce div.product form.cart .variations td, 
+body.single-product.woocommerce div.product form.cart .variations th {
+	padding: 0;
+	line-height: 1rem;
+	display: flex;
+	vertical-align: middle;
+	flex-wrap: nowrap;
+	flex-grow: 1;
+}
+
+body.single-product.woocommerce div.product form.cart .variations td label, 
+body.single-product.woocommerce div.product form.cart .variations th label{
+	padding: 0;
+	line-height: 1rem;
+}
+
+body.single-product.woocommerce div.product form.cart .variations tr th{
+	padding-top: 15px;
+}
+
+body.single-product.woocommerce div.product form.cart .variations tr:first-child th{
+	padding-top: 0;
+}
+
+body .flexify-checkout.flexify-checkout__content {
+    max-width: unset;
+}
+
+body #comments {
+    margin: 0 auto;
+}
+
+
+body .flexify-checkout__content-right #order_review tr.cart_item td.product-total, 
+body .flexify-step #order_review tr.cart_item td.product-total {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+/* Floating Label */
+
+/* .elementor-select-wrapper .select-caret-down-wrapper {
+	display: none;
+} */
+
+.floating-input.elementor-field-group {
+    position: relative;
+}
+
+.floating-input.elementor-field-group .elementor-field {
+    padding: 20px 10px 10px;
+    min-height: 40px;
+	margin: 0;
+}
+
+.floating-input.elementor-field-group .elementor-select-wrapper{
+    padding: 0;
+}
+
+.hide-label label{
+	display: none;
+}
+
+.floating-input .elementor-field-label, 
+.floating-input .elementor-labels-above .elementor-field-group > label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    z-index: 1;
+    transition: font-size 150ms ease-out, -webkit-transform 150ms ease-out;
+    transition: transform 150ms ease-out, font-size 150ms ease-out;
+    transition: transform 150ms ease-out, font-size 150ms ease-out, -webkit-transform 150ms ease-out;
+    /*font-weight: 300;
+    font-size: 1rem;*/
+	font-size: 100%;
+    letter-spacing: 1px;
+	transform: translateY(-50%);
+	margin: 0;
+    padding: 4px 0 !important;
+}
+
+.floating-input.focused .elementor-field-label, 
+.floating-input .elementor-labels-above .focused.elementor-field-group > label {
+     /*background-color: #fff;*/
+    line-height:1.5;
+    -webkit-transform: translateY(-1000%);
+      transform: translateY(-100%);
+    font-size: 0.80rem;
+    top: 28px
+}
+
+.floating-input.elementor-field-group.elementor-field-type-select .elementor-field-label,
+.floating-input .elementor-labels-above .elementor-field-group.elementor-field-type-select > label {
+    display: none;
+}
+
+.floating-input .elementor-field-group.elementor-field-type-dce_wysiwyg .elementor-field-label-description,
+.floating-input .elementor-labels-above .elementor-field-group.elementor-field-type-dce_wysiwyg > label {
+    position: relative;
+    top: unset;
+    left: unset;
+    color: #fff;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    
+}
+
+
+.floating-input .elementor-field-group.elementor-field-type-select .elementor-field-label-description,
+.floating-input .elementor-field-group.elementor-field-type-select .elementor-field-label-description > label {
+    position: relative;
+    top: unset;
+    left: unset;
+    color: #fff;
+    display: none;
+}
+
+
+.floating-input .elementor-field-group .elementor-field-label-description,
+.floating-input .elementor-field-group .elementor-field-label-description > label {
+    position: relative;
+    top: unset;
+    left: unset;
+    color: #fff;
+    display: none;
+}
+
+.elementor-field-group .elementor-select-wrapper select {
+    padding: 6px 32px 6px 10px;
+    min-height: 50px;
+	margin: 0;
+}
+
+.floating-input.elementor-field-group .elementor-field-label-description:after {
+    content: "";
+    display: none;
+}
+
+.floating-input.elementor-field-group.elementor-field-type-recaptcha_v3 {
+    background: none;
+    padding: 0;
+    min-height: unset;
+}
+.elementor-field-group.elementor-field-type-recaptcha_v3 .elementor-field {
+    background: none;
+    padding: 0;
+    min-height: unset;
+}
+
+.floating-input .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+}
+
+
+.elementor-field-group.elementor-field-type-recaptcha_v3 {
+    background: none;
+    padding: 0;
+    min-height: unset;
+}
+.elementor-field-group.elementor-field-type-recaptcha_v3 .elementor-field {
+    background: none;
+    padding: 0;
+    min-height: unset;
+    
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+}
+/* Floating Label */
+
+
+
+/** 
+ * Máscaras de Telefone com Bandeira
+*/
+.iti {
+	width: 100%;
+}
+/** 
+ * Máscaras de Telefone com Bandeira
+*/

@@ -1,0 +1,9 @@
+
+
+/** 
+ * Checkout Mestres WP
+*/
+
+body .woocommerce .cwmp_form_login {
+    width: 100%;
+}

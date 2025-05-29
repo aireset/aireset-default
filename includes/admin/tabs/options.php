@@ -1,0 +1,429 @@
+<?php
+
+use Aireset\Default\Init;
+use Aireset\Default\License;
+
+// Exit if accessed directly.
+defined('ABSPATH') || exit; ?>
+
+<div id="general" class="nav-content">
+   <table class="form-table">
+      <?php
+      /**
+      * Hook for display custom generals option
+      * 
+      * @since 3.6.0
+      */
+      do_action('aireset_default_before_general_options'); ?>
+
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Ativar Flexify Checkout', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que o Flexify Checkout possa ser instanciado.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="enable_aireset_default" name="enable_aireset_default" value="yes" <?php checked( Init::get_setting( 'enable_aireset_default') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Mostrar botão Voltar à loja', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir o botão "Voltar à loja" na primeira etapa de finalização de compra.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="enable_back_to_shop_button" name="enable_back_to_shop_button" value="yes" <?php checked( Init::get_setting('enable_back_to_shop_button') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Tornar imagem de produtos clicáveis', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para permitir que o usuário acesse o produto ao clicar na imagem do produto.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="enable_link_image_products" name="enable_link_image_products" value="yes" <?php checked( Init::get_setting('enable_link_image_products') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Pular página do carrinho', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para redirecionar o usuário da página de carrinho para a finalização de compra automaticamente.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="enable_skip_cart_page" name="enable_skip_cart_page" value="yes" <?php checked( Init::get_setting('enable_skip_cart_page') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Ativar verificação de força da senha do usuário', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para forçar a verificação da força de senha na criação da conta do usuário, na finalização de compras.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="check_password_strenght" name="check_password_strenght" value="yes" <?php checked( Init::get_setting('check_password_strenght') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Ativar sugestão de preenchimento do e-mail', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir a sugestão do provedor de e-mail, na finalização de compras.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="email_providers_suggestion" name="email_providers_suggestion" value="yes" <?php checked( Init::get_setting('email_providers_suggestion') === 'yes' ); ?> />
+            </div>
+         </td>
+         <td class="require-email-suggestions-enabled">
+            <button id="set_email_providers_trigger" class="btn btn-outline-primary ms-2"><?php echo esc_html__( 'Configurar provedores', 'aireset-default' ) ?></button>
+
+            <div id="set_email_providers_container" class="popup-container">
+               <div class="popup-content">
+                  <div class="popup-header">
+                     <h5 class="popup-title"><?php echo esc_html__('Configurar sugestão de e-mails', 'aireset-default') ?></h5>
+                     <button id="close_set_email_providers" class="btn-close fs-lg" aria-label="<?php esc_html( 'Fechar', 'aireset-default' ); ?>"></button>
+                  </div>
+                  <div class="popup-body">
+                     <table class="form-table">
+                        <tr class="mb-4">
+                           <th class="w-50">
+                              <?php echo esc_html__( 'Nome e extensão do novo provedor', 'aireset-default' ) ?>
+                              <span class="aireset-default-description"><?php echo esc_html__( 'Informe o nome do novo provedor incluindo a extensão, por exemplo, aireset.com.br', 'aireset-default' ) ?></span>
+                           </th>
+                           <td class="w-50">
+                              <div class="input-group">
+                                 <input type="text" class="form-control" id="get_new_email_provider" value="" placeholder="<?php echo esc_html__( 'aireset.com.br', 'aireset-default' ) ?>"/>
+                                 <button id="add_new_email_provider" class="btn btn-outline-secondary" disabled><?php echo esc_html__( 'Adicionar', 'aireset-default' ) ?></button>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="w-50">
+                              <ul id="aireset_default_email_providers" class="list-group">
+                                 <?php foreach ( Init::get_setting('set_email_providers') as $provider ) : ?>
+                                    <li class="list-group-item d-flex align-items-center justify-content-between" data-provider="<?php echo esc_attr( $provider ) ?>">
+                                       <span><?php echo esc_html( $provider ) ?></span>
+                                       <button class="exclude-provider btn btn-icon btn-sm btn-outline-danger rounded-3 ms-3">
+                                          <svg class="icon icon-sm icon-danger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z"></path></svg>
+                                       </button>
+                                    </li>
+                                 <?php endforeach; ?>
+                              </ul>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Mostrar resumo do pedido aberto por padrão', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para mostrar o resumo do pedido aberto por padrão em celulares.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="display_opened_order_review_mobile" name="display_opened_order_review_mobile" value="yes" <?php checked( Init::get_setting('display_opened_order_review_mobile') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+
+      <?php if ( class_exists('Kangu_Shipping_Method') ) : ?>
+         <tr>
+            <th>
+               <?php echo esc_html__( 'Mostrar endereço da loja física para retirada da encomenda Kangu', 'aireset-default' ) ?>
+               <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para mostrar o endereço da sua loja como ponto de retirada da encomenda Kangu.', 'aireset-default' ) ?></span>
+            </th>
+            <td>
+               <div class="form-check form-switch">
+                  <input type="checkbox" class="toggle-switch" id="enable_display_local_pickup_kangu" name="enable_display_local_pickup_kangu" value="yes" <?php checked( Init::get_setting('enable_display_local_pickup_kangu') === 'yes' ); ?> />
+               </div>
+            </td>
+         </tr>
+      <?php endif; ?>
+
+      <tr class="container-separator"></tr>
+
+      <?php
+      // Brazilian Market on WooCommerce settings
+      $wcbcf_active = class_exists('Extra_Checkout_Fields_For_Brazil');
+      $wcbcf_settings = get_option('wcbcf_settings');
+      $person_type = isset( $wcbcf_settings['person_type'] ) ? intval( $wcbcf_settings['person_type'] ) : null;
+
+      // check if option contains CNPJ
+      if ( $wcbcf_active && $person_type == 1 || $wcbcf_active && $person_type == 3 || WC()->countries->get_base_country() === 'BR' ) : ?>
+         <tr>
+            <th>
+               <?php echo esc_html__( 'Preencher informações da empresa automaticamente', 'aireset-default' ); 
+
+               if ( ! License::is_valid() ) : ?>
+                  <span class="badge pro bg-primary rounded-pill ms-2">
+                     <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                     <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+                  </span>
+               <?php endif; ?>
+               <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para preencher as informações da empresa automaticamente ao digitar o CNPJ (Disponível apenas no Brasil).', 'aireset-default' ) ?></span>
+            </th>
+            <td>
+               <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+                  <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_autofill_company_info" name="enable_autofill_company_info" value="yes" <?php checked( Init::get_setting('enable_autofill_company_info') === 'yes' && License::is_valid() ); ?> />
+               </div>
+            </td>
+         </tr>
+      <?php endif;
+
+      if ( WC()->countries->get_base_country() === 'BR' ) : ?>
+         <tr>
+            <th>
+               <?php echo esc_html__( 'Preencher endereço automaticamente', 'aireset-default' );
+               
+               if ( ! License::is_valid() ) : ?>
+                  <span class="badge pro bg-primary rounded-pill ms-2">
+                     <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                     <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+                  </span>
+               <?php endif; ?>
+
+               <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para preencher os campos de entrega ao digitar o CEP (Recomendado), (Disponível apenas no Brasil).', 'aireset-default' ) ?></span>
+            </th>
+            <td>
+               <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+                  <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_fill_address" name="enable_fill_address" value="yes" <?php checked( Init::get_setting('enable_fill_address') === 'yes' && License::is_valid() ); ?> />
+               </div>
+            </td>
+            <td class="require-auto-fill-address">
+               <button id="auto_fill_address_api_trigger" class="btn btn-outline-primary ms-2"><?php echo esc_html__( 'Configurar API', 'aireset-default' ) ?></button>
+
+               <div class="auto-fill-address-api-container popup-container">
+                  <div class="popup-content">
+                     <div class="popup-header">
+                        <h5 class="popup-title"><?php echo esc_html__('Configurar API de preenchimento de endereço', 'aireset-default') ?></h5>
+                        <button class="auto-fill-address-api-close btn-close fs-lg" aria-label="<?php esc_html( 'Fechar', 'aireset-default' ); ?>"></button>
+                     </div>
+                     <div class="popup-body">
+                        <table class="form-table">
+                           <tr>
+                              <th class="w-50">
+                                 <?php echo esc_html__( 'Serviço de API para busca de endereço', 'aireset-default' ) ?>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe o endereço da API para obter o endereço do usuário através do seu CEP em formato JSON. Use a variável {postcode} para informar o CEP.', 'aireset-default' ) ?></span>
+                              </th>
+                              <td class="w-50">
+                                 <input type="text" class="form-control" id="get_address_api_service" name="get_address_api_service" value="<?php echo Init::get_setting( 'get_address_api_service') ?>"/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="w-50">
+                                 <?php echo esc_html__( 'Propriedade de obtenção de endereço', 'aireset-default' ) ?>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter o endereço que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                              </th>
+                              <td class="w-50">
+                                 <input type="text" class="form-control" id="api_auto_fill_address_param" name="api_auto_fill_address_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_param') ?>"/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="w-50">
+                                 <?php echo esc_html__( 'Propriedade de obtenção do bairro', 'aireset-default' ) ?>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter o bairro que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                              </th>
+                              <td class="w-50">
+                                 <input type="text" class="form-control" id="api_auto_fill_address_neightborhood_param" name="api_auto_fill_address_neightborhood_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_neightborhood_param') ?>"/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="w-50">
+                                 <?php echo esc_html__( 'Propriedade de obtenção de cidade', 'aireset-default' ) ?>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter a cidade que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                              </th>
+                              <td class="w-50">
+                                 <input type="text" class="form-control" id="api_auto_fill_address_city_param" name="api_auto_fill_address_city_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_city_param') ?>"/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="w-50">
+                                 <?php echo esc_html__( 'Propriedade de obtenção de estado', 'aireset-default' ) ?>
+                                 <span class="aireset-default-description"><?php echo esc_html__( 'Informe a propriedade para obter o estado que é retornado pelo serviço da API.', 'aireset-default' ) ?></span>
+                              </th>
+                              <td class="w-50">
+                                 <input type="text" class="form-control" id="api_auto_fill_address_state_param" name="api_auto_fill_address_state_param" value="<?php echo Init::get_setting( 'api_auto_fill_address_state_param') ?>"/>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </td>
+         </tr>
+      <?php endif; ?>
+
+      <tr class="container-separator"></tr>
+      
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Termos e condições ativo por padrão', 'aireset-default' );
+            
+            if ( ! License::is_valid() ) : ?>
+               <span class="badge pro bg-primary rounded-pill ms-2">
+                  <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                  <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+               </span>
+            <?php endif; ?>
+
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para a opção de termos e condições da última etapa ficar ativa por padrão, caso exista uma página de termos e condições configurada.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+               <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_terms_is_checked_default" name="enable_terms_is_checked_default" value="yes" <?php checked( Init::get_setting('enable_terms_is_checked_default') === 'yes' && License::is_valid() ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Permitir alterar quantidade de produtos', 'aireset-default' );
+            
+            if ( ! License::is_valid() ) : ?>
+               <span class="badge pro bg-primary rounded-pill ms-2">
+                  <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                  <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+               </span>
+            <?php endif; ?>
+
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir os seletores de quantidades do produto na finalização de compras.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+               <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_change_product_quantity" name="enable_change_product_quantity" value="yes" <?php checked( Init::get_setting('enable_change_product_quantity') === 'yes' && License::is_valid() ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Permitir remover produtos do carrinho', 'aireset-default' );
+            
+            if ( ! License::is_valid() ) : ?>
+               <span class="badge pro bg-primary rounded-pill ms-2">
+                  <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                  <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+               </span>
+            <?php endif; ?>
+
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir o botão de remoção do produto do carrinho na finalização de compras.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+               <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_remove_product_cart" name="enable_remove_product_cart" value="yes" <?php checked( Init::get_setting('enable_remove_product_cart') === 'yes' && License::is_valid() ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Ativar seletor de país em número de telefone', 'aireset-default' );
+            
+            if ( ! License::is_valid() ) : ?>
+                  <span class="badge pro bg-primary rounded-pill ms-2">
+                     <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                     <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+                  </span>
+            <?php endif; ?>
+
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para exibir o seletor de país no campo de número de telefone. Útil se você vende para outros países.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+               <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_ddi_phone_field" name="enable_ddi_phone_field" value="yes" <?php checked( Init::get_setting('enable_ddi_phone_field') === 'yes' && License::is_valid() ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Aplicar cupom de desconto automaticamente', 'aireset-default' );
+            
+            if ( ! License::is_valid() ) : ?>
+               <span class="badge pro bg-primary rounded-pill ms-2">
+                  <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                  <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+               </span>
+            <?php endif; ?>
+
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para informar um cupom de desconto para ser aplicado automaticamente na finalização de compra.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+               <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_auto_apply_coupon_code" name="enable_auto_apply_coupon_code" value="yes" <?php checked( Init::get_setting('enable_auto_apply_coupon_code') === 'yes' && License::is_valid() ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr class="show-coupon-code-enabled">
+         <th>
+            <?php echo esc_html__( 'Código do cupom de desconto', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Informe o código do cupom de desconto que será aplicado automaticamente na finalização de compra.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <input type="text" name="coupon_code_for_auto_apply" class="form-control" placeholder="<?php echo esc_html__( 'CUPOMDEDESCONTO', 'aireset-default' ) ?>" value="<?php echo Init::get_setting( 'coupon_code_for_auto_apply' ) ?>"/>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Atribuir pedidos de usuários convidados', 'aireset-default' );
+            
+            if ( ! License::is_valid() ) : ?>
+               <span class="badge pro bg-primary rounded-pill ms-2">
+                  <svg class="icon-pro" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 3C12.3334 3 12.6449 3.16613 12.8306 3.443L16.6106 9.07917L21.2523 3.85213C21.5515 3.51525 22.039 3.42002 22.4429 3.61953C22.8469 3.81904 23.0675 4.26404 22.9818 4.70634L20.2956 18.5706C20.0223 19.9812 18.7872 21 17.3504 21H6.64977C5.21293 21 3.97784 19.9812 3.70454 18.5706L1.01833 4.70634C0.932635 4.26404 1.15329 3.81904 1.55723 3.61953C1.96117 3.42002 2.44865 3.51525 2.74781 3.85213L7.38953 9.07917L11.1696 3.443C11.3553 3.16613 11.6667 3 12.0001 3ZM12.0001 5.79533L8.33059 11.2667C8.1582 11.5237 7.8765 11.6865 7.56772 11.7074C7.25893 11.7283 6.95785 11.6051 6.75234 11.3737L3.67615 7.90958L5.66802 18.1902C5.75913 18.6604 6.17082 19 6.64977 19H17.3504C17.8293 19 18.241 18.6604 18.3321 18.1902L20.324 7.90958L17.2478 11.3737C17.0423 11.6051 16.7412 11.7283 16.4324 11.7074C16.1236 11.6865 15.842 11.5237 15.6696 11.2667L12.0001 5.79533Z"></path> </g></svg>
+                  <?php echo esc_html__( 'Pro', 'aireset-default' ) ?>
+               </span>
+            <?php endif; ?>
+            
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que pedidos de usuários convidados na finalização de compra sejam atribuídos a usuários existentes.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch <?php echo ( ! License::is_valid() ) ? 'require-pro' : ''; ?>">
+               <input type="checkbox" class="toggle-switch <?php echo ( ! License::is_valid() ) ? 'pro-version' : ''; ?>" id="enable_assign_guest_orders" name="enable_assign_guest_orders" value="yes" <?php checked( Init::get_setting('enable_assign_guest_orders') === 'yes' && License::is_valid() ); ?> />
+            </div>
+         </td>
+      </tr>
+
+      <tr class="container-separator"></tr>
+
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Ativar página de agradecimento do Flexify Checkout', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para carregar o modelo de página de agradecimento do Flexify Checkout.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="enable_thankyou_page_template" name="enable_thankyou_page_template" value="yes" <?php checked( Init::get_setting( 'enable_thankyou_page_template') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Página de contato', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Selecione a página de contato que será exibida aos clientes na finalização de compra.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+         <select name="contact_page_thankyou" class="form-select">
+            <?php foreach ( get_pages() as $page ) :
+               $selected = ( Init::get_setting( 'contact_page_thankyou' ) === esc_attr( $page->ID ) ) ? 'selected="selected"' : '';
+               echo '<option value="'. esc_attr( $page->ID ) .'" ' . $selected . '>' . esc_html( $page->post_title ) . '</option>';
+            endforeach; ?>
+         </select>
+         </td>
+      </tr>
+
+      <?php
+      /**
+      * Hook for display custom general options
+      * 
+      * @since 3.6.0
+      */
+      do_action('aireset_default_after_general_options'); ?>
+
+   </table>
+</div>

@@ -28,11 +28,59 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.1 (29/05/2025) =
+* Melhoria no criar e vincular cliente no admin incluindo adicionar os campos no usuario
+
+Versão 1.3.0 (20/05/2025) =
+* Auto Update do plugin pelo github
+  
+Versão 1.2.8 (20/05/2025) =
+* Correção ação criar cliente admin
+
+Versão 1.2.7.2 (08/05/2025) =
+* Melhoria no sistema de ajax do plugin
+* Meta tag para desativar zoom no mobile
+
+Versão 1.2.7 (08/05/2025) =
+* Melhoria no sistema de ajax do plugin
+* Meta tag para desativar zoom no mobile
+
+Versão 1.2.6 (25/02/2025) =
+* Inclusão de botão pra criar novos clientes direto do pedido no painel administrativo
+* Inclusão de Classe para adicionar o atributo de classes nos campos de formulário no elementor
+* Inclusão de Classe para adicionar atributos customizados nos campos de formulário no elementor
+* Inclusão de sistema de máscaras e atalhos de classes para as máscaras no formulários do elementor
+* Inclusão de Label Flutuante para formulários do elementor
+* Inclusão do Intel Input para formulários do elementor (beta)
+
+Versão 1.2.5 (20/02/2025) =
+* Melhoria no delivery_time
+* Criaçao da página fixa de dados da empresa
+* Inclusão do sistema para usar no elementor tags dinamicas
+
+Versão 1.2.4 (20/02/2025) =
+* Remoção de dumps nos calculos de frete
+
+Versão 1.2.3 (20/02/2025) =
+* Inclusao de dump e melhoria na mensagem, adicionado validacao de final de semana e de feriados
+
+Versão 1.2.2 (19/02/2025) =
+* Inclusão e finalização de da calculadora de frete
+
+Versão 1.2.1 (19/02/2025) =
+* Fazendo novas funções	e Navegação funcionarem
+
+Versão 1.2.0 (11/02/2025) =
+* Nova versao
+
+Versão 1.1.2 (14/10/2024) =
+* Inclusão de tela para ativar funções e Inclusãode ferramenta para criar o cliente quando cria o pedido
+
 Versão 1.1.1 (03/10/2024) =
 * Melhorando o codigo e removendo funcionalidades desnecessárias
 
-Versão 1.1.0 (30/09/2024)
+Versão 1.1.0 (30/09/2024) =
 * Correções para combinarem com a solicitações do Wordpress
-  
-Versão 1.1.0 (28/07/2024)
+
+Versão 1.0.0 (28/07/2024) =
 * Versão inicial com configurações de status, e-mails, coluna com link do whatsapp e outros.

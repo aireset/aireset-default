@@ -27,43 +27,51 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
+// Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+}
+
+//require puc factory
+
+
 // if ( ! class_exists( 'Puc_v4_Factory' ) ) {
 //     require_once __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
 // }
 
-$updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
-if ( file_exists( $updater_path ) ) {
-    require_once $updater_path;
-} else {
-    error_log( 'PUC não encontrado em: ' . $updater_path );
-    return; // cancela setup se não carregar
-}
+// $updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
+// if ( file_exists( $updater_path ) ) {
+//     require_once $updater_path;
+// } else {
+//     error_log( 'PUC não encontrado em: ' . $updater_path );
+//     return; // cancela setup se não carregar
+// }
 
-use Puc_v4_Factory;
+// use Puc_v4_Factory;
 
-// URL da sua API de releases no GitHub (sem “releases/latest”)
-$repositoryUrl = 'https://api.github.com/repos/aireset/aireset-default';
+// // URL da sua API de releases no GitHub (sem “releases/latest”)
+// $repositoryUrl = 'https://api.github.com/repos/aireset/aireset-default';
 
-// Cria o checador de atualizações
-$updateChecker = Puc_v4_Factory::buildUpdateChecker(
-    $repositoryUrl,
-    __FILE__,               // este arquivo principal do plugin
-    'aireset-default'       // o “slug” do plugin (pasta/nome-do-arquivo)
-);
+// // Cria o checador de atualizações
+// $updateChecker = Puc_v4_Factory::buildUpdateChecker(
+//     $repositoryUrl,
+//     __FILE__,               // este arquivo principal do plugin
+//     'aireset-default'       // o “slug” do plugin (pasta/nome-do-arquivo)
+// );
 
-$updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
+// $updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
 
-// Opcional: se você usa uma branch diferente da “master”:
-// $updateChecker->setBranch('master');
+// // Opcional: se você usa uma branch diferente da “master”:
+// // $updateChecker->setBranch('master');
 
-// Opcional: para lidar com limitações do GitHub API, defina um token pessoal:
-// $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
+// // Opcional: para lidar com limitações do GitHub API, defina um token pessoal:
+// // $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
 
-// Habilita downloads dos assets (arquivos ZIP de release)
-// $updateChecker->getVcsApi()->enableReleaseAssets();
+// // Habilita downloads dos assets (arquivos ZIP de release)
+// // $updateChecker->getVcsApi()->enableReleaseAssets();
 
-// 3) Habilita downloads de assets das Releases (usa /releases/latest)
-$updateChecker->enableReleaseAssets();
+// // 3) Habilita downloads de assets das Releases (usa /releases/latest)
+// $updateChecker->enableReleaseAssets();
 
 class Aireset_General_Plugin {
 
@@ -95,7 +103,28 @@ class Aireset_General_Plugin {
 
     public function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
+		$this->setup_update_checker(); // Adicione esta linha
     }
+
+	private function setup_update_checker() {
+		$updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
+		if ( file_exists( $updater_path ) ) {
+			require_once $updater_path;
+			// Use o namespace correto para a versão 5.5
+			if (class_exists('\Puc_v5p5_Factory')) {
+				$repositoryUrl = 'https://api.github.com/repos/aireset/aireset-default';
+				$updateChecker = \Puc_v5p5_Factory::buildUpdateChecker(
+					$repositoryUrl,
+					__FILE__,
+					'aireset-default'
+				);
+				$updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
+				$updateChecker->enableReleaseAssets();
+			}
+		} else {
+			error_log( 'PUC não encontrado em: ' . $updater_path );
+		}
+	}
 
 	/**
 	 * Define constants

@@ -62,7 +62,7 @@
     } 
     
 
-   if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
+    if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
         // Permitir pagamento de pedidos se o usuário estiver desconectado
         add_filter( 'user_has_cap', 'aireset_order_pay_without_login', 9999, 3 );
         if ( ! function_exists( 'aireset_order_pay_without_login' ) ) {
@@ -264,10 +264,6 @@
                 update_user_meta($user_id, 'shipping_country', $order->get_shipping_country());
                 update_user_meta($user_id, 'shipping_company', $order->get_shipping_company());
 
-                // Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
-                if ( ! function_exists( 'is_plugin_active' ) ) {
-                    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-                }
                 if ( is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php') ) {
                     update_user_meta($user_id, 'billing_persontype', $order->get_meta('_billing_persontype'));
                     update_user_meta($user_id, 'billing_cpf', $order->get_meta('_billing_cpf'));
@@ -896,10 +892,10 @@
             global $theorder;
 
             // Verificar se o pedido foi feito por um visitante (sem ID de usuário)
-            if ( $theorder->get_user_id() == 0 ) {
+            // if ( $theorder->get_user_id() == 0 ) {
                 // Adicionar a ação "Criar Cliente" se for um visitante
                 $actions['create_customer'] = __( 'Cria/Atualizar Cliente e Vincular', 'woocommerce' );
-            }
+            // }
 
             return $actions;
         }
@@ -927,62 +923,90 @@
                         'last_name'  => $billing_last_name,
                     ]);
                     ( new WP_User( $user_id ) )->set_role( 'customer' );
-
-                    // vincula ao pedido
-                    $order->set_customer_id( $user_id );
-                    $order->save();
-
-                    // WooCommerce admin meta box
-                    WC_Admin_Meta_Boxes::add_message( __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ) );
-
-                    // Aviso padrão WP
-                    $GLOBALS['my_create_customer_notice'] = [
-                        'type' => 'success',
-                        'msg'  => __( 'Cliente criado e vinculado ao pedido com sucesso!', 'woocommerce' ),
-                    ];
-                    do_action( 'my_create_customer_notice' );
-
                 } else {
+
                     $error = $user_id->get_error_message();
-                    WC_Admin_Meta_Boxes::add_error( __( 'Erro ao criar o cliente: ', 'woocommerce' ) . $error );
 
-                    $GLOBALS['my_create_customer_notice'] = [
+                    // Adiciona mensagem de erro como notificação transiente
+                    set_transient('aireset_admin_notice', array(
                         'type' => 'error',
-                        'msg'  => sprintf( __( 'Erro ao criar o cliente: %s', 'woocommerce' ), $error ),
-                    ];
-                    do_action( 'my_create_customer_notice' );
-                }
+                        'message' => sprintf( __( 'Erro ao criar o cliente: %s', 'woocommerce' ), $error )
+                    ), 45);
 
+                    // Redireciona de volta para a página de edição do pedido
+                    wp_redirect( admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) );
+                    exit;
+                }
             } else {
                 // cliente já existe
                 $user = get_user_by( 'email', $billing_email );
-                $order->set_customer_id( $user->ID );
-                $order->save();
-
-                WC_Admin_Meta_Boxes::add_message( __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ) );
-
-                $GLOBALS['my_create_customer_notice'] = [
-                    'type' => 'success',
-                    'msg'  => __( 'Pedido vinculado ao cliente existente.', 'woocommerce' ),
-                ];
-                do_action( 'my_create_customer_notice' );
+                $user_id = $user->ID;
             }
+
+            // Atualiza todos os metadados do usuário com base no pedido
+            update_user_meta($user_id, 'first_name', $order->get_billing_first_name());
+            update_user_meta($user_id, 'last_name', $order->get_billing_last_name());
+            update_user_meta($user_id, 'billing_phone', $order->get_billing_phone());
+            update_user_meta($user_id, 'billing_address_1', $order->get_billing_address_1());
+            update_user_meta($user_id, 'billing_address_2', $order->get_billing_address_2());
+            update_user_meta($user_id, 'billing_city', $order->get_billing_city());
+            update_user_meta($user_id, 'billing_postcode', $order->get_billing_postcode());
+            update_user_meta($user_id, 'billing_state', $order->get_billing_state());
+            update_user_meta($user_id, 'billing_country', $order->get_billing_country());
+            update_user_meta($user_id, 'billing_company', $order->get_billing_company());
+            update_user_meta($user_id, 'shipping_first_name', $order->get_shipping_first_name());
+            update_user_meta($user_id, 'shipping_last_name', $order->get_shipping_last_name());
+            update_user_meta($user_id, 'shipping_address_1', $order->get_shipping_address_1());
+            update_user_meta($user_id, 'shipping_address_2', $order->get_shipping_address_2());
+            update_user_meta($user_id, 'shipping_city', $order->get_shipping_city());
+            update_user_meta($user_id, 'shipping_postcode', $order->get_shipping_postcode());
+            update_user_meta($user_id, 'shipping_state', $order->get_shipping_state());
+            update_user_meta($user_id, 'shipping_country', $order->get_shipping_country());
+            update_user_meta($user_id, 'shipping_company', $order->get_shipping_company());
+
+            // Campos extras do plugin brasileiro
+            if ( function_exists('is_plugin_active') && is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php') ) {
+                update_user_meta($user_id, 'billing_persontype', $order->get_meta('_billing_persontype'));
+                update_user_meta($user_id, 'billing_cpf', $order->get_meta('_billing_cpf'));
+                update_user_meta($user_id, 'billing_cnpj', $order->get_meta('_billing_cnpj'));
+                update_user_meta($user_id, 'billing_ie', $order->get_meta('_billing_ie'));
+                update_user_meta($user_id, 'billing_birthdate', $order->get_meta('_billing_birthdate'));
+                update_user_meta($user_id, 'billing_sex', $order->get_meta('_billing_sex'));
+                update_user_meta($user_id, 'billing_number', $order->get_meta('_billing_number'));
+                update_user_meta($user_id, 'billing_neighborhood', $order->get_meta('_billing_neighborhood'));
+                update_user_meta($user_id, 'shipping_number', $order->get_meta('_shipping_number'));
+                update_user_meta($user_id, 'shipping_neighborhood', $order->get_meta('_shipping_neighborhood'));
+            }
+
+            // vincula ao pedido
+            $order->set_customer_id( $user_id );
+            $order->save();
+
+            // Adiciona mensagem de sucesso como notificação transiente
+            set_transient('aireset_admin_notice', array(
+                'type' => 'success',
+                'message' => __( 'Cliente criado/atualizado e vinculado ao pedido com sucesso!', 'woocommerce' )
+            ), 45);
+
+            // Redireciona de volta para a página de edição do pedido
+            wp_redirect( admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) );
+            exit;
         }
     }
 
+    // Adiciona hook para exibir as notificações admin
     if ( ! function_exists( 'aireset_admin_notices' ) ) {
         add_action( 'admin_notices', 'aireset_admin_notices' );
         function aireset_admin_notices() {
-            if ( ! did_action( 'aireset_notice' ) ) {
-                return;
+            $notice = get_transient('aireset_admin_notice');
+            if ($notice) {
+                printf(
+                    '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
+                    esc_attr( $notice['type'] ),
+                    esc_html( $notice['message'] )
+                );
+                delete_transient('aireset_admin_notice');
             }
-            // a mensagem ficará disponível em $GLOBALS['aireset_notice']
-            $notice = $GLOBALS['aireset_notice'];
-            printf(
-                '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>',
-                esc_attr( $notice['type'] ), 
-                wp_kses_post( $notice['msg'] )
-            );
         }
     }
 

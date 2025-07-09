@@ -92,6 +92,7 @@ defined('ABSPATH') || exit; ?>
             // include_once AIRESET_DEFAULT_INC_PATH . 'admin/tabs/conditions.php';
             // include_once AIRESET_DEFAULT_INC_PATH . 'admin/tabs/integrations.php';
             // include_once AIRESET_DEFAULT_INC_PATH . 'admin/tabs/design.php';
+            include_once AIRESET_DEFAULT_INC_PATH . 'admin/tabs_aireset/docs.php';
             include_once AIRESET_DEFAULT_INC_PATH . 'admin/tabs_aireset/about.php';
             
             /**

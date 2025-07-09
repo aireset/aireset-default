@@ -277,6 +277,16 @@ class Assets {
                 wp_enqueue_style( 'bootstrap-grid', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap/bootstrap-grid.min.css', array(), '5.3.3' );
                 wp_enqueue_style( 'bootstrap-utilities', AIRESET_DEFAULT_ASSETS . 'vendor/bootstrap/bootstrap-utilities.min.css', array(), '5.3.3' );
             }
+			
+			if ( Init::get_setting('aireset_default_masks') === 'yes' ) {
+				// Enqueue estilo personalizado
+				wp_enqueue_script( 'aireset-default-admin-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+			}
+			
+			if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
+				// Enqueue estilo personalizado
+				wp_enqueue_script( 'aireset-default-admin-international-phone-js', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+			}
 		
 			wp_localize_script( 'aireset-default-admin-scripts', 'aireset_default_params', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),

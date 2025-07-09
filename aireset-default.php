@@ -32,6 +32,10 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
+$updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
+require_once $updater_path;
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
 class Aireset_General_Plugin {
 
 	/**
@@ -65,29 +69,38 @@ class Aireset_General_Plugin {
 		$this->setup_update_checker(); // Adicione esta linha
     }
 
-	private function setup_update_checker() {
-		$updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
-		if ( file_exists( $updater_path ) ) {
-			require_once $updater_path;
-			// Use o namespace correto para a versão 5.5
-			if (class_exists('\Puc_v5p5_Factory')) {
-				error_log('PUC: Factory encontrada e carregada'); // <-- Adicione esta linha para depuração
-				$repositoryUrl = 'https://api.github.com/repos/aireset/aireset-default';
-				$updateChecker = \Puc_v5p5_Factory::buildUpdateChecker(
-					$repositoryUrl,
-					__FILE__,
-					'aireset-default'
-				);
-				$updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
-				$updateChecker->enableReleaseAssets();
-			} else {
-				error_log('PUC: Factory NÃO encontrada');
-			}
-		} else {
-			error_log( 'PUC não encontrado em: ' . $updater_path );
-		}
-	}
+	/**
+     * Configura o update checker para o plugin.
+     * Esta função contém o código corrigido.
+     */
+    public function setup_update_checker() {
+        // Verifica se a classe PucFactory existe antes de usá-la.
+        if ( ! class_exists('\YahnisElsts\PluginUpdateChecker\v5\PucFactory') ) {
+            return;
+        }
 
+        $repositoryUrl = 'https://github.com/aireset/aireset-default/';
+        
+        // **CORREÇÃO 2: Usar a PucFactory correta para construir o objeto.**
+        $updateChecker = PucFactory::buildUpdateChecker(
+            $repositoryUrl,
+            __FILE__,
+            'aireset-default'
+        );
+
+        // Opcional: Definir a branch
+        $updateChecker->setBranch('master');
+		
+		// $updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
+
+        // **CORREÇÃO 3: Usar o método correto para habilitar release assets.**
+        // A linha abaixo é a forma correta e substitui a chamada getVcsApi() que causava o erro.
+        // $updateChecker->enableReleaseAssets();
+
+        // Opcional: Adicionar token de autenticação para evitar limites da API do GitHub
+        // $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
+    }
+	
 	/**
 	 * Define constants
 	 * 
@@ -477,6 +490,40 @@ class Aireset_General_Plugin {
 		echo '<div class="notice is-dismissible error">
 				<p>' . __( 'Requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'hubgo-shipping-management-wc' ) . '</p>
 			</div>';
+	}
+
+	// Função utilitária para listar releases do GitHub
+	public static function listar_versoes_github() {
+		$repo = 'aireset/aireset-default';
+		$url = "https://api.github.com/repos/$repo/releases";
+		$args = array(
+			'headers' => array(
+				'Accept'        => 'application/vnd.github.v3+json',
+				'User-Agent'    => 'WordPress/' . get_bloginfo('version'),
+			),
+			'timeout' => 15,
+		);
+
+		$response = wp_remote_get($url, $args);
+
+		if (is_wp_error($response)) {
+			return 'Erro ao consultar o GitHub: ' . $response->get_error_message();
+		}
+
+		$body = wp_remote_retrieve_body($response);
+		$releases = json_decode($body);
+
+		if (empty($releases)) {
+			return 'Nenhuma versão encontrada.';
+		}
+
+		$output = '<ul>';
+		foreach ($releases as $release) {
+			$output .= '<li>' . esc_html($release->tag_name) . ' - ' . esc_html($release->name) . '</li>';
+		}
+		$output .= '</ul>';
+
+		return $output;
 	}
 }
 

@@ -10,7 +10,7 @@ new Autoloader();
 
 require __DIR__ . '/Puc/v5p5/PucFactory.php';
 require __DIR__ . '/Puc/v5/PucFactory.php';
-
+Puc_v5p5_Factory
 //Register classes defined in this version with the factory.
 foreach (
 	array(

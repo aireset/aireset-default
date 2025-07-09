@@ -851,12 +851,13 @@
             return $rates;
         }
     }
-    // add_action('elementor/dynamic_tags/register_tags', function($dynamic_tags) {
-    //     require_once AIRESET_DEFAULT_INC_PATH . 'elementor-dynamic-tags.php';
 
-    //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_Text_Tag');
-    //     $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_URL_Tag');
-    // });
+    add_action('elementor/dynamic_tags/register_tags', function($dynamic_tags) {
+        require_once AIRESET_DEFAULT_INC_PATH . 'elementor-dynamic-tags.php';
+
+        $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_Text_Tag');
+        $dynamic_tags->register_tag('Aireset\Default\Elementor\Aireset_Dynamic_URL_Tag');
+    });
 
     if ( ! function_exists( 'aireset_custom_styles' ) ) {
         function aireset_custom_styles() {
@@ -864,11 +865,23 @@
                 // Enqueue estilo personalizado
                 wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css', array(), AIRESET_DEFAULT_VERSION);
                 wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js', array('jquery'), AIRESET_DEFAULT_VERSION);
-                wp_enqueue_script( 'aireset-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION);
             }
         }
         // Adiciona o hook para carregar o estilo na área administrativa
         add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+    }
+    
+    if ( Init::get_setting('aireset_default_masks') === 'yes' ) {
+        if ( ! function_exists( 'aireset_custom_styles' ) ) {
+            function aireset_custom_styles() {
+                if(!is_admin()){
+                    // Enqueue estilo personalizado
+                    wp_enqueue_script( 'aireset-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+                }
+            }
+            // Adiciona o hook para carregar o estilo na área administrativa
+            add_action('wp_enqueue_scripts', 'aireset_custom_styles');
+        }
     }
     
     if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {

@@ -54,6 +54,30 @@ defined('ABSPATH') || exit; ?>
 
       <tr>
          <th>
+            <?php echo esc_html__( 'Ativar mascaras customizadas?', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que você possa usar mascarás customizadas no no wordpress.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="aireset_default_masks" name="aireset_default_masks" value="yes" <?php checked( Init::get_setting( 'aireset_default_masks') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Ativar Número de Telefone com Bandeira?', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que possa usar Número de Telefone com Bandeira.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="aireset_default_intl_tel_input" name="aireset_default_intl_tel_input" value="yes" <?php checked( Init::get_setting( 'aireset_default_intl_tel_input') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+
+      <tr>
+         <th>
             <?php echo esc_html__( 'Ativar Status Customizados do Woocomerce?', 'aireset-default' ) ?>
             <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que Status Customizados do Woocomerce sejam ativados.', 'aireset-default' ) ?></span>
          </th>

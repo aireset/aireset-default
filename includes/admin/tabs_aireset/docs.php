@@ -8,6 +8,9 @@ defined('ABSPATH') || exit; ?>
 
 <div id="docs" class="nav-content">
   <table class="form-table">
+
+  <?php dump(Init::get_setting('aireset_default_masks')) ?>
+  <?php dump(Init::get_setting('aireset_default_masks')) ?>
 	
 	<?php if ( Init::get_setting('aireset_default_masks') === 'yes' ): ?>
 	<tr class="w-75 mt-5">

@@ -94,76 +94,90 @@ class Assets {
 
 
 		// international phone number selector
-		if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-international-phone-js', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
-			wp_enqueue_style( 'aireset-default-international-phone-css', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );7
-			$deps[] = 'aireset-default-international-phone-js';
-		}
+		// if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aireset_default() && License::is_valid() ) {
+		// 	// wp_enqueue_script( 'aireset-default-international-phone-js', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
+		// 	// wp_enqueue_style( 'aireset-default-international-phone-css', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
+		// 	// $deps[] = 'aireset-default-international-phone-js';
+		// }
 
 		$timestamp = time();
+		
+		// Enqueue estilo personalizado
+		wp_enqueue_style( 'aireset-default-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css', array(), AIRESET_DEFAULT_VERSION);
+		wp_enqueue_script( 'aireset-default-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+		
+		if ( Init::get_setting('aireset_default_masks') === 'yes' ) {
+			// Enqueue estilo personalizado
+			wp_enqueue_script( 'aireset-default-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+		}
+		
+		if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
+			// Enqueue estilo personalizado
+			wp_enqueue_script( 'aireset-default-international-phone-js', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+		}
 
 		// Add the timestamp as a query parameter to the main.js file URL
-		$script = AIRESET_DEFAULT_ASSETS . 'frontend/js/main.js?version=' . $timestamp;
+		// $script = AIRESET_DEFAULT_ASSETS . 'frontend/js/main.js?version=' . $timestamp;
 
-		// Set script version to null to avoid version-based caching
-		$version = null;
+		// // Set script version to null to avoid version-based caching
+		// $version = null;
 
-		wp_enqueue_script('aireset-default', $script, $deps, $version, true);
+		// wp_enqueue_script('aireset-default', $script, $deps, $version, true);
 
-		// autofill address to enter postcode (just valid for Brazil)
-		if ( Init::get_setting('enable_fill_address') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-autofill-address-js', AIRESET_DEFAULT_ASSETS . 'frontend/js/autofill-address.js', array('jquery'), AIRESET_DEFAULT_VERSION, false );
+		// // autofill address to enter postcode (just valid for Brazil)
+		// if ( Init::get_setting('enable_fill_address') === 'yes' && is_aireset_default() && License::is_valid() ) {
+		// 	wp_enqueue_script( 'aireset-default-autofill-address-js', AIRESET_DEFAULT_ASSETS . 'frontend/js/autofill-address.js', array('jquery'), AIRESET_DEFAULT_VERSION, false );
 
-			// send params from JS
-			$auto_fill_address_api_params = apply_filters( 'aireset_default_auto_fill_address', array(
-				'api_service' => Init::get_setting('get_address_api_service'),
-				'address_param' => Init::get_setting('api_auto_fill_address_param'),
-				'neightborhood_param' => Init::get_setting('api_auto_fill_address_neightborhood_param'),
-				'city_param' => Init::get_setting('api_auto_fill_address_city_param'),
-				'state_param' => Init::get_setting('api_auto_fill_address_state_param'),
-			));
+		// 	// send params from JS
+		// 	$auto_fill_address_api_params = apply_filters( 'aireset_default_auto_fill_address', array(
+		// 		'api_service' => Init::get_setting('get_address_api_service'),
+		// 		'address_param' => Init::get_setting('api_auto_fill_address_param'),
+		// 		'neightborhood_param' => Init::get_setting('api_auto_fill_address_neightborhood_param'),
+		// 		'city_param' => Init::get_setting('api_auto_fill_address_city_param'),
+		// 		'state_param' => Init::get_setting('api_auto_fill_address_state_param'),
+		// 	));
 			
-			wp_localize_script( 'aireset-default-autofill-address-js', 'fcw_auto_fill_address_api_params', $auto_fill_address_api_params );
-		}
+		// 	wp_localize_script( 'aireset-default-autofill-address-js', 'fcw_auto_fill_address_api_params', $auto_fill_address_api_params );
+		// }
 
-		// autofill field on enter CNPJ (just valid for Brazil)
-		if ( Init::get_setting('enable_autofill_company_info') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-autofill-cnpj-js', AIRESET_DEFAULT_ASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), AIRESET_DEFAULT_VERSION, false );
-		}
+		// // autofill field on enter CNPJ (just valid for Brazil)
+		// if ( Init::get_setting('enable_autofill_company_info') === 'yes' && is_aireset_default() && License::is_valid() ) {
+		// 	wp_enqueue_script( 'aireset-default-autofill-cnpj-js', AIRESET_DEFAULT_ASSETS . 'frontend/js/autofill-cnpj.js', array('jquery'), AIRESET_DEFAULT_VERSION, false );
+		// }
 
-		// remove brazilian market fields if is not Brazil country
-		if ( Init::get_setting('enable_unset_wcbcf_fields_not_brazil') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'aireset-default-remove-wcbcf-fields', AIRESET_DEFAULT_ASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), AIRESET_DEFAULT_VERSION );
-		}
+		// // remove brazilian market fields if is not Brazil country
+		// if ( Init::get_setting('enable_unset_wcbcf_fields_not_brazil') === 'yes' && is_aireset_default() && License::is_valid() ) {
+		// 	wp_enqueue_script( 'aireset-default-remove-wcbcf-fields', AIRESET_DEFAULT_ASSETS . 'frontend/js/remove-wcbcf-fields.js', array('jquery'), AIRESET_DEFAULT_VERSION );
+		// }
 
-		// enable field masks
-		if ( Init::get_setting('enable_field_masks') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'jquery-mask-lib', AIRESET_DEFAULT_ASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
-			wp_enqueue_script( 'aireset-default-field-masks', AIRESET_DEFAULT_ASSETS . 'frontend/js/field-masks.js', array('jquery'), AIRESET_DEFAULT_VERSION );
-			wp_localize_script( 'aireset-default-field-masks', 'fcw_field_masks', array( 'get_input_masks' => Core::get_fields_with_mask() ) );
-		}
+		// // enable field masks
+		// if ( Init::get_setting('enable_field_masks') === 'yes' && is_aireset_default() && License::is_valid() ) {
+		// 	wp_enqueue_script( 'jquery-mask-lib', AIRESET_DEFAULT_ASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16' );
+		// 	wp_enqueue_script( 'aireset-default-field-masks', AIRESET_DEFAULT_ASSETS . 'frontend/js/field-masks.js', array('jquery'), AIRESET_DEFAULT_VERSION );
+		// 	wp_localize_script( 'aireset-default-field-masks', 'fcw_field_masks', array( 'get_input_masks' => Core::get_fields_with_mask() ) );
+		// }
 
 		// add email suggestions
-		if ( Init::get_setting('email_providers_suggestion') === 'yes' ) {
-			wp_enqueue_script( 'aireset-default-email-suggestions', AIRESET_DEFAULT_ASSETS . 'frontend/js/email-suggestions.js', array('jquery'), AIRESET_DEFAULT_VERSION );
+		// if ( Init::get_setting('email_providers_suggestion') === 'yes' ) {
+		// 	wp_enqueue_script( 'aireset-default-email-suggestions', AIRESET_DEFAULT_ASSETS . 'frontend/js/email-suggestions.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 
-			$emails_suggestions_params = apply_filters( 'aireset_default_emails_suggestions', array(
-				'get_providers' => Init::get_setting('set_email_providers'),
-			));
+		// 	$emails_suggestions_params = apply_filters( 'aireset_default_emails_suggestions', array(
+		// 		'get_providers' => Init::get_setting('set_email_providers'),
+		// 	));
 
-			wp_localize_script( 'aireset-default-email-suggestions', 'fcw_emails_suggestions_params', $emails_suggestions_params );
-		}
+		// 	wp_localize_script( 'aireset-default-email-suggestions', 'fcw_emails_suggestions_params', $emails_suggestions_params );
+		// }
 
-		// add frontend conditions
-		if ( ! empty( get_option('aireset_default_conditions') ) ) {
-			wp_enqueue_script( 'aireset-default-conditions', AIRESET_DEFAULT_ASSETS . 'frontend/js/conditions.js', array('jquery'), AIRESET_DEFAULT_VERSION );
+		// // add frontend conditions
+		// if ( ! empty( get_option('aireset_default_conditions') ) ) {
+		// 	wp_enqueue_script( 'aireset-default-conditions', AIRESET_DEFAULT_ASSETS . 'frontend/js/conditions.js', array('jquery'), AIRESET_DEFAULT_VERSION );
 
-			$conditions_params = apply_filters( 'aireset_default_front_conditions', array(
-				'field_condition' => Conditions::filter_component_type('field'),
-			));
+		// 	$conditions_params = apply_filters( 'aireset_default_front_conditions', array(
+		// 		'field_condition' => Conditions::filter_component_type('field'),
+		// 	));
 
-			wp_localize_script( 'aireset-default-conditions', 'fcw_condition_param', $conditions_params );
-		}
+		// 	wp_localize_script( 'aireset-default-conditions', 'fcw_condition_param', $conditions_params );
+		// }
 
 		/**
 		 * Aireset Default script localized data
@@ -172,43 +186,43 @@ class Assets {
 		 * @version 3.5.0
 		 * @return array
 		 */
-		$aireset_default_script_data = apply_filters( 'aireset_default_script_data', array(
-			'allowed_countries' => array_map( 'strtolower', array_keys( WC()->countries->get_allowed_countries() ) ),
-			'ajax_url' => admin_url('admin-ajax.php'),
-			'is_user_logged_in' => is_user_logged_in(),
-			'localstorage_fields' => self::get_localstorage_fields(),
-			'international_phone' => Init::get_setting('enable_ddi_phone_field') ? Init::get_setting('enable_ddi_phone_field') : '',
-			'allow_login_existing_user' => 'inline_popup',
-			'steps' => Steps::get_steps_hashes(),
-			'i18n' => array(
-				'error' => __( 'Corrija todos os erros e tente novamente.', 'aireset-default' ),
-				'errorAddressSearch' => __( 'Procure um endereço e tente novamente.', 'aireset-default' ),
-				'login' => __( 'Entrar', 'aireset-default' ),
-				'pay' => __( 'Pagar', 'aireset-default' ),
-				'coupon_success' => __( 'O cupom foi removido.', 'aireset-default' ),
-				'account_exists' => __( 'Uma conta já está registrada com este endereço de e-mail. Gostaria de entrar nela?', 'aireset-default' ),
-				'login_successful' => __( 'Bem vindo de volta!', 'aireset-default' ),
-				'error_occured' => __( 'Ocorreu um erro', 'aireset-default' ),
-				'phone' => array(
-					'invalid' => __( 'Por favor, insira um número de telefone válido.', 'aireset-default' ),
-				),
-				'cpf' => array(
-					'invalid' => __( 'Por favor, insira um CPF válido.', 'aireset-default' ),
-				),
-				'cnpj' => array(
-					'invalid' => __( 'Por favor, insira um CNPJ válido.', 'aireset-default' ),
-				),
-				'required_field' => __( 'obrigatório', 'aireset-default' ),
-			),
-			'update_cart_nonce' => wp_create_nonce('update_cart'),
-			'shop_page' => Helpers::get_shop_page_url(),
-			'base_country' => WC()->countries->get_base_country(),
-			'intl_util_path' => plugins_url( 'assets/vendor/intl-tel-input/js/utils.js', AIRESET_DEFAULTFILE ),
-			'get_new_select_fields' => Helpers::get_new_select_fields(),
-			'check_password_strenght' => Init::get_setting('check_password_strenght'),
-			'get_all_checkout_fields' => Helpers::export_all_checkout_fields(),
-			'opened_default_order_summary' => Init::get_setting('display_opened_order_review_mobile'),
-		));
+		// $aireset_default_script_data = apply_filters( 'aireset_default_script_data', array(
+		// 	'allowed_countries' => array_map( 'strtolower', array_keys( WC()->countries->get_allowed_countries() ) ),
+		// 	'ajax_url' => admin_url('admin-ajax.php'),
+		// 	'is_user_logged_in' => is_user_logged_in(),
+		// 	'localstorage_fields' => self::get_localstorage_fields(),
+		// 	'international_phone' => Init::get_setting('enable_ddi_phone_field') ? Init::get_setting('enable_ddi_phone_field') : '',
+		// 	'allow_login_existing_user' => 'inline_popup',
+		// 	'steps' => Steps::get_steps_hashes(),
+		// 	'i18n' => array(
+		// 		'error' => __( 'Corrija todos os erros e tente novamente.', 'aireset-default' ),
+		// 		'errorAddressSearch' => __( 'Procure um endereço e tente novamente.', 'aireset-default' ),
+		// 		'login' => __( 'Entrar', 'aireset-default' ),
+		// 		'pay' => __( 'Pagar', 'aireset-default' ),
+		// 		'coupon_success' => __( 'O cupom foi removido.', 'aireset-default' ),
+		// 		'account_exists' => __( 'Uma conta já está registrada com este endereço de e-mail. Gostaria de entrar nela?', 'aireset-default' ),
+		// 		'login_successful' => __( 'Bem vindo de volta!', 'aireset-default' ),
+		// 		'error_occured' => __( 'Ocorreu um erro', 'aireset-default' ),
+		// 		'phone' => array(
+		// 			'invalid' => __( 'Por favor, insira um número de telefone válido.', 'aireset-default' ),
+		// 		),
+		// 		'cpf' => array(
+		// 			'invalid' => __( 'Por favor, insira um CPF válido.', 'aireset-default' ),
+		// 		),
+		// 		'cnpj' => array(
+		// 			'invalid' => __( 'Por favor, insira um CNPJ válido.', 'aireset-default' ),
+		// 		),
+		// 		'required_field' => __( 'obrigatório', 'aireset-default' ),
+		// 	),
+		// 	'update_cart_nonce' => wp_create_nonce('update_cart'),
+		// 	'shop_page' => Helpers::get_shop_page_url(),
+		// 	'base_country' => WC()->countries->get_base_country(),
+		// 	'intl_util_path' => plugins_url( 'assets/vendor/intl-tel-input/js/utils.js', AIRESET_DEFAULTFILE ),
+		// 	'get_new_select_fields' => Helpers::get_new_select_fields(),
+		// 	'check_password_strenght' => Init::get_setting('check_password_strenght'),
+		// 	'get_all_checkout_fields' => Helpers::export_all_checkout_fields(),
+		// 	'opened_default_order_summary' => Init::get_setting('display_opened_order_review_mobile'),
+		// ));
 
 		wp_localize_script( 'aireset-default', 'aireset_default_vars', $aireset_default_script_data );
 

@@ -92,11 +92,12 @@ class Assets {
 			'wp-hooks',
 		);
 
+
 		// international phone number selector
 		if ( Init::get_setting('enable_ddi_phone_field') === 'yes' && is_aireset_default() && License::is_valid() ) {
-			wp_enqueue_script( 'flexify-international-phone-js', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
-			wp_enqueue_style( 'flexify-international-phone-css', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );
-			$deps[] = 'flexify-international-phone-js';
+			wp_enqueue_script( 'aireset-default-international-phone-js', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/js/intlTelInput-jquery.min.js', array('jquery'), '17.0.19', false );
+			wp_enqueue_style( 'aireset-default-international-phone-css', AIRESET_DEFAULT_ASSETS . 'vendor/intl-tel-input/css/intlTelInput.min.css', array(), '17.0.19' );7
+			$deps[] = 'aireset-default-international-phone-js';
 		}
 
 		$timestamp = time();
@@ -419,8 +420,8 @@ class Assets {
 					background-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
 
-				.aireset-default .flexify-button,
-				.aireset-default .flexify-button:hover,
+				.aireset-default .aireset-default-button,
+				.aireset-default .aireset-default-button:hover,
 				.button,
 				button {
 					background-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
@@ -436,7 +437,7 @@ class Assets {
 					border-color: <?php echo esc_attr( $primary ); ?> !important;
 				}
 
-				.flexify-heading__count {
+				.aireset-default-heading__count {
 					background-color: <?php echo esc_attr( $primary ); ?> !important;
 				}
 
@@ -483,11 +484,11 @@ class Assets {
 					border-color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
 
-				.flexify-review-customer__buttons a[data-stepper-goto] {
+				.aireset-default-review-customer__buttons a[data-stepper-goto] {
 					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
 
-				.flexify-review-customer__buttons a[data-stepper-goto]:hover {
+				.aireset-default-review-customer__buttons a[data-stepper-goto]:hover {
 					color: <?php echo esc_attr( $settings['set_primary_color'] ); ?>;
 				}
 
@@ -544,8 +545,8 @@ class Assets {
 				.form-row textarea,
 				#shipping_method li label,
 				.button,
-				.flexify-button,
-				.flexify-ty-status {
+				.aireset-default-button,
+				.aireset-default-ty-status {
 					border-radius: <?php echo esc_attr( $border_radius ); ?> !important;
 				}
 	

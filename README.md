@@ -28,6 +28,9 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.2 (08/07/2025) =
+* Inclusão de sistema de mascaras
+
 Versão 1.3.1 (29/05/2025) =
 * Melhoria no criar e vincular cliente no admin incluindo adicionar os campos no usuario
 

@@ -864,6 +864,7 @@
                 // Enqueue estilo personalizado
                 wp_enqueue_style( 'aireset-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css', array(), AIRESET_DEFAULT_VERSION);
                 wp_enqueue_script( 'aireset-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+                wp_enqueue_script( 'aireset-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION);
             }
         }
         // Adiciona o hook para carregar o estilo na área administrativa

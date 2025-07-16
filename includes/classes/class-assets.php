@@ -42,45 +42,45 @@ class Assets {
 	 * @return void
 	 */
 	public static function frontend_assets() {
-		if ( ! defined( 'IS_AIRESET_DEFAULT' ) || ! IS_AIRESET_DEFAULT ) {
-			return;
-		}
+		// if ( ! defined( 'IS_AIRESET_DEFAULT' ) || ! IS_AIRESET_DEFAULT ) {
+		// 	return;
+		// }
 
-		global $wp, $wp_scripts, $wp_styles;
+		// global $wp, $wp_scripts, $wp_styles;
 
-		$settings = get_option('aireset_default_settings');
-		$theme = Core::get_theme();
+		// $settings = get_option('aireset_default_settings');
+		// // $theme = Core::get_theme();
 
-		/**
-		 * Choose which sources are allowed at checkout
-		 *
-		 * @since 1.0.0
-		 */
-		$allowed_sources = apply_filters( 'aireset_default_allowed_sources', array() );
+		// /**
+		//  * Choose which sources are allowed at checkout
+		//  *
+		//  * @since 1.0.0
+		//  */
+		// $allowed_sources = apply_filters( 'aireset_default_allowed_sources', array() );
 
-		foreach ( $wp_scripts->queue as $key => $name ) {
-			$src = $wp_scripts->registered[ $name ]->src;
+		// foreach ( $wp_scripts->queue as $key => $name ) {
+		// 	$src = $wp_scripts->registered[ $name ]->src;
 
-			if ( ! in_array( $wp_scripts->registered[ $name ]->src, $allowed_sources ) && strpos( $src, '/themes/' ) ) {
-				wp_dequeue_script( $name );
-			}
-		}
+		// 	if ( ! in_array( $wp_scripts->registered[ $name ]->src, $allowed_sources ) && strpos( $src, '/themes/' ) ) {
+		// 		wp_dequeue_script( $name );
+		// 	}
+		// }
 
-		foreach ( $wp_styles->queue as $key => $name ) {
-			$src = $wp_styles->registered[ $name ]->src;
-			// The twenty-x themes have custom CSS within woo.
-			if ( ! in_array( $wp_styles->registered[ $name ]->src, $allowed_sources ) && ( strpos( $src, '/themes/' ) || strpos( $src, '/twenty' ) ) ) {
-				wp_dequeue_style( $name );
-			}
-		}
+		// foreach ( $wp_styles->queue as $key => $name ) {
+		// 	$src = $wp_styles->registered[ $name ]->src;
+		// 	// The twenty-x themes have custom CSS within woo.
+		// 	if ( ! in_array( $wp_styles->registered[ $name ]->src, $allowed_sources ) && ( strpos( $src, '/themes/' ) || strpos( $src, '/twenty' ) ) ) {
+		// 		wp_dequeue_style( $name );
+		// 	}
+		// }
 
-		wp_dequeue_style( 'global-styles' );
+		// wp_dequeue_style( 'global-styles' );
 
-		wp_enqueue_style( 'aireset-default-theme', AIRESET_DEFAULT_ASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), AIRESET_DEFAULT_VERSION, false );
+		// wp_enqueue_style( 'aireset-default-theme', AIRESET_DEFAULT_ASSETS . 'frontend/css/templates/' . $theme . '/main.css', array(), AIRESET_DEFAULT_VERSION, false );
 
-		if ( is_aireset_default() || Core::is_thankyou_page() ) {
-			wp_add_inline_style( 'aireset-default-theme', self::get_dynamic_styles( $settings ) );
-		}
+		// if ( is_aireset_default() || Core::is_thankyou_page() ) {
+		// 	wp_add_inline_style( 'aireset-default-theme', self::get_dynamic_styles( $settings ) );
+		// }
 
 		$deps = array(
 			'jquery',
@@ -103,18 +103,18 @@ class Assets {
 		$timestamp = time();
 		
 		// Enqueue estilo personalizado
-		wp_enqueue_style( 'aireset-default-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css', array(), AIRESET_DEFAULT_VERSION);
-		wp_enqueue_script( 'aireset-default-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js', array('jquery'), AIRESET_DEFAULT_VERSION);
+		// wp_enqueue_style( 'aireset-default-styles', AIRESET_DEFAULT_ASSETS . 'front/css/styles.css', array(), AIRESET_DEFAULT_VERSION, false);
+		// wp_enqueue_script( 'aireset-default-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/scripts.js', array('jquery'), AIRESET_DEFAULT_VERSION, false);
 		
-		if ( Init::get_setting('aireset_default_masks') === 'yes' ) {
-			// Enqueue estilo personalizado
-			wp_enqueue_script( 'aireset-default-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION);
-		}
+		// if ( Init::get_setting('aireset_default_masks') === 'yes' ) {
+		// 	// Enqueue estilo personalizado
+		// 	wp_enqueue_script( 'aireset-default-masks', AIRESET_DEFAULT_ASSETS . 'front/js/masks.js', array('jquery'), AIRESET_DEFAULT_VERSION, false);
+		// }
 		
-		if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
-			// Enqueue estilo personalizado
-			wp_enqueue_script( 'aireset-default-international-phone-js', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js', array('jquery'), AIRESET_DEFAULT_VERSION);
-		}
+		// if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ) {
+		// 	// Enqueue estilo personalizado
+		// 	wp_enqueue_script( 'aireset-default-international-phone-js', AIRESET_DEFAULT_ASSETS . 'front/js/intl-tel-input.js', array('jquery'), AIRESET_DEFAULT_VERSION, false);
+		// }
 
 		// Add the timestamp as a query parameter to the main.js file URL
 		// $script = AIRESET_DEFAULT_ASSETS . 'frontend/js/main.js?version=' . $timestamp;
@@ -224,7 +224,7 @@ class Assets {
 		// 	'opened_default_order_summary' => Init::get_setting('display_opened_order_review_mobile'),
 		// ));
 
-		wp_localize_script( 'aireset-default', 'aireset_default_vars', $aireset_default_script_data );
+		// wp_localize_script( 'aireset-default', 'aireset_default_vars', $aireset_default_script_data );
 
 		/**
 		 * Modify script data

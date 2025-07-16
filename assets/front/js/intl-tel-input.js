@@ -1,98 +1,111 @@
-/** 
- * Máscaras de Telefone com Bandeira
-*/
-// Cria um elemento <script>
-const script_intlput = document.createElement('script');
-// Define os atributos necessários
-script_intlput.src = "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js";
-script_intlput.crossOrigin = "anonymous";
-script_intlput.referrerPolicy = "no-referrer";
+/** * Máscaras de Telefone com Bandeira (Versão Corrigida e Melhorada)
+ * * Este script carrega as dependências da biblioteca intl-tel-input e a inicializa
+ * nos campos de formulário que contêm a classe 'mascara_telefone_com_bandeira'.
+ */
+(function($) {
 
-// Adiciona o script ao <head> ou ao final do <body>
-document.head.appendChild(script_intlput);
+    // --- 1. Carregamento Seguro das Dependências ---
 
-// Cria um elemento <script>
-const script_intlpututils = document.createElement('script');
-// Define os atributos necessários
-script_intlpututils.src = "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js";
-script_intlpututils.crossOrigin = "anonymous";
-script_intlpututils.referrerPolicy = "no-referrer";
+    // Função para carregar um script e retornar uma Promise
+    function loadScript(src) {
+        return new Promise(function(resolve, reject) {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
 
-// Adiciona o script ao <head> ou ao final do <body>
-document.head.appendChild(script_intlpututils);
+    // Função para carregar um arquivo CSS
+    function loadStyle(href) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
 
-// Cria um elemento <style>
-const style_intlpututils = document.createElement('style');
-// Define os atributos necessários
-style_intlpututils.src = "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css";
-style_intlpututils.crossOrigin = "anonymous";
-style_intlpututils.referrerPolicy = "no-referrer";
+    // Carrega o CSS primeiro
+    loadStyle("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css");
 
-// Adiciona o script ao <head> ou ao final do <body>
-document.head.appendChild(scriptstyle_intlpututils_intlpututils);
-jQuery(document).ready(function($) {
-    // 1. Seleciona apenas formulários que possuem ao menos um campo de telefone
-    $('form').filter(function() {
-        // Ajuste o seletor conforme sua necessidade:
-        // '[name="telefone"]', '[name="whatsapp"]' ou '[class^="mascara_telefone_com_bandeira"]'
-        return $(this).find('[class*="mascara_telefone_com_bandeira"]').length > 0;
-    })
-        .each(function() {
-        // 2. Dentro de cada formulário filtrado, selecionamos os campos de telefone
-        let $form = $(this);
-        let $phoneFields = $form.find('[class*="mascara_telefone_com_bandeira"]');
+    // Carrega os scripts em sequência e só depois executa o código principal
+    loadScript("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js")
+        .then(function() {
+            // O script principal foi carregado, agora podemos executar nossa lógica
+            initializePhoneFields();
+        })
+        .catch(function() {
+            console.error("Erro ao carregar o script intl-tel-input.");
+        });
+
+
+    // --- 2. Lógica de Inicialização do Plugin ---
+
+    function initializePhoneFields() {
+        // Seleciona todos os campos de telefone com a classe específica
+        const phoneFields = $('[class*="mascara_telefone_com_bandeira"]');
         
-// 			console.log($phoneFields)
+        // Se não encontrar nenhum campo, não faz nada
+        if (!phoneFields.length) {
+            return;
+        }
 
-        // Armazena as instâncias do intlTelInput para cada campo
-        let itiInstances = [];
+        // Itera sobre cada campo encontrado para inicializar a biblioteca
+        phoneFields.each(function() {
+            const input = this;
+            const $form = $(input).closest('form');
 
-        // 3. Inicia o intlTelInput para cada input do formulário
-        $phoneFields.each(function(index, input) {
-            itiInstances[index] = window.intlTelInput(input, {
+            // Previne inicialização dupla caso o script rode mais de uma vez
+            if ($(input).data('iti-initialized')) {
+                return;
+            }
+
+            const iti = window.intlTelInput(input, {
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
                 separateDialCode: true,
                 preferredCountries: ["br"],
-                nationalMode: true, 
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+                nationalMode: true,
             });
+            
+            // Guarda a instância no próprio elemento para referência futura
+            $(input).data('iti-instance', iti);
+            $(input).data('iti-initialized', true);
 
-            // Ajuste dinâmico da largura do dropdown ao mudar o país
-            $(input).on('countrychange', function() {
-                let larguraInput = input.getBoundingClientRect().width;
-                $(input).closest(".iti").find(".iti__country-list").css("width", larguraInput + "px");
-            });
+            // Validação no evento de SUBMIT do formulário (mais robusto que o 'click')
+            if ($form.length && !$form.data('submit-handler-attached')) {
+                $form.on('submit', function(e) {
+                    let isFormValid = true;
+                    
+                    // Valida todos os campos de telefone dentro deste formulário específico
+                    $form.find('[class*="mascara_telefone_com_bandeira"]').each(function() {
+                        const fieldInput = this;
+                        const fieldIti = $(fieldInput).data('iti-instance');
 
-            // Formata o valor no modo nacional a cada digitação
-            $(input).on("input", function() {
-                let numero = itiInstances[index].getNumber(intlTelInputUtils.numberFormat.NATIONAL);
-                $(input).val(numero);
-            });
-        });
+                        if (fieldIti) {
+                            // Usa o validador da própria biblioteca (muito mais seguro)
+                            if (fieldInput.value.trim() && !fieldIti.isValidNumber()) {
+                                alert("Por favor, insira um número de telefone válido para o país selecionado.");
+                                $(fieldInput).css('border-color', 'red'); // Destaque visual
+                                isFormValid = false;
+                                e.preventDefault(); // Impede o envio do formulário
+                                return false; // Para o loop .each
+                            } else {
+                                // Se válido, formata para o padrão internacional E.164
+                                fieldInput.value = fieldIti.getNumber();
+                                $(fieldInput).css('border-color', ''); // Remove o destaque
+                            }
+                        }
+                    });
 
-        // 4. Captura o clique em qualquer botão ou input [type="submit"] do formulário
-        $form.on('click', '[type="submit"]', function(e) {
-            let invalidNumber = false;
-
-            // Verificamos cada campo para garantir que tenha o código do país
-            $phoneFields.each(function(index, input) {
-                let fullNumber = itiInstances[index].getNumber(intlTelInputUtils.numberFormat.E164); 
-
-                // Verifica se inclui o código do país (+)
-                if (!fullNumber.includes('+') && $(input).is(':visible')) {
-                    invalidNumber = true;
-                    input.value = ''; // Limpa o campo
-                } else {
-                    input.value = fullNumber; // Atribui o número formatado completo
-                }
-            });
-
-            // Se algum telefone estiver inválido, exibimos o alerta e impedimos o submit
-            if (invalidNumber) {
-                alert("Por favor, preencha o(s) número(s) de telefone com o código do país.");
-                e.preventDefault();
-                return false;
+                    if (!isFormValid) {
+                        return false; // Impede o envio final
+                    }
+                });
+                
+                $form.data('submit-handler-attached', true); // Garante que o handler seja adicionado apenas uma vez
             }
         });
-    });
+    }
 
-});
+})(jQuery);

@@ -1699,3 +1699,15 @@ body .tablenav .search-plugins input[name="s"],
 body .tagsdiv .newtag {
 	flex-grow: 1;
 }
+
+
+
+/** 
+ * Máscaras de Telefone com Bandeira
+*/
+.iti {
+	width: 100%;
+}
+/** 
+ * Máscaras de Telefone com Bandeira
+*/

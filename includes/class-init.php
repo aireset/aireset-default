@@ -77,7 +77,7 @@ class Init {
 			'aireset_default_fixed_viewport' => 'yes',
 			'aireset_default_disable_add_to_cart_message' => 'no',
 			'aireset_default_order_pay_without_login' => 'yes',
-			'aireset_default_status_woocommerce' => 'yes',
+			// 'aireset_default_status_woocommerce' => 'yes',
 			'aireset_default_masks' => 'yes',
 			'aireset_default_intl_tel_input' => 'yes',
 			'aireset_default_auto_create_or_assign_customer_to_order' => 'yes',

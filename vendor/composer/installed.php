@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'aireset/default',
-        'pretty_version' => '1.2.0.x-dev',
-        'version' => '1.2.0.9999999-dev',
-        'reference' => 'a09121baed160ef6fc7baec1f99a06dfab25271e',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '11e2bf20307eca722b8fe65b1a872f7122665679',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'aireset/default' => array(
-            'pretty_version' => '1.2.0.x-dev',
-            'version' => '1.2.0.9999999-dev',
-            'reference' => 'a09121baed160ef6fc7baec1f99a06dfab25271e',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '11e2bf20307eca722b8fe65b1a872f7122665679',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -76,7 +76,7 @@ defined('ABSPATH') || exit; ?>
          </td>
       </tr>
 
-      <tr>
+      <!-- <tr>
          <th>
             <?php echo esc_html__( 'Ativar Status Customizados do Woocomerce?', 'aireset-default' ) ?>
             <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para que Status Customizados do Woocomerce sejam ativados.', 'aireset-default' ) ?></span>
@@ -86,7 +86,7 @@ defined('ABSPATH') || exit; ?>
                <input type="checkbox" class="toggle-switch" id="aireset_default_status_woocommerce" name="aireset_default_status_woocommerce" value="yes" <?php checked( Init::get_setting( 'aireset_default_status_woocommerce') === 'yes' ); ?> />
             </div>
          </td>
-      </tr>
+      </tr> -->
 
       <tr>
          <th>

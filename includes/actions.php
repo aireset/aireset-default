@@ -212,9 +212,9 @@
         if ( ! function_exists( 'auto_create_or_assign_customer_to_order' ) ) {
             function auto_create_or_assign_customer_to_order($order_id) {
                 // Verifica se a opção está ativada
-                if (get_option('aireset_woo_auto_create_customer') != 1) {
-                    return;
-                }
+                // if (get_option('aireset_woo_auto_create_customer') != 1) {
+                //     return;
+                // }
 
                 $order = wc_get_order($order_id);
                 if ( ! $order ) {
@@ -241,6 +241,14 @@
                         return;
                     }
                     $order->set_customer_id($user_id);
+                        
+                    // Aciona o e-mail de boas-vindas com a senha gerada
+                    $mailer = WC()->mailer();
+                    $new_account_email = $mailer->get_emails()['WC_Email_Customer_New_Account'];
+                    
+                    if ( $new_account_email ) {
+                        $new_account_email->trigger( $user_id, $password, true );
+                    }
                 }
 
                 // Atualiza SEMPRE os dados do usuário com base no pedido
@@ -1023,4 +1031,5 @@
             }
         }
     }
+
 

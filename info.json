@@ -1,0 +1,12 @@
+{
+    "name": "Aireset - Plugin Geral",
+    "version": "1.3.5",
+    "download_url": "https://github.com/aireset/aireset-default/archive/main.zip",
+    "homepage": "https://github.com/aireset/aireset-default",
+    "requires": "4.0",
+    "tested": "6.6.2",
+    "last_updated": "2025-08-18",
+    "upgrade_notice": "Atualização 1.3.5 disponível - Inclui melhorias no sistema de atualização automática via GitHub",
+    "description": "Plugin com configurações padrões para Woocommerce para o mercado brasileiro",
+    "changelog": "= 1.3.5 (18/08/2025) =\n* Adicionado sistema de atualizações via GitHub\n* Melhorias na organização do código\n* Separação de funcionalidades em classes"
+}

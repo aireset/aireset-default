@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
-Tags: aireset
-Stable tag: 1.3.4
+Tags: aireset, woocommerce, brazilian market
+Stable tag: 1.3.5
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,11 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+Versão 1.3.5 (18/08/2025) =
+* Adicionado sistema de atualizações via GitHub
+* Melhorias na organização do código
+* Separação de funcionalidades em classes
 
 Versão 1.3.4 (30/07/2025) =
 * Remoção de status customizados do woocommerce em prol do novo plugin de checkout

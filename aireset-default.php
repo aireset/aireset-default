@@ -6,7 +6,7 @@ namespace Aireset\Default;
  * Plugin Name: Aireset - Geral
  * Plugin URI: https://github.com/aireset/aireset-default
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
- * Version: 1.3.4
+ * Version: 1.3.5
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
@@ -28,13 +28,15 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 // Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
-// if ( ! function_exists( 'is_plugin_active' ) ) {
-// 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-// }
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+}
 
-// $updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
-// require_once $updater_path;
-// use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+// Configura o sistema de atualizações
+$updater_path = __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
+if (file_exists($updater_path)) {
+    require_once $updater_path;
+}
 
 class Aireset_General_Plugin {
 
@@ -74,31 +76,42 @@ class Aireset_General_Plugin {
      * Esta função contém o código corrigido.
      */
     public function setup_update_checker() {
-        // // Verifica se a classe PucFactory existe antes de usá-la.
-        // if ( ! class_exists('\YahnisElsts\PluginUpdateChecker\v5\PucFactory') ) {
-        //     return;
-        // }
+        if (!class_exists('YahnisElsts\PluginUpdateChecker\v5\PucFactory')) {
+            return;
+        }
 
-        // $repositoryUrl = 'https://github.com/aireset/aireset-default/';
+        if (!class_exists('Puc_v5_Factory')) {
+            return;
+        }
+
+        try {
+            $updateChecker = \Puc_v5_Factory::buildUpdateChecker(
+                'https://github.com/aireset/aireset-default/',
+                __FILE__,
+                'aireset-default'
+            );
+
+            if ($updateChecker) {
+                $updateChecker->setBranch('main');
+                $updateChecker->getVcsApi()->enableReleaseAssets();
+                $updateChecker->setAuthentication('');
+            }
+        } catch (\Exception $e) {
+            error_log('Erro ao configurar o atualizador do plugin: ' . $e->getMessage());
+        }
+    }
+    
+    private function get_changelog_formatted() {
+        $readme_file = plugin_dir_path(__FILE__) . 'README.md';
+        if (!file_exists($readme_file)) {
+            return 'Nenhum changelog disponível.';
+        }
         
-        // // **CORREÇÃO 2: Usar a PucFactory correta para construir o objeto.**
-        // $updateChecker = PucFactory::buildUpdateChecker(
-        //     $repositoryUrl,
-        //     __FILE__,
-        //     'aireset-default'
-        // );
-
-        // // Opcional: Definir a branch
-        // $updateChecker->setBranch('master');
-		
-		// $updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
-
-        // **CORREÇÃO 3: Usar o método correto para habilitar release assets.**
-        // A linha abaixo é a forma correta e substitui a chamada getVcsApi() que causava o erro.
-        // $updateChecker->enableReleaseAssets();
-
-        // Opcional: Adicionar token de autenticação para evitar limites da API do GitHub
-        // $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
+        $content = file_get_contents($readme_file);
+        if (preg_match('/### Registro de alterações \(Changelogs\):(.*?)(?=###|$)/s', $content, $matches)) {
+            return trim($matches[1]);
+        }
+        return 'Nenhum changelog encontrado.';
     }
 	
 	/**

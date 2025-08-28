@@ -13,7 +13,7 @@ class Admin_Fields {
      * Constructor
      */
     public function __construct() {
-        // Reordena os campos no admin
+        // Reordena os campos no admin e altera labels
         add_filter('woocommerce_admin_billing_fields', array($this, 'reorder_admin_billing_fields'), 10, 1);
         add_filter('woocommerce_admin_shipping_fields', array($this, 'reorder_admin_shipping_fields'), 10, 1);
     }
@@ -49,6 +49,9 @@ class Admin_Fields {
             foreach ($fields as $key => $field) {
                 if ($key === 'address_1') {
                     $new_fields['postcode'] = $postcode;
+                }
+                if ($key === 'address_2') {
+                    $field['label'] = 'Complemento';
                 }
                 $new_fields[$key] = $field;
             }
@@ -97,6 +100,9 @@ class Admin_Fields {
                 if ($key === 'address_1') {
                     $new_fields['postcode'] = $postcode;
                 }
+                if ($key === 'address_2') {
+                    $field['label'] = 'Complemento';
+                }
                 $new_fields[$key] = $field;
             }
             
@@ -111,6 +117,7 @@ class Admin_Fields {
         
         return $fields;
     }
+
 }
 
 new Admin_Fields();

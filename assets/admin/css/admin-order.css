@@ -1,0 +1,20 @@
+
+/* Campo CEP em linha única */
+.order_data_column p._billing_postcode_field,
+.order_data_column p._shipping_postcode_field {
+    clear: both !important;
+    float: left !important;
+}
+
+/* Campo cidade em linha única */
+.order_data_column p._billing_persontype_field,
+.order_data_column p._billing_address_1_field,
+.order_data_column p._shipping_address_1_field, 
+.order_data_column p._billing_address_2_field,
+.order_data_column p._shipping_address_2_field,
+.order_data_column p._billing_city_field,
+.order_data_column p._shipping_city_field {
+    clear: both !important;
+    width: 100% !important;
+    float: left !important;
+}

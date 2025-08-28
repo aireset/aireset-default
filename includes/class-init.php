@@ -24,6 +24,9 @@ class Init {
 		// set default options
 		add_action( 'admin_init', array( $this, 'aireset_default_set_default_options' ) );
 
+		// Inicializa o gerenciador de CEP
+		require_once AIRESET_DEFAULT_PATH . 'includes/classes/class-cep-manager.php';
+
 		$this->initValidConfigs();
 	}
 

@@ -43,6 +43,12 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
 
+Versão 1.3.6 (27/08/2025) =
+* Inclusão de script e ajustes na área de criação ou edição de pedidos do admin:
+* Adicionado mascaras
+* Reordenado campos
+* Colocado preenhcimento automatico com cep
+
 Versão 1.3.5 (18/08/2025) =
 * Adicionado sistema de atualizações via GitHub
 * Melhorias na organização do código

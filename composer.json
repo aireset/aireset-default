@@ -3,11 +3,12 @@
     "description": "Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais.",
     "type": "wordpress-plugin",
     "require": {
-        "symfony/var-dumper": "^7.2"
+        "symfony/var-dumper": "^7.2",
+        "claudsonm/cep-promise-php": "^1.2"
     },
     "autoload": {
         "psr-4": {
-            "Aireset\\Default\\": "src/"
+            "Aireset\\Default\\": "includes/"
         }
     }
 }

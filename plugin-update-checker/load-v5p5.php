@@ -10,22 +10,19 @@ new Autoloader();
 
 require __DIR__ . '/Puc/v5p5/PucFactory.php';
 require __DIR__ . '/Puc/v5/PucFactory.php';
-Puc_v5p5_Factory
+
 //Register classes defined in this version with the factory.
-foreach (
-	array(
-		'Plugin\\UpdateChecker' => Plugin\UpdateChecker::class,
-		'Theme\\UpdateChecker'  => Theme\UpdateChecker::class,
+$classMap = array(
+    'Plugin\\UpdateChecker' => Plugin\UpdateChecker::class,
+    'Theme\\UpdateChecker'  => Theme\UpdateChecker::class,
+    'Vcs\\PluginUpdateChecker' => Vcs\PluginUpdateChecker::class,
+    'Vcs\\ThemeUpdateChecker'  => Vcs\ThemeUpdateChecker::class,
+    'GitHubApi'    => Vcs\GitHubApi::class,
+    'BitBucketApi' => Vcs\BitBucketApi::class,
+    'GitLabApi'    => Vcs\GitLabApi::class,
+);
 
-		'Vcs\\PluginUpdateChecker' => Vcs\PluginUpdateChecker::class,
-		'Vcs\\ThemeUpdateChecker'  => Vcs\ThemeUpdateChecker::class,
-
-		'GitHubApi'    => Vcs\GitHubApi::class,
-		'BitBucketApi' => Vcs\BitBucketApi::class,
-		'GitLabApi'    => Vcs\GitLabApi::class,
-	)
-	as $pucGeneralClass => $pucVersionedClass
-) {
+foreach ($classMap as $pucGeneralClass => $pucVersionedClass) {
 	MajorFactory::addVersion($pucGeneralClass, $pucVersionedClass, '5.5');
 	//Also add it to the minor-version factory in case the major-version factory
 	//was already defined by another, older version of the update checker.

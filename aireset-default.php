@@ -23,9 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Carrega o autoloader do Composer se existir.
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-    require_once __DIR__ . '/vendor/autoload.php';
-}
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
 if ( ! function_exists( 'is_plugin_active' ) ) {
@@ -77,27 +75,32 @@ class Aireset_General_Plugin {
      */
     public function setup_update_checker() {
         if (!class_exists('YahnisElsts\PluginUpdateChecker\v5\PucFactory')) {
-            return;
-        }
-
-        if (!class_exists('Puc_v5_Factory')) {
+            error_log('PucFactory class não encontrada');
             return;
         }
 
         try {
-            $updateChecker = \Puc_v5_Factory::buildUpdateChecker(
+            $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
                 'https://github.com/aireset/aireset-default/',
                 __FILE__,
                 'aireset-default'
             );
 
-            if ($updateChecker) {
-                $updateChecker->setBranch('main');
-                $updateChecker->getVcsApi()->enableReleaseAssets();
-                $updateChecker->setAuthentication('');
+            if ($myUpdateChecker) {
+                $myUpdateChecker->setBranch('master');
+                $myUpdateChecker->getVcsApi()->enableReleaseAssets();
+                
+                // Debug
+                add_filter('puc_pre_check_for_updates', function($value, $plugin_file, $slug) {
+                    error_log('Verificando atualizações para: ' . $slug);
+                    return $value;
+                }, 10, 3);
+            } else {
+                error_log('Falha ao criar o updateChecker');
             }
         } catch (\Exception $e) {
             error_log('Erro ao configurar o atualizador do plugin: ' . $e->getMessage());
+            error_log('Stack trace: ' . $e->getTraceAsString());
         }
     }
     
@@ -416,6 +419,7 @@ class Aireset_General_Plugin {
 			'classes/class-admin-options.php',
 			'classes/class-assets.php',
 			'classes/class-ajax.php',
+			'classes/class-admin-fields.php',
 			// // 'classes/class-compat-autoloader.php',
 			// // 'classes/class-sidebar.php',
 			// // 'classes/class-steps.php',

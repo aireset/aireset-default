@@ -24,24 +24,7 @@ jQuery(function($) {
         };
         $('input[name="_billing_phone"]').mask(maskBehavior, options);
         $('input[name="_billing_cellphone"]').mask(maskBehavior, options);
-    }
-
-    // Inicializa as máscaras
-    initMasks();
-
-    // Observa mudanças na DOM para campos dinâmicos
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.addedNodes.length) {
-                initMasks();
-            }
-        });
-    });
-
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });    
+    }  
 
 
     // Função para formatar o CEP
@@ -165,6 +148,51 @@ jQuery(function($) {
         });
     }
 
+    // Função para gerenciar campos baseado no tipo de pessoa
+    function handlePersonType() {
+        function toggleFields(personType) {
+            // Campos de Pessoa Física
+            const pfFields = ['_billing_cpf_field'];
+            
+            // Campos de Pessoa Jurídica
+            const pjFields = ['_billing_cnpj_field', '_billing_company_field', '_billing_ie_field'];
+            
+            if (personType === '1') { // Pessoa Física
+                pfFields.forEach(field => $('.' + field).show());
+                pjFields.forEach(field => $('.' + field).hide());
+            } else { // Pessoa Jurídica
+                pfFields.forEach(field => $('.' + field).hide());
+                pjFields.forEach(field => $('.' + field).show());
+            }
+        }
+
+        // Observa mudanças no tipo de pessoa
+        $('#_billing_persontype').on('change', function() {
+            toggleFields($(this).val());
+        });
+        // Aplica visibilidade inicial
+        jQuery('#_billing_persontype option[value="1"]').prop('selected', true).trigger('change');
+    }
+
     // Inicializa quando a página carregar
     initCEPAutoFill();
+    handlePersonType();
+    
+
+    // Inicializa as máscaras
+    initMasks();
+
+    // Observa mudanças na DOM para campos dinâmicos
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                initMasks();
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });  
 });

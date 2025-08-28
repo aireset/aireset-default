@@ -29,13 +29,34 @@ class Admin_Fields {
             // Remove o CEP da posição atual
             unset($fields['postcode']);
             
-            // Reordena os campos colocando o CEP antes do address_1
+            // Se existirem campos de estado e país
+            if (isset($fields['country']) && isset($fields['state'])) {
+                // Guarda os campos
+                $country = $fields['country'];
+                $state = $fields['state'];
+                
+                // Define Brasil como padrão se não houver país definido
+                if (empty($fields['country']['value'])) {
+                    $country['value'] = 'BR';
+                }
+                
+                // Remove da posição atual
+                unset($fields['country'], $fields['state']);
+            }
+            
+            // Reordena os campos
             $new_fields = array();
             foreach ($fields as $key => $field) {
                 if ($key === 'address_1') {
                     $new_fields['postcode'] = $postcode;
                 }
                 $new_fields[$key] = $field;
+            }
+            
+            // Adiciona estado e país no final, estado primeiro
+            if (isset($state)) {
+                $new_fields['state'] = $state;
+                $new_fields['country'] = $country;
             }
             
             return $new_fields;
@@ -55,13 +76,34 @@ class Admin_Fields {
             // Remove o CEP da posição atual
             unset($fields['postcode']);
             
-            // Reordena os campos colocando o CEP antes do address_1
+            // Se existirem campos de estado e país
+            if (isset($fields['country']) && isset($fields['state'])) {
+                // Guarda os campos
+                $country = $fields['country'];
+                $state = $fields['state'];
+                
+                // Define Brasil como padrão se não houver país definido
+                if (empty($fields['country']['value'])) {
+                    $country['value'] = 'BR';
+                }
+                
+                // Remove da posição atual
+                unset($fields['country'], $fields['state']);
+            }
+            
+            // Reordena os campos
             $new_fields = array();
             foreach ($fields as $key => $field) {
                 if ($key === 'address_1') {
                     $new_fields['postcode'] = $postcode;
                 }
                 $new_fields[$key] = $field;
+            }
+            
+            // Adiciona estado e país no final, estado primeiro
+            if (isset($state)) {
+                $new_fields['state'] = $state;
+                $new_fields['country'] = $country;
             }
             
             return $new_fields;

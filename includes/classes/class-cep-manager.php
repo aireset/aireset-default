@@ -25,7 +25,7 @@ class CEP_Manager {
      * Busca o CEP usando o CEP Promise
      */
     public function buscar_cep() {
-        check_ajax_referer('aireset_cep_autofill', 'nonce');
+        check_ajax_referer('aireset_order', 'nonce');
 
         if (!isset($_POST['cep'])) {
             wp_send_json_error('CEP não fornecido');

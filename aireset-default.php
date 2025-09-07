@@ -25,11 +25,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Carrega o autoloader do Composer se existir.
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
-if ( ! function_exists( 'is_plugin_active' ) ) {
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-}
-
 // Configura o sistema de atualizações
 $updater_path = __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
 if (file_exists($updater_path)) {

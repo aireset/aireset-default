@@ -29,13 +29,15 @@ class Admin_Options extends Init {
     // Adiciona o menu na raiz do WordPress
     add_action('admin_menu', array($this, 'add_admin_menu'));
 
-    // handle for billing country admin notice
-    add_action('woocommerce_checkout_init', array(__CLASS__, 'check_billing_country_field'));
-    add_action('admin_notices', array(__CLASS__, 'show_billing_country_warning'));
-    add_action('admin_footer', array(__CLASS__, 'dismiss_billing_country_warning_script'));
-
-    // display notice when not has [woocommerce_checkout] shortcode
-    add_action('admin_notices', array(__CLASS__, 'check_for_checkout_shortcode'));
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+      // handle for billing country admin notice
+      add_action('woocommerce_checkout_init', array(__CLASS__, 'check_billing_country_field'));
+      add_action('admin_notices', array(__CLASS__, 'show_billing_country_warning'));
+      add_action('admin_footer', array(__CLASS__, 'dismiss_billing_country_warning_script'));
+  
+      // display notice when not has [woocommerce_checkout] shortcode
+      add_action('admin_notices', array(__CLASS__, 'check_for_checkout_shortcode'));
+    }
 
     // display notice when not has PHP gd extension
     add_action('admin_notices', array(__CLASS__, 'missing_gd_extension_notice'));

@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
         'name' => 'aireset/default',
-        'pretty_version' => '1.3.5.x-dev',
-        'version' => '1.3.5.9999999-dev',
-        'reference' => 'ab4c24bcda4b4ac8200ca3cb8c1907abe97767a3',
+        'pretty_version' => 'dev-copilot/fix-guzzle-http-inclusion-error',
+        'version' => 'dev-copilot/fix-guzzle-http-inclusion-error',
+        'reference' => '32b25bc9ae9287cbf2674189b1a057ceadfab105',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'aireset/default' => array(
-            'pretty_version' => '1.3.5.x-dev',
-            'version' => '1.3.5.9999999-dev',
-            'reference' => 'ab4c24bcda4b4ac8200ca3cb8c1907abe97767a3',
+            'pretty_version' => 'dev-copilot/fix-guzzle-http-inclusion-error',
+            'version' => 'dev-copilot/fix-guzzle-http-inclusion-error',
+            'reference' => '32b25bc9ae9287cbf2674189b1a057ceadfab105',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -49,7 +49,7 @@ class MetaCheckoutHandler {
 
         // Validação 1: O WooCommerce está ativo?
         // Se não estiver, o código para imediatamente.
-        if ( ! function_exists('WC') ) {
+        if ( ! function_exists( 'WC' ) ) {
             return; // Para aqui. Nenhuma ação é tomada.
         }
 
@@ -76,6 +76,16 @@ class MetaCheckoutHandler {
             
             // O CARRINHO NÃO É LIMPO. NADA ACONTECE.
             return; 
+        }
+
+        /**
+         * Validação 3: Verificação de Nonce para CSRF Protection
+         * 
+         * Verifica se existe um nonce válido na URL para prevenir ataques CSRF.
+         * Se o nonce não existir ou for inválido, a função retorna sem processar.
+         */
+        if ( ! isset( $_GET['meta_checkout_nonce'] ) || ! wp_verify_nonce( $_GET['meta_checkout_nonce'], 'meta_checkout_action' ) ) {
+            return;
         }
 
         // -----------------------------------------------------------------
@@ -154,5 +164,3 @@ class MetaCheckoutHandler {
         exit;
     }
 }
-
-new MetaCheckoutHandler();

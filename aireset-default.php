@@ -6,7 +6,7 @@ namespace Aireset\Default;
  * Plugin Name: Aireset - Geral
  * Plugin URI: https://github.com/aireset/aireset-default
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
- * Version: 1.3.4
+ * Version: 1.3.6
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
@@ -23,18 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Carrega o autoloader do Composer se existir.
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-    require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Configura o sistema de atualizações
+$updater_path = __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
+if (file_exists($updater_path)) {
+    require_once $updater_path;
 }
-
-// Verifica se o plugin Brazilian Market está ativo antes de atualizar os campos extras
-// if ( ! function_exists( 'is_plugin_active' ) ) {
-// 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-// }
-
-// $updater_path = plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
-// require_once $updater_path;
-// use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 class Aireset_General_Plugin {
 
@@ -44,7 +39,7 @@ class Aireset_General_Plugin {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public static $version = '1.3.2';
+	public static $version = '1.3.6';
 	
     private static $instance = null; // Declare static instance property
 
@@ -74,31 +69,47 @@ class Aireset_General_Plugin {
      * Esta função contém o código corrigido.
      */
     public function setup_update_checker() {
-        // // Verifica se a classe PucFactory existe antes de usá-la.
-        // if ( ! class_exists('\YahnisElsts\PluginUpdateChecker\v5\PucFactory') ) {
-        //     return;
-        // }
+        if (!class_exists('YahnisElsts\PluginUpdateChecker\v5\PucFactory')) {
+            error_log('PucFactory class não encontrada');
+            return;
+        }
 
-        // $repositoryUrl = 'https://github.com/aireset/aireset-default/';
+        try {
+            $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+                'https://github.com/aireset/aireset-default/',
+                __FILE__,
+                'aireset-default'
+            );
+
+            if ($myUpdateChecker) {
+                $myUpdateChecker->setBranch('master');
+                $myUpdateChecker->getVcsApi()->enableReleaseAssets();
+                
+                // Debug
+                add_filter('puc_pre_check_for_updates', function($value, $plugin_file, $slug) {
+                    error_log('Verificando atualizações para: ' . $slug);
+                    return $value;
+                }, 10, 3);
+            } else {
+                error_log('Falha ao criar o updateChecker');
+            }
+        } catch (\Exception $e) {
+            error_log('Erro ao configurar o atualizador do plugin: ' . $e->getMessage());
+            error_log('Stack trace: ' . $e->getTraceAsString());
+        }
+    }
+    
+    private function get_changelog_formatted() {
+        $readme_file = plugin_dir_path(__FILE__) . 'README.md';
+        if (!file_exists($readme_file)) {
+            return 'Nenhum changelog disponível.';
+        }
         
-        // // **CORREÇÃO 2: Usar a PucFactory correta para construir o objeto.**
-        // $updateChecker = PucFactory::buildUpdateChecker(
-        //     $repositoryUrl,
-        //     __FILE__,
-        //     'aireset-default'
-        // );
-
-        // // Opcional: Definir a branch
-        // $updateChecker->setBranch('master');
-		
-		// $updateChecker->addFilter('remove_from_default_update_checks', '__return_false');
-
-        // **CORREÇÃO 3: Usar o método correto para habilitar release assets.**
-        // A linha abaixo é a forma correta e substitui a chamada getVcsApi() que causava o erro.
-        // $updateChecker->enableReleaseAssets();
-
-        // Opcional: Adicionar token de autenticação para evitar limites da API do GitHub
-        // $updateChecker->setAuthentication('SEU_PERSONAL_ACCESS_TOKEN');
+        $content = file_get_contents($readme_file);
+        if (preg_match('/### Registro de alterações \(Changelogs\):(.*?)(?=###|$)/s', $content, $matches)) {
+            return trim($matches[1]);
+        }
+        return 'Nenhum changelog encontrado.';
     }
 	
 	/**
@@ -403,6 +414,7 @@ class Aireset_General_Plugin {
 			'classes/class-admin-options.php',
 			'classes/class-assets.php',
 			'classes/class-ajax.php',
+			'classes/class-admin-fields.php',
 			// // 'classes/class-compat-autoloader.php',
 			// // 'classes/class-sidebar.php',
 			// // 'classes/class-steps.php',

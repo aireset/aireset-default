@@ -12,6 +12,11 @@ use Aireset\Default\Conditions;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+// Carrega função is_plugin_active se ainda não estiver disponível
+if (!function_exists('is_plugin_active')) {
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+}
+
 /**
  * Register/enqueue frontend and backend scripts
  *
@@ -257,6 +262,22 @@ class Assets {
 	public function admin_assets() {
 		// $min_file = WP_DEBUG ? '' : '.min';
 		$min_file = '';
+
+		// Verifica se está na página de pedidos do WooCommerce e se os plugins necessários estão ativos
+		if (is_admin() && 
+			get_current_screen() && 
+			in_array(get_current_screen()->id, array('shop_order', 'woocommerce_page_wc-orders')) &&
+			is_plugin_active('woocommerce/woocommerce.php') &&
+			is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')
+		) {
+        	wp_enqueue_script('jquery-mask', AIRESET_DEFAULT_ASSETS . 'vendor/jquery-mask/jquery.mask.min.js', array('jquery'), '1.14.16', true);
+			wp_enqueue_script('aireset-admin-order', AIRESET_DEFAULT_ASSETS . 'admin/js/admin-order' . $min_file . '.js', array('jquery', 'jquery-mask'), AIRESET_DEFAULT_VERSION, true);
+			wp_localize_script('aireset-admin-order', 'aireset_cep_params', array(
+				'ajax_url' => admin_url('admin-ajax.php'),
+				'nonce' => wp_create_nonce('aireset_order')
+			));
+			wp_enqueue_style( 'aireset-default-admin-styles', AIRESET_DEFAULT_ASSETS . 'admin/css/admin-order.css', array(), AIRESET_DEFAULT_VERSION );
+		}
 
 		// check if is admin settings
 		if ( is_aireset_default_admin_settings() ) {

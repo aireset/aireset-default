@@ -116,11 +116,7 @@ class MetaCheckoutHandler {
         // 5. Aplica o Cupom (Opcional)
         if ( isset( $_GET['coupon'] ) && ! empty( $_GET['coupon'] ) ) {
             $coupon_code = sanitize_text_field( wp_unslash( $_GET['coupon'] ) );
-            
-            $coupon = new \WC_Coupon( $coupon_code );
-            if ( $coupon->is_valid() ) {
-                WC()->cart->apply_coupon( $coupon_code );
-            }
+            WC()->cart->apply_coupon( $coupon_code );
         }
 
         // 6. Prepara o Redirecionamento Limpo

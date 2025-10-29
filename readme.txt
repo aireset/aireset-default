@@ -47,7 +47,7 @@ Versão 1.3.6 (27/08/2025) =
 * Inclusão de script e ajustes na área de criação ou edição de pedidos do admin:
 * Adicionado mascaras
 * Reordenado campos
-* Colocado preenhcimento automatico com cep
+* Colocado preenchimento automatico com cep
 
 Versão 1.3.5 (18/08/2025) =
 * Adicionado sistema de atualizações via GitHub

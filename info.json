@@ -8,5 +8,5 @@
     "last_updated": "2025-08-18",
     "upgrade_notice": "Atualização 1.3.6 disponível - Inclui melhorias no sistema de atualização automática via GitHub",
     "description": "Plugin com configurações padrões para Woocommerce para o mercado brasileiro",
-    "changelog": "= 1.3.6 (27/08/2025) =\n* Inclusão de script e ajustes na área de criação ou edição de pedidos do admin, adicionado mascaras, reordenado campos e colocado preenhcimento automatico com cep"
+    "changelog": "= 1.3.6 (27/08/2025) =\n* Inclusão de script e ajustes na área de criação ou edição de pedidos do admin, adicionado mascaras, reordenado campos e colocado preenchimento automatico com cep"
 }

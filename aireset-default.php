@@ -143,11 +143,6 @@ class Aireset_General_Plugin {
 	 * @return void
 	 */
 	public function init() {
-		// Load plugin.php for is_plugin_active function
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		}
-		
 		// Display notice if PHP version is bottom 7.4
 		if ( version_compare( phpversion(), '7.4', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_php_version_notice' ) );
@@ -155,7 +150,7 @@ class Aireset_General_Plugin {
 		}
 
 		// display notice if WooCommerce version is bottom 6.0
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
+		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_version_notice' ) );
 			return;
 		}
@@ -348,8 +343,9 @@ class Aireset_General_Plugin {
         // );
     }
     public function enqueue_assets_frontend() {
-		
-		if ( is_plugin_active( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php' ) ) {
+		// Check if checkout-mestres-wp plugin is active
+		$active_plugins = get_option( 'active_plugins', array() );
+		if ( in_array( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php', $active_plugins ) ) {
 			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
 		}
         // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );

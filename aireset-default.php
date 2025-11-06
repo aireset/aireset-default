@@ -61,6 +61,7 @@ class Aireset_General_Plugin {
 
     public function __construct() {
 		add_action( 'init', array( $this, 'init' ), 10 );
+		add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
 		$this->setup_update_checker(); // Adicione esta linha
     }
 
@@ -170,13 +171,6 @@ class Aireset_General_Plugin {
         // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets_admin' ) );// preciso fazer o mesmo para frontend
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets_frontend' ) );
-
-		// check if WooCommerce is active
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
-			// add_action( 'plugins_loaded', array( $this, 'setup_includes' ), 20 );
-			// add_filter( 'plugin_action_links_' . AIRESET_DEFAULT_BASENAME, array( $this, 'hubgo_shipping_management_wc_plugin_links' ), 10, 4 );
-		}
 
 		// Hooks para a área administrativa – somente se estivermos no admin.
         // if ( is_admin() ) {

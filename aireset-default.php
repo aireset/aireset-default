@@ -60,7 +60,7 @@ class Aireset_General_Plugin {
 	public static $slug = 'aireset-default';
 
     public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
+		add_action( 'init', array( $this, 'init' ), 10 );
 		$this->setup_update_checker(); // Adicione esta linha
     }
 
@@ -142,6 +142,11 @@ class Aireset_General_Plugin {
 	 * @return void
 	 */
 	public function init() {
+		// Load plugin.php for is_plugin_active function
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
+		
 		// Display notice if PHP version is bottom 7.4
 		if ( version_compare( phpversion(), '7.4', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_php_version_notice' ) );
@@ -154,13 +159,9 @@ class Aireset_General_Plugin {
 			return;
 		}
 		
-		$this->define_constants();
-
-        $this->load_textdomain();
+		$this->load_textdomain();
 		
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		}
+		$this->define_constants();
         
         // Add admin menu
         // add_action('admin_menu', array( $this, 'add_admin_menu' ));

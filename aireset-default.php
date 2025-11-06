@@ -192,7 +192,7 @@ class Aireset_General_Plugin {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
 				'custom_order_tables',
-				AIRESET_DEFAULT_FILE,
+				__FILE__,
 				true
 			);
 		}

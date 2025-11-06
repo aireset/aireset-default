@@ -61,11 +61,8 @@ class Aireset_General_Plugin {
 
     public function __construct() {
 		add_action( 'init', array( $this, 'init' ), 10 );
-		// Only register HPOS compatibility hook if WooCommerce is likely to be present
-		// Using class_exists to avoid filesystem check on every request
-		if ( class_exists( 'WooCommerce' ) ) {
-			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
-		}
+		// Register HPOS compatibility hook - it will only fire if WooCommerce is present
+		add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
 		$this->setup_update_checker(); // Adicione esta linha
     }
 

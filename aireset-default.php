@@ -61,7 +61,10 @@ class Aireset_General_Plugin {
 
     public function __construct() {
 		add_action( 'init', array( $this, 'init' ), 10 );
-		add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
+		// Only register HPOS compatibility hook if WooCommerce is likely to be present
+		if ( class_exists( 'WooCommerce' ) || file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) ) {
+			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
+		}
 		$this->setup_update_checker(); // Adicione esta linha
     }
 
@@ -343,9 +346,17 @@ class Aireset_General_Plugin {
         // );
     }
     public function enqueue_assets_frontend() {
-		// Check if checkout-mestres-wp plugin is active
+		// Check if checkout-mestres-wp plugin is active (including multisite)
 		$active_plugins = get_option( 'active_plugins', array() );
-		if ( in_array( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php', $active_plugins ) ) {
+		$is_active = in_array( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php', $active_plugins );
+		
+		// Check for network-activated plugins in multisite
+		if ( ! $is_active && is_multisite() ) {
+			$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
+			$is_active = isset( $network_plugins['checkout-mestres-wp/checkout-woocommerce-mestres-wp.php'] );
+		}
+		
+		if ( $is_active ) {
 			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
 		}
         // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );

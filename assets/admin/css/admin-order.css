@@ -20,7 +20,7 @@
     clear: both !important;
     width: 100% !important;
     float: left !important;
-    display: none; /* Inicia oculto e JS controla visibilidade */
+    /* display: none; Inicia oculto e JS controla visibilidade */
 }
 
 .order_data_column p._billing_address_1_field,

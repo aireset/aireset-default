@@ -28,6 +28,9 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.7 (28/11/2025) =
+* remove display none do css do admin-order para o campo complemento no admin
+
 Versão 1.3.6 (27/08/2025) =
 * Inclusão de script e ajustes na área de criação ou edição de pedidos do admin:
 * Adicionado mascaras

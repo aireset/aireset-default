@@ -3,7 +3,17 @@
 use Aireset\Default\Core;
 
 // Exit if accessed directly.
-defined('ABSPATH') || exit;
+defined('ABSPATH') || exit;+
+
+add_filter( 'intermediate_image_sizes_advanced', 'ignorar_miniaturas_na_api_tiny' );
+
+function ignorar_miniaturas_na_api_tiny( $sizes ) {
+    // Verifica se é uma requisição REST API (usada pelo Tiny/Woo)
+    if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+        return array(); // Retorna lista vazia: não cria nenhuma miniatura extra neste momento
+    }
+    return $sizes; // Se você subir a foto manualmente pelo painel, funciona normal
+}
 
 /**
  * Remove filter/action declared by class
@@ -162,4 +172,5 @@ function aireset_default_only_virtual() {
 //     }
 
 //     return false;
+
 // }

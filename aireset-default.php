@@ -6,7 +6,7 @@ namespace Aireset\Default;
  * Plugin Name: Aireset - Geral
  * Plugin URI: https://github.com/aireset/aireset-default
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
- * Version: 1.3.7
+ * Version: 1.3.8
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
@@ -39,7 +39,7 @@ class Aireset_General_Plugin {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public static $version = '1.3.7';
+	public static $version = '1.3.8';
 	
     private static $instance = null; // Declare static instance property
 
@@ -586,4 +586,5 @@ if ( $aireset_default->initiated ) {
 //     adp_fs();
 //     // Signal that SDK was initiated.
 //     do_action( 'adp_fs_loaded' );
+
 // }

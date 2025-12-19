@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset, woocommerce, brazilian market
-Stable tag: 1.3.5
+Stable tag: 1.3.8
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,9 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+Versão 1.3.8 (19/12/2025) =
+* Se essa imagem estiver vindo via API, salve apenas a original e não perca tempo criando miniaturas agora
 
 Versão 1.3.7 (28/11/2025) =
 * remove display none do css do admin-order para o campo complemento no admin

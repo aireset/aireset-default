@@ -60,7 +60,9 @@ class Aireset_General_Plugin {
 	public static $slug = 'aireset-default';
 
     public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
+		add_action( 'init', array( $this, 'init' ), 10 );
+		// Register HPOS compatibility hook - it will only fire if WooCommerce is present
+		add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
 		$this->setup_update_checker(); // Adicione esta linha
     }
 
@@ -149,18 +151,14 @@ class Aireset_General_Plugin {
 		}
 
 		// display notice if WooCommerce version is bottom 6.0
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
+		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_version_notice' ) );
 			return;
 		}
 		
-		$this->define_constants();
-
-        $this->load_textdomain();
+		$this->load_textdomain();
 		
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		}
+		$this->define_constants();
         
         // Add admin menu
         // add_action('admin_menu', array( $this, 'add_admin_menu' ));
@@ -169,13 +167,6 @@ class Aireset_General_Plugin {
         // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets_admin' ) );// preciso fazer o mesmo para frontend
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets_frontend' ) );
-
-		// check if WooCommerce is active
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
-			// add_action( 'plugins_loaded', array( $this, 'setup_includes' ), 20 );
-			// add_filter( 'plugin_action_links_' . AIRESET_DEFAULT_BASENAME, array( $this, 'hubgo_shipping_management_wc_plugin_links' ), 10, 4 );
-		}
 
 		// Hooks para a área administrativa – somente se estivermos no admin.
         // if ( is_admin() ) {
@@ -202,7 +193,7 @@ class Aireset_General_Plugin {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
 				'custom_order_tables',
-				AIRESET_DEFAULT_FILE,
+				__FILE__,
 				true
 			);
 		}
@@ -353,8 +344,22 @@ class Aireset_General_Plugin {
         // );
     }
     public function enqueue_assets_frontend() {
+		// Cache plugin activation check to avoid repeated database queries
+		static $checkout_mestres_active = null;
 		
-		if ( is_plugin_active( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php' ) ) {
+		if ( $checkout_mestres_active === null ) {
+			// Check if checkout-mestres-wp plugin is active (including multisite)
+			$active_plugins = get_option( 'active_plugins', array() );
+			$checkout_mestres_active = in_array( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php', $active_plugins );
+			
+			// Check for network-activated plugins in multisite
+			if ( ! $checkout_mestres_active && is_multisite() ) {
+				$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
+				$checkout_mestres_active = isset( $network_plugins['checkout-mestres-wp/checkout-woocommerce-mestres-wp.php'] );
+			}
+		}
+		
+		if ( $checkout_mestres_active ) {
 			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
 		}
         // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );

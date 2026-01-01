@@ -83,6 +83,14 @@ class Ajax {
 				return;
 			}
 	
+			// Verify user has permission to manage options
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( array(
+					'message' => esc_html__( 'Unauthorized request.', 'aireset-default-for-woocommerce' ),
+				) );
+				wp_die();
+			}
+
 			$form_data = $_POST['form_data'];
 			$options   = get_option('aireset_default_settings', []);
 			$saved     = false;

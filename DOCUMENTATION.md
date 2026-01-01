@@ -5,7 +5,7 @@
 **Nome do Plugin:** Aireset - Geral  
 **Versão:** 1.3.8  
 **Autor:** Felipe Almeman - Aireset Agencia Web  
-**Requerimentos:** PHP 7.4+, WordPress 4.0+, WooCommerce 5.0+  
+**Requisitos:** PHP 7.4+, WordPress 4.0+, WooCommerce 5.0+  
 
 O plugin Aireset Default fornece funcionalidades essenciais e padronizações para e-commerces e sites institucionais desenvolvidos com WordPress e WooCommerce.
 

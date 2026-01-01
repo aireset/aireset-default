@@ -181,14 +181,15 @@ class Shipping_Calculator_Widget extends Widget_Base {
             <?php endif; ?>
             
             <div class="aireset-form-group">
-                <input class="aireset-postcode" placeholder="<?php echo esc_attr($placeholder); ?>" name="aireset-postcode">
-                <button class="aireset-shipping-calc-button">
+                <label for="aireset-postcode-input" class="screen-reader-text"><?php echo esc_html($placeholder); ?></label>
+                <input type="text" id="aireset-postcode-input" class="aireset-postcode" placeholder="<?php echo esc_attr($placeholder); ?>" name="aireset-postcode" autocomplete="postal-code">
+                <button type="button" class="aireset-shipping-calc-button">
                     <span class="aireset-shipping-calc-button-title"><?php echo esc_html($button_text); ?></span>
                 </button>
             </div>
             
             <?php if ($show_link) : ?>
-                <a class="aireset-postcode-search" href="https://buscacepinter.correios.com.br/app/endereco/" target="_blank"><?php echo esc_html__('Não sei meu CEP', 'aireset-default'); ?></a>
+                <a class="aireset-postcode-search" href="https://buscacepinter.correios.com.br/app/endereco/" target="_blank" rel="noopener noreferrer"><?php echo esc_html__('Não sei meu CEP', 'aireset-default'); ?></a>
             <?php endif; ?>
             
             <div class="aireset-response"></div>
@@ -208,18 +209,19 @@ class Shipping_Calculator_Widget extends Widget_Base {
         #>
         <div class="aireset-shipping-calc aireset-elementor-widget">
             <# if (info_text) { #>
-                <span class="aireset-info-shipping-calc">{{{ info_text }}}</span>
+                <span class="aireset-info-shipping-calc">{{ info_text }}</span>
             <# } #>
             
             <div class="aireset-form-group">
-                <input class="aireset-postcode" placeholder="{{{ placeholder }}}" name="aireset-postcode">
-                <button class="aireset-shipping-calc-button">
-                    <span class="aireset-shipping-calc-button-title">{{{ button_text }}}</span>
+                <label for="aireset-postcode-input-editor" class="screen-reader-text">{{ placeholder }}</label>
+                <input type="text" id="aireset-postcode-input-editor" class="aireset-postcode" placeholder="{{ placeholder }}" name="aireset-postcode" autocomplete="postal-code">
+                <button type="button" class="aireset-shipping-calc-button">
+                    <span class="aireset-shipping-calc-button-title">{{ button_text }}</span>
                 </button>
             </div>
             
             <# if (settings.show_cep_link === 'yes') { #>
-                <a class="aireset-postcode-search" href="https://buscacepinter.correios.com.br/app/endereco/" target="_blank"><?php echo esc_html__('Não sei meu CEP', 'aireset-default'); ?></a>
+                <a class="aireset-postcode-search" href="https://buscacepinter.correios.com.br/app/endereco/" target="_blank" rel="noopener noreferrer"><?php echo esc_html__('Não sei meu CEP', 'aireset-default'); ?></a>
             <# } #>
             
             <div class="aireset-response"></div>

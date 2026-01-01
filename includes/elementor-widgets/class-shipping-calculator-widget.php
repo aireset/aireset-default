@@ -160,18 +160,18 @@ class Shipping_Calculator_Widget extends Widget_Base {
      * Render widget output on the frontend.
      */
     protected function render() {
-        // Only render on product pages
-        if (!function_exists('is_product') || (!is_product() && !\Elementor\Plugin::$instance->editor->is_edit_mode())) {
-            if (!\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                return;
-            }
+        $is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+        
+        // Only render on product pages or in Elementor editor
+        if (!$is_editor && (!function_exists('is_product') || !is_product())) {
+            return;
         }
 
         $settings = $this->get_settings_for_display();
         
-        $info_text = !empty($settings['info_text']) ? $settings['info_text'] : Init::get_setting('aireset_default_text_info_before_input_shipping_calc');
-        $placeholder = !empty($settings['placeholder_text']) ? $settings['placeholder_text'] : Init::get_setting('aireset_default_text_placeholder_input_shipping_calc');
-        $button_text = !empty($settings['button_text']) ? $settings['button_text'] : Init::get_setting('aireset_default_text_button_shipping_calc');
+        $info_text = $settings['info_text'];
+        $placeholder = $settings['placeholder_text'];
+        $button_text = $settings['button_text'];
         $show_link = $settings['show_cep_link'] === 'yes';
 
         ?>

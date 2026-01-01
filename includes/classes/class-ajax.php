@@ -83,6 +83,14 @@ class Ajax {
 				return;
 			}
 	
+			// Verify user has permission to manage options
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( array(
+					'message' => esc_html__( 'Unauthorized request.', 'aireset-default-for-woocommerce' ),
+				) );
+				wp_die();
+			}
+
 			$form_data = $_POST['form_data'];
 			$options   = get_option('aireset_default_settings', []);
 			$saved     = false;
@@ -103,23 +111,37 @@ class Ajax {
 			// 	}
 			// }
 
+			// Obter os campos da empresa para salvar como opções individuais
+			$company_fields = array();
+			if (class_exists('Aireset\Default\Custom_Fields')) {
+				$all_fields = Custom_Fields::get_fields();
+				if (isset($all_fields['dados_empresa']['fields'])) {
+					$company_fields = array_keys($all_fields['dados_empresa']['fields']);
+				}
+			}
+
 			foreach ($form_data as $field) {
 				if (!isset($field['name'])) continue;
 		
 				$name  = $field['name'];
 				$value = isset($field['value']) ? $field['value'] : '';
+				$sanitized_value = sanitize_text_field($value);
+
+				// Se for um campo de empresa, salva como opção individual
+				if (in_array($name, $company_fields)) {
+					$current_individual_value = get_option($name, '');
+					if ($current_individual_value !== $sanitized_value) {
+						update_option($name, $sanitized_value);
+						$saved = true;
+					}
+				}
 		
-				// Compara com o valor atual salvo no array principal
+				// Também salva no array principal de configurações
 				$current_value = isset($options[$name]) ? $options[$name] : '';
 		
-				if ($current_value !== $value) {
-					$options[$name] = sanitize_text_field($value);
+				if ($current_value !== $sanitized_value) {
+					$options[$name] = $sanitized_value;
 					$saved = true;
-		
-					// Para debug (pode remover depois)
-					// highlight_string("\$name = " . var_export($name, true) . ";\n");
-					// highlight_string("\$current_value = " . var_export($current_value, true) . ";\n");
-					// highlight_string("\$value = " . var_export($value, true) . ";\n");
 				}
 			}
 

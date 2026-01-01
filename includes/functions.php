@@ -1,11 +1,15 @@
 <?php
 
 use Aireset\Default\Core;
+use Aireset\Default\Init;
 
 // Exit if accessed directly.
-defined('ABSPATH') || exit;+
+defined('ABSPATH') || exit;
 
-add_filter( 'intermediate_image_sizes_advanced', 'ignorar_miniaturas_na_api_tiny' );
+// Conditionally add filter to ignore thumbnails during REST API requests
+if ( Init::get_setting( 'aireset_default_disable_rest_thumbnails' ) === 'yes' ) {
+	add_filter( 'intermediate_image_sizes_advanced', 'ignorar_miniaturas_na_api_tiny' );
+}
 
 function ignorar_miniaturas_na_api_tiny( $sizes ) {
     // Verifica se é uma requisição REST API (usada pelo Tiny/Woo)

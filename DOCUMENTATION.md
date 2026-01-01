@@ -256,6 +256,11 @@ Muitas funcionalidades estão comentadas no código, indicando features planejad
 - **Arquivo:** `integrations/class-yith-search-manager.php`
 - **Descrição:** Personalização do YITH WooCommerce Ajax Search.
 
+### 10. Desativar Miniaturas via REST API
+- **Arquivo:** `functions.php`
+- **Configuração:** `aireset_default_disable_rest_thumbnails`
+- **Descrição:** Impede a criação de miniaturas extras ao enviar imagens via REST API (Tiny, WooCommerce, etc). Upload manual pelo painel funciona normalmente.
+
 ---
 
 ## Configurações Disponíveis
@@ -273,6 +278,7 @@ Todas as configurações são armazenadas em `aireset_default_settings` (array) 
 | `aireset_default_images` | no | Gerenciamento de imagens |
 | `aireset_default_yith_wcas_submit_label` | no | Label de submit YITH |
 | `aireset_default_custom_orders_list_column_content` | yes | Colunas personalizadas em pedidos |
+| `aireset_default_disable_rest_thumbnails` | yes | Desativar criação de miniaturas via REST API |
 | `aireset_default_enable_shipping_calculator` | yes | Habilitar calculadora de frete |
 | `aireset_default_enable_auto_shipping_calculator` | yes | Cálculo automático de frete |
 | `aireset_default_primary_main_color` | #000000 | Cor principal |

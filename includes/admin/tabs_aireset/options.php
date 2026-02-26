@@ -136,6 +136,18 @@ defined('ABSPATH') || exit; ?>
          </td>
       </tr>
 
+      <tr>
+         <th>
+            <?php echo esc_html__( 'Desativar criação de miniaturas via REST API?', 'aireset-default' ) ?>
+            <span class="aireset-default-description"><?php echo esc_html__( 'Ative esta opção para impedir a criação de miniaturas extras ao enviar imagens via REST API (Tiny, WooCommerce, etc). Upload manual pelo painel funciona normalmente.', 'aireset-default' ) ?></span>
+         </th>
+         <td>
+            <div class="form-check form-switch">
+               <input type="checkbox" class="toggle-switch" id="aireset_default_disable_rest_thumbnails" name="aireset_default_disable_rest_thumbnails" value="yes" <?php checked( Init::get_setting( 'aireset_default_disable_rest_thumbnails') === 'yes' ); ?> />
+            </div>
+         </td>
+      </tr>
+
       <?php
       /**
       * Hook for display custom general options

@@ -87,6 +87,7 @@ class Init {
 			'aireset_default_images' => 'no',
 			'aireset_default_yith_wcas_submit_label' => 'no',
 			'aireset_default_custom_orders_list_column_content' => 'yes',
+			'aireset_default_disable_rest_thumbnails' => 'yes',
 
 			'aireset_default_enable_shipping_calculator' => 'yes',
 			'aireset_default_enable_auto_shipping_calculator' => 'yes',

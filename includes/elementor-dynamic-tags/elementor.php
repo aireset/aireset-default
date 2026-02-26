@@ -17,6 +17,42 @@ class Aireset_Default_Elementor_Integration {
 	public function __construct() {
 		add_action( 'elementor/dynamic_tags/register', [ $this, 'register_request_variables_dynamic_tag_group' ] );
 		add_action( 'elementor/dynamic_tags/register', [ $this, 'register_default_dynamic_tags' ] );
+		
+		// Register widgets
+		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
+		
+		// Register widget category
+		add_action( 'elementor/elements/categories_registered', [ $this, 'register_widget_category' ] );
+	}
+
+	/**
+	 * Register widget category
+	 *
+	 * @since 1.0.0
+	 * @param \Elementor\Elements_Manager $elements_manager Elementor elements manager.
+	 * @return void
+	 */
+	public function register_widget_category( $elements_manager ) {
+		$elements_manager->add_category(
+			'aireset-default',
+			[
+				'title' => __( 'Aireset Geral', 'aireset-default' ),
+				'icon' => 'fa fa-plug',
+			]
+		);
+	}
+
+	/**
+	 * Register Elementor widgets
+	 *
+	 * @since 1.0.0
+	 * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
+	 * @return void
+	 */
+	public function register_widgets( $widgets_manager ) {
+		// Register Shipping Calculator Widget
+		require_once AIRESET_DEFAULT_INC_PATH . 'elementor-widgets/class-shipping-calculator-widget.php';
+		$widgets_manager->register( new \Aireset\Default\Elementor\Widgets\Shipping_Calculator_Widget() );
 	}
 
 	/**

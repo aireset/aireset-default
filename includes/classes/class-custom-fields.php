@@ -95,6 +95,41 @@ class Custom_Fields {
                     ],
                 ]
             ],
+            'gerenciamento_frete' => [
+                'title' => esc_html__('Gerenciamento de Frete', 'aireset-default'),
+                'fields' => [
+                    'aireset_default_text_info_before_input_shipping_calc' => [
+                        'title' => esc_html__('Texto informativo antes do campo de CEP', 'aireset-default'),
+                        'description' => esc_html__('Texto exibido antes do campo de CEP na calculadora de frete.', 'aireset-default'),
+                        'type' => 'text'
+                    ],
+                    'aireset_default_text_button_shipping_calc' => [
+                        'title' => esc_html__('Texto do botão da calculadora de frete', 'aireset-default'),
+                        'description' => esc_html__('Texto exibido no botão de calcular frete.', 'aireset-default'),
+                        'type' => 'text'
+                    ],
+                    'aireset_default_text_header_ship' => [
+                        'title' => esc_html__('Texto do cabeçalho das formas de entrega', 'aireset-default'),
+                        'description' => esc_html__('Cabeçalho da coluna de métodos de entrega.', 'aireset-default'),
+                        'type' => 'text'
+                    ],
+                    'aireset_default_text_header_value' => [
+                        'title' => esc_html__('Texto do cabeçalho do valor das formas de entrega', 'aireset-default'),
+                        'description' => esc_html__('Cabeçalho da coluna de valores de frete.', 'aireset-default'),
+                        'type' => 'text'
+                    ],
+                    'aireset_default_text_placeholder_input_shipping_calc' => [
+                        'title' => esc_html__('Texto do espaço reservado do campo de CEP', 'aireset-default'),
+                        'description' => esc_html__('Placeholder do campo de CEP.', 'aireset-default'),
+                        'type' => 'text'
+                    ],
+                    'aireset_default_note_text_bottom_shipping_calc' => [
+                        'title' => esc_html__('Texto de observação inferior das opções de frete', 'aireset-default'),
+                        'description' => esc_html__('Texto de observação exibido após as opções de frete.', 'aireset-default'),
+                        'type' => 'text'
+                    ],
+                ]
+            ],
             
         ];
     }

@@ -311,6 +311,7 @@ class Assets {
 		
 			wp_localize_script( 'aireset-default-admin-scripts', 'aireset_default_params', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'save_options_nonce' => wp_create_nonce( 'aireset_default_save_options' ),
 				'set_logo_modal_title' => esc_html__( 'Escolher Imagem de cabeçalho', 'aireset-default' ),
 				'use_this_image_title' => esc_html__( 'Usar esta imagem', 'aireset-default' ),
 				'upload_success' => esc_html__( 'Arquivo enviado com sucesso', 'aireset-default' ),

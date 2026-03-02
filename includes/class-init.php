@@ -92,6 +92,8 @@ class Init {
 			'aireset_default_enable_auto_shipping_calculator' => 'yes',
 			
 			'aireset_default_primary_main_color' => '#000000',
+			'aireset_default_secondary_main_color' => '#0069e2',
+			'aireset_default_button_text_color' => '#ffffff',
 			'aireset_default_hook_display_shipping_calculator' => 'after_cart',
 			'aireset_default_text_info_before_input_shipping_calc' => 'Consultar prazo e valor da entrega',
 			'aireset_default_text_button_shipping_calc' => 'Calcular',
@@ -99,6 +101,12 @@ class Init {
 			'aireset_default_text_header_value' => 'Valor',
 			'aireset_default_note_text_bottom_shipping_calc' => '*Este resultado é apenas uma estimativa para este produto. O valor final considerado, deverá ser o total do carrinho.',
 			'aireset_default_text_placeholder_input_shipping_calc' => 'Informe seu CEP',
+			'aireset_default_show_postcode_helper_link' => 'yes',
+			'aireset_default_postcode_helper_link_text' => 'Nao sei meu CEP',
+			'aireset_default_postcode_helper_link_url' => 'https://buscacepinter.correios.com.br/app/endereco/',
+			'aireset_default_shipping_calc_results_order' => 'default',
+			'aireset_default_shipping_calc_cookie_days' => '30',
+			'aireset_default_empty_shipping_message' => 'Nenhuma forma de entrega disponivel.',
 
 			// 'enable_autofill_company_info' => 'no',
 			// 'enable_street_number_field' => 'yes',

@@ -3,7 +3,7 @@
 use Aireset\Default\Core;
 
 // Exit if accessed directly.
-defined('ABSPATH') || exit;+
+defined('ABSPATH') || exit;
 
 add_filter( 'intermediate_image_sizes_advanced', 'ignorar_miniaturas_na_api_tiny' );
 

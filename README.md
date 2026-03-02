@@ -28,6 +28,13 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versao 1.3.9 (02/03/2026) =
+* Integracao dos Dados da Empresa com endereco da loja do WooCommerce
+* Novos campos estruturados de endereco (linha 1, linha 2, cidade, estado e pais)
+* Correcao do salvamento/carregamento dos Dados da Empresa
+* Hardening do AJAX de configuracoes com nonce de seguranca
+* Melhorias de customizacao da calculadora de frete e robustez geral
+
 Versão 1.3.7 (28/11/2025) =
 * remove display none do css do admin-order para o campo complemento no admin
 

@@ -6,7 +6,7 @@ namespace Aireset\Default;
  * Plugin Name: Aireset - Geral
  * Plugin URI: https://github.com/aireset/aireset-default
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
- * Version: 1.3.8
+ * Version: 1.3.9
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
@@ -39,7 +39,7 @@ class Aireset_General_Plugin {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public static $version = '1.3.8';
+	public static $version = '1.3.9';
 	
     private static $instance = null; // Declare static instance property
 
@@ -60,9 +60,7 @@ class Aireset_General_Plugin {
 	public static $slug = 'aireset-default';
 
     public function __construct() {
-		add_action( 'init', array( $this, 'init' ), 10 );
-		// Register HPOS compatibility hook - it will only fire if WooCommerce is present
-		add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
+		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
 		$this->setup_update_checker(); // Adicione esta linha
     }
 
@@ -133,7 +131,7 @@ class Aireset_General_Plugin {
 		$this->define( 'AIRESET_DEFAULT_SLUG', self::$slug );
 		$this->define( 'AIRESET_DEFAULT_ADMIN_EMAIL', get_option('admin_email') );
 		$this->define( 'AIRESET_DEFAULT_DOCS_LINK', 'https://ajuda.aireset.com.br' );
-		$this->define( 'AIRESET_DEFAULT_PLUGIN_NAME', esc_html__( 'Aireset - Geral', 'aireset-default' ) );
+		$this->define( 'AIRESET_DEFAULT_PLUGIN_NAME', 'Aireset - Geral' );
 	}
 
 	/**
@@ -151,14 +149,18 @@ class Aireset_General_Plugin {
 		}
 
 		// display notice if WooCommerce version is bottom 6.0
-		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_version_notice' ) );
 			return;
 		}
 		
-		$this->load_textdomain();
-		
 		$this->define_constants();
+
+		add_action( 'init', array( $this, 'load_textdomain' ) );
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
         
         // Add admin menu
         // add_action('admin_menu', array( $this, 'add_admin_menu' ));
@@ -167,6 +169,13 @@ class Aireset_General_Plugin {
         // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets_admin' ) );// preciso fazer o mesmo para frontend
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets_frontend' ) );
+
+		// check if WooCommerce is active
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
+			// add_action( 'plugins_loaded', array( $this, 'setup_includes' ), 20 );
+			// add_filter( 'plugin_action_links_' . AIRESET_DEFAULT_BASENAME, array( $this, 'hubgo_shipping_management_wc_plugin_links' ), 10, 4 );
+		}
 
 		// Hooks para a área administrativa – somente se estivermos no admin.
         // if ( is_admin() ) {
@@ -193,7 +202,7 @@ class Aireset_General_Plugin {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
 				'custom_order_tables',
-				__FILE__,
+				AIRESET_DEFAULT_FILE,
 				true
 			);
 		}
@@ -344,22 +353,8 @@ class Aireset_General_Plugin {
         // );
     }
     public function enqueue_assets_frontend() {
-		// Cache plugin activation check to avoid repeated database queries
-		static $checkout_mestres_active = null;
 		
-		if ( $checkout_mestres_active === null ) {
-			// Check if checkout-mestres-wp plugin is active (including multisite)
-			$active_plugins = get_option( 'active_plugins', array() );
-			$checkout_mestres_active = in_array( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php', $active_plugins );
-			
-			// Check for network-activated plugins in multisite
-			if ( ! $checkout_mestres_active && is_multisite() ) {
-				$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
-				$checkout_mestres_active = isset( $network_plugins['checkout-mestres-wp/checkout-woocommerce-mestres-wp.php'] );
-			}
-		}
-		
-		if ( $checkout_mestres_active ) {
+		if ( is_plugin_active( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php' ) ) {
 			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
 		}
         // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );
@@ -549,10 +544,8 @@ class Aireset_General_Plugin {
 
 $aireset_default = new Aireset_General_Plugin();
 
-if ( $aireset_default->initiated ) {
-	register_activation_hook( __FILE__, array( $aireset_default, 'activate' ) );
-	register_deactivation_hook( __FILE__, array( $aireset_default, 'deactivate' ) );
-}
+register_activation_hook( __FILE__, array( '\Aireset\Default\Aireset_General_Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( '\Aireset\Default\Aireset_General_Plugin', 'deactivate' ) );
 
 // if ( ! function_exists( 'adp_fs' ) ) {
 //     // Create a helper function for easy SDK access.

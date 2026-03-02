@@ -122,6 +122,7 @@
 				type: 'POST',
 				data: {
 					action: 'aireset_default_admin_ajax_save_options',
+					nonce: aireset_default_params.save_options_nonce,
 					// form_data: changed_data,
 					form_data: form_data,
 				},

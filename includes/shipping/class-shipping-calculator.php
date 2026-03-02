@@ -12,10 +12,11 @@ class ShippingCalculator {
 
     public function enqueue_admin_scripts() {
         global $pagenow;
+        $post_type = isset($_GET['post_type']) ? sanitize_key(wp_unslash($_GET['post_type'])) : 'shop_order';
 
         if(is_admin() 
             && in_array($pagenow, ['post.php', 'post-new.php'])
-            && ($_GET['post_type'] ?: 'shop_order') === 'shop_order') 
+            && $post_type === 'shop_order') 
         {
             wp_enqueue_script('shipping-calc_js', plugins_url('admin/js/shipping-calc.js', AIRESET_DEFAULT_FILE), array('jquery'), AIRESET_DEFAULT_VERSION);
             wp_localize_script('shipping-calc_js', 'shipping_calc', array(

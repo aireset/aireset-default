@@ -1,7 +1,7 @@
 === Aireset - Plugin Geral ===
 Contributors: aireset
 Tags: aireset, woocommerce, brazilian market
-Stable tag: 1.3.9
+Stable tag: 1.3.10
 Requires at least: 4.0
 Tested up to: 6.6.2
 Requires PHP: 7.4
@@ -42,6 +42,9 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 == Changelog ==
 Lançamos versões regularmente com melhorias, correções e atualizações.
+
+Versao 1.3.10 (03/05/2026) =
+* Revisao de manutencao para sincronizar versao e metadados de release do plugin
 
 Versao 1.3.9 (02/03/2026) =
 * Integracao dos Dados da Empresa com endereco da loja do WooCommerce

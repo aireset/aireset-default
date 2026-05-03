@@ -28,6 +28,9 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versao 1.3.10 (03/05/2026) =
+* Revisao de manutencao para sincronizar versao e metadados de release do plugin
+
 Versao 1.3.9 (02/03/2026) =
 * Integracao dos Dados da Empresa com endereco da loja do WooCommerce
 * Novos campos estruturados de endereco (linha 1, linha 2, cidade, estado e pais)

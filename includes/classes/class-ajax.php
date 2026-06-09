@@ -10,12 +10,17 @@ defined('ABSPATH') || exit;
  */
 class Ajax {
 
+	use Aireset_License_Guard;
+
 	/**
 	 * Register AJAX handlers.
 	 *
 	 * @return void
 	 */
 	public function __construct() {
+		if ( ! self::_prefetch_module_state() ) {
+			return;
+		}
 		add_action( 'wp_ajax_aireset_default_admin_ajax_save_options', array( $this, 'ajax_save_options_callback' ) );
 	}
 

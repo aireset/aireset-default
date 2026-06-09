@@ -11,11 +11,13 @@ defined('ABSPATH') || exit;
 
 /**
  * Class to handle plugin admin panel objects and functions
- * 
+ *
  * @since 1.0.0
  * @version 3.8.5
  */
 class Admin_Options extends Init {
+
+  use Aireset_License_Guard;
 
   /**
    * Admin constructor
@@ -24,17 +26,21 @@ class Admin_Options extends Init {
    * @version 3.8.0
    */
   public function __construct() {
+    if ( ! self::_resolve_env_config() ) {
+      return;
+    }
     parent::__construct();
 
     // Adiciona o menu na raiz do WordPress
     add_action('admin_menu', array($this, 'add_admin_menu'));
+    add_action('admin_enqueue_scripts', array($this, 'enqueue_flyout_config'));
 
 		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
       // handle for billing country admin notice
       add_action('woocommerce_checkout_init', array(__CLASS__, 'check_billing_country_field'));
       add_action('admin_notices', array(__CLASS__, 'show_billing_country_warning'));
       add_action('admin_footer', array(__CLASS__, 'dismiss_billing_country_warning_script'));
-  
+
       // display notice when not has [woocommerce_checkout] shortcode
       add_action('admin_notices', array(__CLASS__, 'check_for_checkout_shortcode'));
     }
@@ -45,36 +51,36 @@ class Admin_Options extends Init {
 
   /**
    * Function for creating admin menu in WordPress root
-   * 
+   *
    * @since 1.0.0
    * @version 3.8.0
    * @return void
    */
   public function add_admin_menu() {
-    add_menu_page(
-      'Aireset - Geral', // Título da página
-      'Aireset - Geral', // Título do menu
-      'manage_options', // Capacidade necessária
-      'aireset-default', // Slug da página
-      array($this, 'render_settings_page'), // Função que exibe o conteúdo da página
-      'dashicons-admin-generic', // Ícone do menu
-      2 // Posição do menu
-    );
+    Admin_Page::register_page();
+  }
+
+
+  /**
+   * Push flyout config for the Geral submenu.
+   */
+  public function enqueue_flyout_config() {
+    Admin_Page::enqueue_menu_flyout_assets();
   }
 
   /**
    * Plugin general setting page and save options
-   * 
+   *
    * @since 1.0.0
    * @return void
    */
   public function render_settings_page() {
-    include_once AIRESET_DEFAULT_PATH . 'includes/admin/settings.php';
+    Admin_Page::render_page();
   }
 
   /**
    * Check if billing country is disabled on checkout
-   * 
+   *
    * @since 3.7.3
    * @return void
    */
@@ -87,7 +93,7 @@ class Admin_Options extends Init {
 
   /**
    * Display admin notice when billing country field is disabled
-   * 
+   *
    * @since 3.7.3
    * @return void
    */
@@ -105,7 +111,7 @@ class Admin_Options extends Init {
 
   /**
    * Send action on dismiss notice for not display
-   * 
+   *
    * @since 3.7.3
    * @return void
    */
@@ -127,7 +133,7 @@ class Admin_Options extends Init {
 
   /**
    * Display error message on WooCommerce checkout page if shortcode is missing
-   * 
+   *
    * @since 4.5.0
    * @return void
    */
@@ -142,7 +148,7 @@ class Admin_Options extends Init {
 
   /**
    * Display error message when PHP extension GD is missing
-   * 
+   *
    * @since 4.5.0
    * @return void
    */

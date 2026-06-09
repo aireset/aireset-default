@@ -1,0 +1,74 @@
+/* Elite Licenser — Estilo admin para formulários de licença Aireset */
+.el-license-container {
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 30px;
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+.el-license-title {
+	font-size: 1.3em;
+	margin: 0 0 10px;
+	color: #23282d;
+}
+.el-license-title .dashicons-before::before {
+	color: #f0b849;
+}
+.el-license-info {
+	list-style: none;
+	padding: 0;
+	margin: 20px 0;
+}
+.el-license-info li {
+	padding: 10px 0;
+	border-bottom: 1px solid #eee;
+}
+.el-license-info li:last-child {
+	border-bottom: none;
+}
+.el-license-info-title {
+	font-weight: 600;
+	display: inline-block;
+	min-width: 160px;
+	color: #23282d;
+}
+.el-license-valid {
+	color: #46b450;
+	font-weight: 600;
+}
+.el-license-invalid {
+	color: #dc3232;
+	font-weight: 600;
+}
+.el-license-key {
+	font-family: monospace;
+	background: #f1f1f1;
+	padding: 2px 6px;
+	border-radius: 3px;
+}
+.el-blue-btn {
+	display: inline-block;
+	margin-left: 8px;
+	padding: 2px 10px;
+	background: #0073aa;
+	color: #fff !important;
+	text-decoration: none;
+	border-radius: 3px;
+	font-size: 12px;
+}
+.el-blue-btn:hover {
+	background: #005177;
+}
+.el-license-field {
+	margin-bottom: 15px;
+}
+.el-license-field label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+.el-license-active-btn {
+	margin-top: 20px;
+}

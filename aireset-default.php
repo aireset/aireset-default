@@ -3,19 +3,20 @@
 namespace Aireset\Default;
 
 /*
- * Plugin Name: Aireset - Geral
- * Plugin URI: https://github.com/aireset/aireset-default
+ * Plugin Name: Aireset — Geral
+ * Plugin URI: https://aireset.com.br
+ * Author: Felipe Almeman, Aireset Agencia Web
+ * Author URI: https://aireset.com.br
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
  * Version: 1.3.10
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
  * WC tested up to: 9.3.3
- * Author: Felipe Almeman - Aireset Agencia Web
- * Link: https://aireset.com.br
  * Text Domain: aireset-default
  * Domain Path: /languages
- * License: GPLv2 or later
+ * License: Proprietary
+ * License URI: https://aireset.com.br/termos-de-uso
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -31,6 +32,8 @@ if (file_exists($updater_path)) {
     require_once $updater_path;
 }
 
+require_once __DIR__ . '/includes/classes/class-admin-page.php';
+
 class Aireset_General_Plugin {
 
 	/**
@@ -40,7 +43,7 @@ class Aireset_General_Plugin {
 	 * @var string
 	 */
 	public static $version = '1.3.10';
-	
+
     private static $instance = null; // Declare static instance property
 
 	/**
@@ -84,7 +87,7 @@ class Aireset_General_Plugin {
             if ($myUpdateChecker) {
                 $myUpdateChecker->setBranch('master');
                 $myUpdateChecker->getVcsApi()->enableReleaseAssets();
-                
+
                 // Debug
                 add_filter('puc_pre_check_for_updates', function($value, $plugin_file, $slug) {
                     error_log('Verificando atualizações para: ' . $slug);
@@ -98,23 +101,23 @@ class Aireset_General_Plugin {
             error_log('Stack trace: ' . $e->getTraceAsString());
         }
     }
-    
+
     private function get_changelog_formatted() {
         $readme_file = plugin_dir_path(__FILE__) . 'README.md';
         if (!file_exists($readme_file)) {
             return 'Nenhum changelog disponível.';
         }
-        
+
         $content = file_get_contents($readme_file);
         if (preg_match('/### Registro de alterações \(Changelogs\):(.*?)(?=###|$)/s', $content, $matches)) {
             return trim($matches[1]);
         }
         return 'Nenhum changelog encontrado.';
     }
-	
+
 	/**
 	 * Define constants
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @version 3.9.0
 	 * @return void
@@ -136,7 +139,7 @@ class Aireset_General_Plugin {
 
 	/**
 	 * Checker dependencies before activate plugin
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @version 3.9.0
 	 * @return void
@@ -153,15 +156,15 @@ class Aireset_General_Plugin {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_version_notice' ) );
 			return;
 		}
-		
+
 		$this->define_constants();
 
 		add_action( 'init', array( $this, 'load_textdomain' ) );
-		
+
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
-        
+
         // Add admin menu
         // add_action('admin_menu', array( $this, 'add_admin_menu' ));
 
@@ -190,7 +193,7 @@ class Aireset_General_Plugin {
 
 	/**
 	 * Setup WooCommerce High-Performance Order Storage (HPOS) compatibility
-	 * 
+	 *
 	 * @since 1.2.5
 	 * @return void
 	 */
@@ -210,7 +213,7 @@ class Aireset_General_Plugin {
 
 	/**
 	 * Run on activation
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
@@ -227,6 +230,7 @@ class Aireset_General_Plugin {
 	 */
 	public static function deactivate() {
 		self::clear_wc_template_cache();
+		wp_clear_scheduled_hook( 'aireset_default_verify_unlinked_orders_customer' );
 	}
 
 	/**
@@ -353,7 +357,7 @@ class Aireset_General_Plugin {
         // );
     }
     public function enqueue_assets_frontend() {
-		
+
 		if ( is_plugin_active( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php' ) ) {
 			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
 		}
@@ -405,7 +409,7 @@ class Aireset_General_Plugin {
         // include_once plugin_dir_path(__FILE__) . 'includes/imagens.php';
         // include_once plugin_dir_path(__FILE__) . 'includes/yith.php';
         // include_once plugin_dir_path(__FILE__) . 'includes/order-custom-column.php';
-        
+
 		$includes = apply_filters( 'aireset_default_setup_includes', array(
 			'functions.php',
 			'classes/class-license.php',
@@ -495,7 +499,7 @@ class Aireset_General_Plugin {
 
 	/**
 	 * PHP version notice
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function aireset_default_wc_php_version_notice() {
@@ -538,6 +542,26 @@ class Aireset_General_Plugin {
 		return $output;
 	}
 }
+
+// License gate — bloqueia o plugin sem licença válida.
+/* ── License gate ── */
+if ( ! defined( 'AIRESET_DEFAULT_FILE' ) ) {
+	define( 'AIRESET_DEFAULT_FILE', __FILE__ );
+}
+require_once __DIR__ . '/includes/classes/class-license.php';
+
+if ( ! \Aireset\Default\License::is_valid() ) {
+	add_action( 'admin_notices', function () {
+		printf(
+			'<div class="notice notice-error"><p>%s</p></div>',
+			esc_html__( 'Aireset Geral: ative sua licença para usar o plugin.', 'aireset-default' )
+		);
+	} );
+	return;
+}
+/* ── /License gate ── */
+
+require_once __DIR__ . '/includes/classes/trait-aireset-license-guard.php';
 
 // Initialize the plugin
 // Aireset_General_Plugin::get_instance();

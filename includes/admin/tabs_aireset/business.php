@@ -5,6 +5,8 @@ use Aireset\Default\Custom_Fields;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+$panel_class = class_exists('\Aireset\Default\Admin_Page') ? \Aireset\Default\Admin_Page::get_panel_classes('business') : 'nav-content';
+
 // Business fields and legacy fallback settings.
 $fields = Custom_Fields::get_fields()['dados_empresa']['fields'];
 $settings = get_option('aireset_default_settings', array());
@@ -23,7 +25,7 @@ $woo_address_map = array(
 
 ?>
 
-<div id="business" class="nav-content">
+<div id="business" class="<?php echo esc_attr($panel_class); ?>">
    <table class="form-table">
       <?php
       /**

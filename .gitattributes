@@ -1,0 +1,17 @@
+# Normaliza quebras de linha para LF no codigo-fonte do plugin
+* text=auto eol=lf
+
+# vendor/ versionado mas SEM conversao de EOL (preserva libs como estao)
+vendor/** -text
+
+# Binarios
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.woff  binary
+*.woff2 binary
+*.ttf  binary
+*.eot  binary
+*.mo   binary

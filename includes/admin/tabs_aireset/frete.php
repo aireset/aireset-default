@@ -6,7 +6,9 @@ use Aireset\Default\License;
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 
-<div id="frete" class="nav-content">
+<?php $panel_class = class_exists('\Aireset\Default\Admin_Page') ? \Aireset\Default\Admin_Page::get_panel_classes('frete') : 'nav-content'; ?>
+
+<div id="frete" class="<?php echo esc_attr($panel_class); ?>">
    <table class="form-table">
       <tr>
         <th>

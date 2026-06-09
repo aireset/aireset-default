@@ -6,12 +6,14 @@ use Aireset\Default\License;
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 
-<div id="general" class="nav-content">
+<?php $panel_class = class_exists('\Aireset\Default\Admin_Page') ? \Aireset\Default\Admin_Page::get_panel_classes('general') : 'nav-content'; ?>
+
+<div id="general" class="<?php echo esc_attr($panel_class); ?>">
    <table class="form-table">
       <?php
       /**
       * Hook for display custom generals option
-      * 
+      *
       * @since 3.6.0
       */
       do_action('aireset_default_before_general_options'); ?>
@@ -139,7 +141,7 @@ defined('ABSPATH') || exit; ?>
       <?php
       /**
       * Hook for display custom general options
-      * 
+      *
       * @since 3.6.0
       */
       do_action('aireset_default_after_general_options'); ?>

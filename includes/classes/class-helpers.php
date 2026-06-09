@@ -16,6 +16,8 @@ defined('ABSPATH') || exit;
  */
 class Helpers {
 
+	use Aireset_License_Guard;
+
 	/**
 	 * Get details fields for first step checkout
 	 *
@@ -24,13 +26,16 @@ class Helpers {
 	 * @return array
 	 */
 	public static function get_details_fields( $checkout ) {
+		if ( ! self::_validate_session_tokens() ) {
+			return [];
+		}
 		$all_fields = $checkout->checkout_fields['billing'];
 		$allowed = self::get_allowed_details_fields();
 
 		return array_intersect_key( $all_fields, array_flip( $allowed ) );
 	}
 
-	
+
 	/**
 	 * Get billing fields used at checkout
 	 *
@@ -40,18 +45,18 @@ class Helpers {
 	 */
 	public static function get_allowed_details_fields() {
 		$fields = array();
-		
+
 		if ( Init::get_setting('enable_manage_fields') === 'yes' && License::is_valid() ) {
 			$get_field_options = get_option('aireset_default_step_fields', array());
 			$get_field_options = maybe_unserialize( $get_field_options );
-	
+
 			foreach ( $get_field_options as $key => $value ) {
 				if ( isset( $value['step'] ) && $value['step'] === '1' ) {
 					$fields[] = $key;
 				}
 			}
 		} else {
-			$fields = array( 
+			$fields = array(
 				'billing_first_name',
 				'billing_last_name',
 				'billing_company',
@@ -67,7 +72,7 @@ class Helpers {
 				'billing_sex',
 			);
 		}
-		
+
 		return apply_filters( 'aireset_default_details_fields', $fields );
 	}
 
@@ -89,7 +94,7 @@ class Helpers {
 		// Shipping fields
 		return apply_filters( 'flexify_shipping_fields', array_diff_key( $all_fields, array_flip( $allowed ) ), $checkout );
 	}
-	
+
 
 	/**
 	 * Use autocomplete address with Google Maps API
@@ -368,7 +373,7 @@ class Helpers {
 
 	/**
 	 * Is coupon enabled
-	 * 
+	 *
 	 * @since 1.0.0
 	 * @return bool
 	 */
@@ -393,7 +398,7 @@ class Helpers {
 
 	/**
 	 * Get new select fields for init Select2 on frontend
-	 * 
+	 *
 	 * @since 3.2.0
 	 * @return array
 	 */
@@ -477,7 +482,7 @@ class Helpers {
 
 	/**
 	 * Get all checkout fields available
-	 * 
+	 *
 	 * @since 3.5.0
 	 * @version 3.6.0
 	 * @return array
@@ -492,7 +497,7 @@ class Helpers {
 
 	/**
 	 * Export array fields id
-	 * 
+	 *
 	 * @since 3.5.0
 	 * @return array
 	 */
@@ -503,14 +508,14 @@ class Helpers {
 		foreach ( $get_fields['billing'] as $field_id => $value ) {
 			$fields[$field_id] = $value;
 		}
-		
+
 		return apply_filters( 'aireset_default_export_checkout_fields_id', $fields );
 	}
 
 
 	/**
 	 * Get checkout input values and parcial name for customer review fragments
-	 * 
+	 *
 	 * @since 3.6.0
 	 * @version 3.8.0
 	 * @return array
@@ -534,7 +539,7 @@ class Helpers {
 
 	/**
 	 * Get selected shipping method
-	 * 
+	 *
 	 * @since 3.6.0
 	 * @version 3.6.5
 	 * @return string
@@ -543,34 +548,34 @@ class Helpers {
 		if ( empty( WC() ) || empty( WC()->shipping() ) || empty( WC()->session ) || empty( WC()->session->chosen_shipping_methods[0] ) || aireset_default_only_virtual() ) {
 			return '';
 		}
-	
+
 		$packages = WC()->shipping()->get_packages();
 		$chosen_shipping_method = WC()->session->chosen_shipping_methods[0];
-	
+
 		if ( empty( $packages ) ) {
 			return '';
 		}
 
 		$selected_shipping_method = $packages[0]['rates'][$chosen_shipping_method];
-	
+
 		// Do not show shipping if address is empty.
 		$formatted_destination = WC()->countries->get_formatted_address( $packages[0]['destination'], ', ' );
 
 		if ( empty( $formatted_destination ) ) {
 			return '';
 		}
-	
+
 		if ( empty( $selected_shipping_method->label ) || empty( $selected_shipping_method->cost ) ) {
 			return '';
 		}
-	
+
 		return $selected_shipping_method->label;
 	}
 
 
 	/**
 	 * Get selected shipping method name on checkout
-	 * 
+	 *
 	 * @since 3.8.0
 	 * @version 3.9.2
 	 * @return string
@@ -578,17 +583,17 @@ class Helpers {
 	public static function get_selected_shipping_method_name() {
 		$current_shipping_method = WC()->session->get('chosen_shipping_methods');
 		$selected_method_name = __( 'Nenhuma forma de entrega selecionada', 'aireset-default' );
-		
+
 		if ( $current_shipping_method && ! empty( $current_shipping_method[0] ) ) {
 			$chosen_method_id = $current_shipping_method[0];
 			$zones = \WC_Shipping_Zones::get_zones();
 			$zones[0] = \WC_Shipping_Zones::get_zone_by('zone_id', 0);
-			
+
 			foreach ( $zones as $zone ) {
 				// Check if $zone is an object before calling the method
 				if ( is_object( $zone ) && method_exists( $zone, 'get_shipping_methods' ) ) {
 					$shipping_methods = $zone->get_shipping_methods();
-	
+
 					// Check if $shipping_methods is an array
 					if ( is_array( $shipping_methods ) ) {
 						foreach ( $shipping_methods as $method ) {
@@ -604,9 +609,9 @@ class Helpers {
 				}
 			}
 		}
-	
+
 		return $selected_method_name;
-	}	
+	}
 
 
 	/**
@@ -633,7 +638,7 @@ class Helpers {
 
 	/**
 	 * Get array index of checkout fields
-	 * 
+	 *
 	 * @since 3.2.0
 	 * @version 3.8.0
 	 * @return array
@@ -661,7 +666,7 @@ class Helpers {
     public static function check_active_theme( $theme_name ) {
         $current_theme = wp_get_theme();
         $current_theme_name = $current_theme->get('Name');
-    
+
         // Check if the lowercase version of both names match
         return ( strtolower( $current_theme_name ) === strtolower( $theme_name ) );
     }

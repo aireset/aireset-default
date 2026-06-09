@@ -6,20 +6,22 @@ use Aireset\Default\License;
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 
-<div id="docs" class="nav-content">
+<?php $panel_class = class_exists('\Aireset\Default\Admin_Page') ? \Aireset\Default\Admin_Page::get_panel_classes('docs') : 'nav-content'; ?>
+
+<div id="docs" class="<?php echo esc_attr($panel_class); ?>">
   <table class="form-table">
-	
+
 	<tr>
 		<td class="d-grid">
 			<span class="mb-2"><?php echo esc_html__( 'Talvez precise atualizar a tela:', 'aireset-default' ) ?>
 		</td>
 	</tr>
-	
+
 	<?php if ( Init::get_setting('aireset_default_masks') === 'yes' ): ?>
 	<tr class="w-75 mt-5">
 		<td>
 			<h3 class="h2 mt-0"><?php esc_html_e( 'Documentação das máscaras:', 'aireset-default' ); ?></h3>
-			
+
 			<div class="p-3 mb-4 bg-light border rounded">
 				<h4 class="fw-bold"><?php esc_html_e( 'Como Funciona?', 'aireset-default' ); ?></h4>
 				<p class="mb-1"><?php esc_html_e( 'Para aplicar uma máscara a um campo de formulário (<input>), basta adicionar a classe CSS correspondente na seção "Avançado" do campo no Elementor ou diretamente no HTML.', 'aireset-default' ); ?></p>
@@ -107,7 +109,7 @@ defined('ABSPATH') || exit; ?>
 	<?php endif; ?>
 
 	<!-- <tr class="container-separator"></tr> -->
-	
+
 	<?php if ( Init::get_setting('aireset_default_intl_tel_input') === 'yes' ): ?>
 	<tr class="w-75 mt-5">
 		<td>

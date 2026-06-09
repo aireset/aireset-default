@@ -6,7 +6,9 @@ use Aireset\Default\License;
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 
-<div id="about" class="nav-content">
+<?php $panel_class = class_exists('\Aireset\Default\Admin_Page') ? \Aireset\Default\Admin_Page::get_panel_classes('about') : 'nav-content'; ?>
+
+<div id="about" class="<?php echo esc_attr($panel_class); ?>">
   <table class="form-table">
 	<tr>
 		<td class="d-grid">
@@ -32,9 +34,9 @@ defined('ABSPATH') || exit; ?>
 		</td>
 	</tr>
 
-	
+
 	<tr class="container-separator"></tr>
-	
+
 	<tr class="w-75 mt-5">
 		<td>
 			<h3 class="h2 mt-0"><?php esc_html_e( 'Status do sistema:', 'aireset-default' ); ?></h3>
@@ -327,7 +329,7 @@ defined('ABSPATH') || exit; ?>
 								<span class="title-hightlight bg-danger mt-2 mb-3"></span>
 								<span class="text-muted fs-lg p-3"><?php echo esc_html__( 'Ao redefinir as configurações do plugin, todas opções serão removidas, voltando ao estado original.', 'aireset-default' ) ?></span>
 							</div>
-							
+
 							<div class="my-4 p-3">
 								<button id="confirm_reset_settings" class="btn btn-lg btn-outline-secondary"><?php echo esc_html__('Sim, desejo redefinir', 'aireset-default'); ?></button>
 							</div>

@@ -290,29 +290,12 @@ class Aireset_General_Plugin {
 	}
 
 	/**
-	 * Include additional functions and modules from other files.
+	 * Boot the plugin modules through the central loader.
 	 *
 	 * @return void
 	 */
 	private function include_functions() {
-		$includes = apply_filters( 'aireset_default_setup_includes', array(
-			'functions.php',
-			'classes/class-license.php',
-			'class-init.php',
-			'classes/class-helpers.php',
-			'classes/class-admin-options.php',
-			'classes/class-assets.php',
-			'classes/class-ajax.php',
-			'classes/class-admin-fields.php',
-		) );
-
-		foreach ( $includes as $file ) {
-			$file_path = AIRESET_DEFAULT_INC_PATH . $file;
-
-			if ( file_exists( $file_path ) ) {
-				include_once $file_path;
-			}
-		}
+		Plugin::boot();
 	}
 
 	/**

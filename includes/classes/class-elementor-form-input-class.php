@@ -93,4 +93,3 @@
 			return $field;
 		}
     }
-    new Elementor_Forms_Input_Classes();

@@ -541,9 +541,3 @@ class Conditions {
         return false;
     }
 }
-
-new Conditions();
-
-if ( ! class_exists('Aireset\Default\Conditions\Conditions') ) {
-    class_alias( 'Aireset\Default\Conditions', 'Aireset\Default\Conditions\Conditions' );
-}

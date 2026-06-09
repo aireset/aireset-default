@@ -21,50 +21,8 @@ class Init {
 	 * @return void
 	 */
 	public function __construct() {
-		// set default options
+		// Set default options.
 		add_action( 'admin_init', array( $this, 'aireset_default_set_default_options' ) );
-
-		// Inicializa o gerenciador de CEP
-		require_once AIRESET_DEFAULT_PATH . 'includes/classes/class-cep-manager.php';
-
-		$this->initValidConfigs();
-	}
-
-	public function initValidConfigs(){
-
-		include_once AIRESET_DEFAULT_INC_PATH . 'actions.php';
-		
-		// if ( Init::get_setting('status_woocommerce') === 'yes' ) {
-		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/woocommerce.php';
-		// }
-
-		// if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
-		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
-		// }
-
-		// if ( Init::get_setting('aireset_default_order_pay_without_login') === 'yes' ) {
-		// 	include_once AIRESET_DEFAULT_INC_PATH . 'includes/cart.php';
-		// }
-
-		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-elementor-form-input-class.php'; // Elementor Forms Input Classes
-		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-elementor-form-input-custom-attributes.php'; // Elementor Forms Input Custom Attributes
-		include_once AIRESET_DEFAULT_INC_PATH . 'classes/class-custom-fields.php';
-
-		// Verifica se NÃO estamos no admin e NÃO é uma chamada AJAX
-		// if ( ! is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-		// if ( ! is_admin() ) {
-			// load shipping calculator in single product page
-			include_once AIRESET_DEFAULT_INC_PATH . 'classes/shipping/management-custom-colors.php';
-			if ( Init::get_setting( 'aireset_default_enable_shipping_calculator' ) === 'yes' ) {
-				include_once AIRESET_DEFAULT_INC_PATH . 'classes/shipping/management-calculator.php';
-				// wp_enqueue_script( 'hubgo-shipping-management-wc-front-scripts', AIRESET_DEFAULT_ASSETS . 'front/js/shipping-management-front-scripts.js', array( 'jquery' ), AIRESET_DEFAULT_VERSION );
-			}
-		// }
-
-		// Maybe enable Elementor integration
-		if ( in_array( 'elementor/elementor.php', get_option( 'active_plugins', array() ) ) ) {
-			require_once AIRESET_DEFAULT_INC_PATH . 'elementor-dynamic-tags/elementor.php';
-		}
 	}
 
 
@@ -282,10 +240,4 @@ class Init {
 
 		return false;
 	}
-}
-
-new Init();
-
-if ( ! class_exists( 'Aireset\Default\Init\Init' ) ) {
-	class_alias( 'Aireset\Default\Init', 'Aireset\Default\Init\Init' );
 }

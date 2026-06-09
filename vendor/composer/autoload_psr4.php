@@ -14,5 +14,5 @@ return array(
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Claudsonm\\CepPromise\\' => array($vendorDir . '/claudsonm/cep-promise-php/src'),
-    'Aireset\\Default\\' => array($baseDir . '/includes'),
+    'Aireset\\Default\\' => array($baseDir . '/src', $baseDir . '/includes'),
 );

@@ -450,5 +450,3 @@ class Shipping_Management_Shipping_Calculator {
 		return '';
 	}
 }
-
-new Shipping_Management_Shipping_Calculator();

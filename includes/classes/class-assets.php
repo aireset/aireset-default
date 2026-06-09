@@ -633,9 +633,3 @@ class Assets {
 	}
 
 }
-
-new Assets();
-
-if ( ! class_exists('Aireset\Default\Assets\Assets') ) {
-    class_alias( 'Aireset\Default\Assets', 'Aireset\Default\Assets\Assets' );
-}

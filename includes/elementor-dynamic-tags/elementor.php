@@ -291,5 +291,3 @@ class Aireset_Default_Elementor_Integration {
 		return $cf_groups;
 	}
 }
-
-$aireset_default_elementor_integration = new Aireset_Default_Elementor_Integration();

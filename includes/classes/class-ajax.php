@@ -161,9 +161,3 @@ class Ajax {
 		update_option( 'woocommerce_default_country', empty( $state ) ? $country : $country . ':' . $state );
 	}
 }
-
-new Ajax();
-
-if ( ! class_exists( 'Aireset\Default\Ajax\Ajax' ) ) {
-	class_alias( 'Aireset\Default\Ajax', 'Aireset\Default\Ajax\Ajax' );
-}

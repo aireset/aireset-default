@@ -161,9 +161,3 @@ class Admin_Options extends Init {
     }
   }
 }
-
-new Admin_Options();
-
-if ( ! class_exists('Aireset\Default\Admin_Options\Admin_Options') ) {
-  class_alias( 'Aireset\Default\Admin_Options', 'Aireset\Default\Admin_Options\Admin_Options' );
-}

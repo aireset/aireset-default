@@ -49,5 +49,3 @@ class CEP_Manager {
         }
     }
 }
-
-new CEP_Manager();

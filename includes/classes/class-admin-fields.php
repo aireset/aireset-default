@@ -119,5 +119,3 @@ class Admin_Fields {
     }
 
 }
-
-new Admin_Fields();

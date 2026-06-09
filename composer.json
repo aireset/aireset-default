@@ -8,7 +8,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Aireset\\Default\\": "includes/"
+            "Aireset\\Default\\": [
+                "src/",
+                "includes/"
+            ]
         }
     }
 }

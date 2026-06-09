@@ -77,5 +77,3 @@ class Shipping_Management_Custom_Colors {
 		return "rgba($red, $green, $blue, $opacity)";
 	}
 }
-
-new Shipping_Management_Custom_Colors();

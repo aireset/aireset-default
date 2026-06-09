@@ -671,7 +671,3 @@ class Helpers {
         return ( strtolower( $current_theme_name ) === strtolower( $theme_name ) );
     }
 }
-
-if ( ! class_exists('Aireset\Default\Helpers\Helpers') ) {
-    class_alias( 'Aireset\Default\Helpers', 'Aireset\Default\Helpers\Helpers' );
-}

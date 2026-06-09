@@ -112,6 +112,3 @@ class Elementor_Forms_Custom_Attributes {
         return $field;
     }
 }
-
-// Inicializa a classe
-new Elementor_Forms_Custom_Attributes();

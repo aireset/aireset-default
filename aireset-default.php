@@ -26,9 +26,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Carrega o autoloader do Composer se existir.
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Configura o sistema de atualizações
+// Configura o sistema de atualizações.
 $updater_path = __DIR__ . '/plugin-update-checker/plugin-update-checker.php';
-if (file_exists($updater_path)) {
+if ( file_exists( $updater_path ) ) {
     require_once $updater_path;
 }
 
@@ -44,10 +44,15 @@ class Aireset_General_Plugin {
 	 */
 	public static $version = '1.3.10';
 
-    private static $instance = null; // Declare static instance property
+	/**
+	 * Single instance of the plugin.
+	 *
+	 * @var Aireset_General_Plugin|null
+	 */
+	private static $instance = null;
 
 	/**
-	 * Plugin initiated
+	 * Plugin initiated.
 	 *
 	 * @since 1.0.0
 	 * @var bool
@@ -62,61 +67,40 @@ class Aireset_General_Plugin {
 	 */
 	public static $slug = 'aireset-default';
 
-    public function __construct() {
+	public function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
-		$this->setup_update_checker(); // Adicione esta linha
-    }
+		$this->setup_update_checker();
+	}
 
 	/**
-     * Configura o update checker para o plugin.
-     * Esta função contém o código corrigido.
-     */
-    public function setup_update_checker() {
-        if (!class_exists('YahnisElsts\PluginUpdateChecker\v5\PucFactory')) {
-            error_log('PucFactory class não encontrada');
-            return;
-        }
+	 * Configure the GitHub update checker for the plugin.
+	 *
+	 * @return void
+	 */
+	public function setup_update_checker() {
+		if ( ! class_exists( 'YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
+			return;
+		}
 
-        try {
-            $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
-                'https://github.com/aireset/aireset-default/',
-                __FILE__,
-                'aireset-default'
-            );
+		try {
+			$update_checker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+				'https://github.com/aireset/aireset-default/',
+				__FILE__,
+				'aireset-default'
+			);
 
-            if ($myUpdateChecker) {
-                $myUpdateChecker->setBranch('master');
-                $myUpdateChecker->getVcsApi()->enableReleaseAssets();
-
-                // Debug
-                add_filter('puc_pre_check_for_updates', function($value, $plugin_file, $slug) {
-                    error_log('Verificando atualizações para: ' . $slug);
-                    return $value;
-                }, 10, 3);
-            } else {
-                error_log('Falha ao criar o updateChecker');
-            }
-        } catch (\Exception $e) {
-            error_log('Erro ao configurar o atualizador do plugin: ' . $e->getMessage());
-            error_log('Stack trace: ' . $e->getTraceAsString());
-        }
-    }
-
-    private function get_changelog_formatted() {
-        $readme_file = plugin_dir_path(__FILE__) . 'README.md';
-        if (!file_exists($readme_file)) {
-            return 'Nenhum changelog disponível.';
-        }
-
-        $content = file_get_contents($readme_file);
-        if (preg_match('/### Registro de alterações \(Changelogs\):(.*?)(?=###|$)/s', $content, $matches)) {
-            return trim($matches[1]);
-        }
-        return 'Nenhum changelog encontrado.';
-    }
+			if ( $update_checker ) {
+				$update_checker->setBranch( 'master' );
+				$update_checker->getVcsApi()->enableReleaseAssets();
+			}
+		} catch ( \Exception $e ) {
+			// Falha na configuração do atualizador não deve quebrar o carregamento do plugin.
+			return;
+		}
+	}
 
 	/**
-	 * Define constants
+	 * Define constants.
 	 *
 	 * @since 1.0.0
 	 * @version 3.9.0
@@ -132,27 +116,27 @@ class Aireset_General_Plugin {
 		$this->define( 'AIRESET_DEFAULT_BASENAME', plugin_basename( __FILE__ ) );
 		$this->define( 'AIRESET_DEFAULT_VERSION', self::$version );
 		$this->define( 'AIRESET_DEFAULT_SLUG', self::$slug );
-		$this->define( 'AIRESET_DEFAULT_ADMIN_EMAIL', get_option('admin_email') );
+		$this->define( 'AIRESET_DEFAULT_ADMIN_EMAIL', get_option( 'admin_email' ) );
 		$this->define( 'AIRESET_DEFAULT_DOCS_LINK', 'https://ajuda.aireset.com.br' );
 		$this->define( 'AIRESET_DEFAULT_PLUGIN_NAME', 'Aireset - Geral' );
 	}
 
 	/**
-	 * Checker dependencies before activate plugin
+	 * Check dependencies and bootstrap the plugin.
 	 *
 	 * @since 1.0.0
 	 * @version 3.9.0
 	 * @return void
 	 */
 	public function init() {
-		// Display notice if PHP version is bottom 7.4
+		// Display notice if PHP version is below 7.4.
 		if ( version_compare( phpversion(), '7.4', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_php_version_notice' ) );
 			return;
 		}
 
-		// display notice if WooCommerce version is bottom 6.0
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
+		// Display notice if WooCommerce version is below 6.0.
+		if ( class_exists( 'WooCommerce' ) && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '6.0', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'aireset_default_wc_version_notice' ) );
 			return;
 		}
@@ -162,37 +146,22 @@ class Aireset_General_Plugin {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-
-        // Add admin menu
-        // add_action('admin_menu', array( $this, 'add_admin_menu' ));
-
-        // Enqueue scripts and styles
-        // add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets_admin' ) );// preciso fazer o mesmo para frontend
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets_frontend' ) );
 
-		// check if WooCommerce is active
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		// Declare HPOS compatibility when WooCommerce is active.
+		if ( class_exists( 'WooCommerce' ) ) {
 			add_action( 'before_woocommerce_init', array( $this, 'setup_hpos_compatibility' ) );
-			// add_action( 'plugins_loaded', array( $this, 'setup_includes' ), 20 );
-			// add_filter( 'plugin_action_links_' . AIRESET_DEFAULT_BASENAME, array( $this, 'hubgo_shipping_management_wc_plugin_links' ), 10, 4 );
 		}
 
-		// Hooks para a área administrativa – somente se estivermos no admin.
-        // if ( is_admin() ) {
-        //     // Executa a verificação do reset e adiciona o link oculto somente na página do plugin.
-        //     add_action( 'admin_init', array( $this, 'handle_reset_options' ) );
-        //     // add_action( 'admin_footer', array( $this, 'hidden_reset_link' ) );
-        // }
-
-        // Include additional functions
-        $this->include_functions();
-    }
+		// Include additional functions and modules.
+		$this->include_functions();
+	}
 
 	/**
-	 * Setup WooCommerce High-Performance Order Storage (HPOS) compatibility
+	 * Setup WooCommerce High-Performance Order Storage (HPOS) compatibility.
 	 *
 	 * @since 1.2.5
 	 * @return void
@@ -212,7 +181,7 @@ class Aireset_General_Plugin {
 	}
 
 	/**
-	 * Run on activation
+	 * Run on activation.
 	 *
 	 * @since 1.0.0
 	 * @return void
@@ -221,9 +190,8 @@ class Aireset_General_Plugin {
 		self::clear_wc_template_cache();
 	}
 
-
 	/**
-	 * Deactivate plugin
+	 * Run on deactivation.
 	 *
 	 * @since 1.0.0
 	 * @return void
@@ -243,24 +211,23 @@ class Aireset_General_Plugin {
 	}
 
 	/**
-	 * Clear WooCommerce template cache
+	 * Clear WooCommerce template cache.
 	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
 	public static function clear_wc_template_cache() {
-		if ( function_exists('wc_clear_template_cache') ) {
+		if ( function_exists( 'wc_clear_template_cache' ) ) {
 			wc_clear_template_cache();
 		}
 	}
 
-
 	/**
-	 * Define constant if not already set
+	 * Define constant if not already set.
 	 *
 	 * @since 1.0.0
-	 * @param string $name | Constant name
-	 * @param string|bool $value | Constant value
+	 * @param string      $name  Constant name.
+	 * @param string|bool $value Constant value.
 	 * @return void
 	 */
 	private function define( $name, $value ) {
@@ -269,147 +236,65 @@ class Aireset_General_Plugin {
 		}
 	}
 
-    /**
-     * Return an instance of this class.
-     *
-     * @return object A single instance of this class.
-     */
-    public static function get_instance() {
-        // If the single instance hasn't been set, set it now.
-        if ( null === self::$instance ) {
-            self::$instance = new self();
-        }
+	/**
+	 * Return a single instance of this class.
+	 *
+	 * @return Aireset_General_Plugin
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
 
-    /**
-     * Load the plugin text domain for translations.
-     */
-    public function load_textdomain() {
-        // Load regular translation from WordPress.
-        load_plugin_textdomain( 'aireset-default', false, dirname(plugin_basename(__FILE__)) . '/languages' );
+	/**
+	 * Load the plugin text domain for translations.
+	 *
+	 * @return void
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain( 'aireset-default', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
-        // Try to use the plugin's own translation, only available for pt_BR.
-        $locale = apply_filters( 'plugin_locale', determine_locale(), 'aireset-default' );
+		// Try to use the plugin's own translation, only available for pt_BR.
+		$locale = apply_filters( 'plugin_locale', determine_locale(), 'aireset-default' );
 
-        if ( 'pt_BR' === $locale ) {
-            unload_textdomain( 'aireset-default' );
-            load_textdomain(
-                'aireset-default',
-                plugin_dir_path( __FILE__ ) . '/languages/aireset-default-' . $locale . '.mo'
-            );
-        }
-    }
+		if ( 'pt_BR' === $locale ) {
+			unload_textdomain( 'aireset-default' );
+			load_textdomain(
+				'aireset-default',
+				plugin_dir_path( __FILE__ ) . '/languages/aireset-default-' . $locale . '.mo'
+			);
+		}
+	}
 
-    /**
-     * Add admin menu item.
-     */
-    // public function add_admin_menu() {
-    //     add_menu_page(
-    //         'Aireset', // Título da página
-    //         'Aireset', // Título do menu
-    //         'manage_options',        // Capacidade necessária
-    //         'aireset-default', // Slug da página
-    //         array( $this, 'admin_page_content' ) // Função que gera o conteúdo
-    //     );
-    // }
-
-    /**
-     * Admin page content (can be customized later).
-     */
-    // public function admin_page_content() {
-    //     echo '<h1>' . esc_html__( 'Aireset - Geral', 'aireset-default' ) . '</h1>';
-    //     // Add additional content here as needed.
-    // }
-
-    /**
-     * Enqueue scripts and styles.
-     */
-    public function enqueue_assets_admin() {
-        // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );
-        // wp_enqueue_script( 'aireset-scripts', $this->get_assets_url() . 'js/script.js', array('jquery'), null, true );
-
-        // Carrega o estilo CSS do plugin
-        // wp_enqueue_style(
-        //     'aireset-style',
-        //     $this->get_assets_url() . 'css/style.css',
-        //     array(),
-        //     '1.0.0'
-        // );
-
-        // // Carrega Vue.js via CDN (ou localmente se preferir)
-        // wp_enqueue_script(
-        //     'vue-js',
-        //     'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
-        //     array(),
-        //     '2.6.14',
-        //     true
-        // );
-
-        // // Carrega o script principal do Vue
-        // wp_enqueue_script(
-        //     'aireset-app',
-        //     $this->get_assets_url() . 'js/app.js',
-        //     array('vue-js'),
-        //     '1.0.0',
-        //     true
-        // );
-    }
-    public function enqueue_assets_frontend() {
-
+	/**
+	 * Enqueue frontend assets.
+	 *
+	 * @return void
+	 */
+	public function enqueue_assets_frontend() {
 		if ( is_plugin_active( 'checkout-mestres-wp/checkout-woocommerce-mestres-wp.php' ) ) {
 			wp_enqueue_style( 'aireset-checkout-mestres-styles', AIRESET_DEFAULT_ASSETS . 'front/css/checkout-mestres-wp.css' );
 		}
-        // wp_enqueue_style( 'aireset-styles', $this->get_assets_url() . 'css/style.css' );
-        // wp_enqueue_script( 'aireset-scripts', $this->get_assets_url() . 'js/script.js', array('jquery'), null, true );
+	}
 
-        // Carrega o estilo CSS do plugin
-        // wp_enqueue_style(
-        //     'aireset-style',
-        //     $this->get_assets_url() . 'css/style.css',
-        //     array(),
-        //     '1.0.0'
-        // );
+	/**
+	 * Get assets URL.
+	 *
+	 * @return string
+	 */
+	public static function get_assets_url() {
+		return plugins_url( 'assets/', __FILE__ );
+	}
 
-        // // Carrega Vue.js via CDN (ou localmente se preferir)
-        // wp_enqueue_script(
-        //     'vue-js',
-        //     'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
-        //     array(),
-        //     '2.6.14',
-        //     true
-        // );
-
-        // // Carrega o script principal do Vue
-        // wp_enqueue_script(
-        //     'aireset-app',
-        //     $this->get_assets_url() . 'js/app.js',
-        //     array('vue-js'),
-        //     '1.0.0',
-        //     true
-        // );
-    }
-
-    /**
-     * Get assets URL.
-     *
-     * @return string
-     */
-    public static function get_assets_url() {
-        return plugins_url( 'assets/', __FILE__ );
-    }
-
-    /**
-     * Include additional functions from other files.
-     */
-    private function include_functions() {
-        // include_once plugin_dir_path(__FILE__) . 'includes/status.php';
-        // include_once plugin_dir_path(__FILE__) . 'includes/cart.php';
-        // include_once plugin_dir_path(__FILE__) . 'includes/imagens.php';
-        // include_once plugin_dir_path(__FILE__) . 'includes/yith.php';
-        // include_once plugin_dir_path(__FILE__) . 'includes/order-custom-column.php';
-
+	/**
+	 * Include additional functions and modules from other files.
+	 *
+	 * @return void
+	 */
+	private function include_functions() {
 		$includes = apply_filters( 'aireset_default_setup_includes', array(
 			'functions.php',
 			'classes/class-license.php',
@@ -419,13 +304,7 @@ class Aireset_General_Plugin {
 			'classes/class-assets.php',
 			'classes/class-ajax.php',
 			'classes/class-admin-fields.php',
-			// // 'classes/class-compat-autoloader.php',
-			// // 'classes/class-sidebar.php',
-			// // 'classes/class-steps.php',
-			// // 'classes/class-logger.php',
-			// // 'classes/class-modules.php',
-			// // 'classes/class-updater.php',
-		));
+		) );
 
 		foreach ( $includes as $file ) {
 			$file_path = AIRESET_DEFAULT_INC_PATH . $file;
@@ -434,28 +313,7 @@ class Aireset_General_Plugin {
 				include_once $file_path;
 			}
 		}
-    }
-
-    /**
-     * Log messages.
-     *
-     * @param string $message
-     */
-    public function registrar_log( $mensagem ) {
-        $log_handler = new WC_Log_Handler_File( 'aireset_verificar_pedidos' );
-        $logger = wc_get_logger();
-        $logger->info( $mensagem, array( 'source' => 'aireset_verificar_pedidos' ) );
-    }
-
-    /**
-     * Highlight array for debugging.
-     *
-     * @param array $array
-     * @param string $name
-     */
-    public function highlight_array( $array, $name = 'var' ) {
-        highlight_string( "<?php\n\$$name =\n" . var_export( $array, true ) . ";\n?>" );
-    }
+	}
 
 	/**
 	 * Cloning is forbidden.
@@ -464,7 +322,7 @@ class Aireset_General_Plugin {
 	 * @return void
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default-for-woocommerce' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default' ), '1.0.0' );
 	}
 
 	/**
@@ -474,76 +332,33 @@ class Aireset_General_Plugin {
 	 * @return void
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default-for-woocommerce' ), '1.0.0' );
-	}
-
-	/**
-	 * Notice if WooCommerce is deactivate
-	 */
-	public function aireset_default_wc_deactivate_notice() {
-		if ( !current_user_can( 'install_plugins' ) ) { return; }
-
-		echo '<div class="notice is-dismissible error">
-				<p>' . __( 'Requer que <strong>WooCommerce</strong> esteja instalado e ativado.', 'hubgo-shipping-management-wc' ) . '</p>
-			</div>';
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Trapaceando?', 'aireset-default' ), '1.0.0' );
 	}
 
 	/**
 	 * WooCommerce version notice.
+	 *
+	 * @return void
 	 */
 	public function aireset_default_wc_version_notice() {
 		echo '<div class="notice is-dismissible error">
-				<p>' . __( 'Requer a versão do WooCommerce 5.0 ou maior. Faça a atualização do plugin WooCommerce.', 'hubgo-shipping-management-wc' ) . '</p>
+				<p>' . esc_html__( 'Requer a versão do WooCommerce 5.0 ou maior. Faça a atualização do plugin WooCommerce.', 'aireset-default' ) . '</p>
 			</div>';
 	}
 
 	/**
-	 * PHP version notice
+	 * PHP version notice.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
 	public function aireset_default_wc_php_version_notice() {
 		echo '<div class="notice is-dismissible error">
-				<p>' . __( 'Requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'hubgo-shipping-management-wc' ) . '</p>
+				<p>' . esc_html__( 'Requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'aireset-default' ) . '</p>
 			</div>';
-	}
-
-	// Função utilitária para listar releases do GitHub
-	public static function listar_versoes_github() {
-		$repo = 'aireset/aireset-default';
-		$url = "https://api.github.com/repos/$repo/releases";
-		$args = array(
-			'headers' => array(
-				'Accept'        => 'application/vnd.github.v3+json',
-				'User-Agent'    => 'WordPress/' . get_bloginfo('version'),
-			),
-			'timeout' => 15,
-		);
-
-		$response = wp_remote_get($url, $args);
-
-		if (is_wp_error($response)) {
-			return 'Erro ao consultar o GitHub: ' . $response->get_error_message();
-		}
-
-		$body = wp_remote_retrieve_body($response);
-		$releases = json_decode($body);
-
-		if (empty($releases)) {
-			return 'Nenhuma versão encontrada.';
-		}
-
-		$output = '<ul>';
-		foreach ($releases as $release) {
-			$output .= '<li>' . esc_html($release->tag_name) . ' - ' . esc_html($release->name) . '</li>';
-		}
-		$output .= '</ul>';
-
-		return $output;
 	}
 }
 
-// License gate — bloqueia o plugin sem licença válida.
 /* ── License gate ── */
 if ( ! defined( 'AIRESET_DEFAULT_FILE' ) ) {
 	define( 'AIRESET_DEFAULT_FILE', __FILE__ );
@@ -563,50 +378,8 @@ if ( ! \Aireset\Default\License::is_valid() ) {
 
 require_once __DIR__ . '/includes/classes/trait-aireset-license-guard.php';
 
-// Initialize the plugin
-// Aireset_General_Plugin::get_instance();
-
+// Initialize the plugin.
 $aireset_default = new Aireset_General_Plugin();
 
 register_activation_hook( __FILE__, array( '\Aireset\Default\Aireset_General_Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( '\Aireset\Default\Aireset_General_Plugin', 'deactivate' ) );
-
-// if ( ! function_exists( 'adp_fs' ) ) {
-//     // Create a helper function for easy SDK access.
-//     function adp_fs() {
-//         global $adp_fs;
-
-//         if ( ! isset( $adp_fs ) ) {
-//             // Include Freemius SDK.
-//             require_once dirname(__FILE__) . '/freemius/start.php';
-
-//             $adp_fs = fs_dynamic_init( array(
-//                 'id'                  => '16791',
-//                 'slug'                => 'aireset-default-pro',
-//                 'type'                => 'plugin',
-//                 'public_key'          => 'pk_5d033d0ef9241016259794d49fad3',
-//                 'is_premium'          => true,
-//                 'premium_suffix'      => 'Pro',
-//                 // If your plugin is a serviceware, set this option to false.
-//                 'has_premium_version' => true,
-//                 'has_addons'          => false,
-//                 'has_paid_plans'      => true,
-//                 'trial'               => array(
-//                     'days'               => 7,
-//                     'is_require_payment' => false,
-//                 ),
-//                 'menu'                => array(
-//                     'support'        => false,
-//                 ),
-//             ) );
-//         }
-
-//         return $adp_fs;
-//     }
-
-//     // Init Freemius.
-//     adp_fs();
-//     // Signal that SDK was initiated.
-//     do_action( 'adp_fs_loaded' );
-
-// }

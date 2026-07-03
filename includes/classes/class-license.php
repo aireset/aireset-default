@@ -61,7 +61,7 @@ class License
         $this->set_plugin_data();
 
         $main_lic_key = 'Aireset-Geral_lic_Key';
-        $lic_key_name = \Aireset_License_Base::get_lic_key_param($main_lic_key);
+        $lic_key_name = \Aireset_Default_License_Base::get_lic_key_param($main_lic_key);
         $license_key  = get_option($lic_key_name, '');
 
         // Migração de chave legada.
@@ -75,11 +75,11 @@ class License
 
         $lic_email = get_option('Aireset-Geral_lic_email', '');
 
-        \Aireset_License_Base::add_on_delete(function () {
+        \Aireset_Default_License_Base::add_on_delete(function () {
             update_option('Aireset-Geral_lic_Key', '');
         });
 
-        if (\Aireset_License_Base::check_wp_plugin($license_key, $lic_email, $this->license_message, $this->response_obj, $this->plugin_file)) {
+        if (\Aireset_Default_License_Base::check_wp_plugin($license_key, $lic_email, $this->license_message, $this->response_obj, $this->plugin_file)) {
             $this->is_valid = true;
             add_action('admin_menu', [$this, 'active_admin_menu'], 99999);
             add_action('admin_post_Aireset-Geral_el_deactivate_license', [$this, 'action_deactivate_license']);
@@ -250,7 +250,7 @@ class License
         $license_email = ! empty($_POST['el_license_email']) ? sanitize_email(wp_unslash($_POST['el_license_email'])) : '';
 
         $main_lic_key = 'Aireset-Geral_lic_Key';
-        $lic_key_name = \Aireset_License_Base::get_lic_key_param($main_lic_key);
+        $lic_key_name = \Aireset_Default_License_Base::get_lic_key_param($main_lic_key);
 
         update_option($lic_key_name, $license_key);
         update_option('Aireset-Geral_lic_email', $license_email);
@@ -272,9 +272,9 @@ class License
 
         $message      = '';
         $main_lic_key = 'Aireset-Geral_lic_Key';
-        $lic_key_name = \Aireset_License_Base::get_lic_key_param($main_lic_key);
+        $lic_key_name = \Aireset_Default_License_Base::get_lic_key_param($main_lic_key);
 
-        if (\Aireset_License_Base::remove_license_key($this->plugin_file, $message)) {
+        if (\Aireset_Default_License_Base::remove_license_key($this->plugin_file, $message)) {
             update_option($lic_key_name, '');
             update_option('_site_transient_update_plugins', '');
         }

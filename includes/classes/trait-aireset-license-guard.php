@@ -27,12 +27,12 @@ trait Aireset_License_Guard {
 	 * @return bool
 	 */
 	private static function _resolve_env_config() {
-		if ( ! class_exists( 'Aireset_License_Base' ) ) {
+		if ( ! class_exists( 'Aireset_Default_License_Base' ) ) {
 			self::_flag_env_status( 'missing_core' );
 			return false;
 		}
 
-		$core = \Aireset_License_Base::get_instance();
+		$core = \Aireset_Default_License_Base::get_instance();
 		if ( empty( $core ) ) {
 			return false;
 		}

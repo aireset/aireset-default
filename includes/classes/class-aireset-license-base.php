@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Aireset_License_Base' ) ) {
+if ( ! class_exists( 'Aireset_Default_License_Base' ) ) {
 
-	class Aireset_License_Base {
+	class Aireset_Default_License_Base {
 
 		/**
 		 * Chave encriptada do produto (enc_key do Elite Licenser).
@@ -803,7 +803,7 @@ if ( ! class_exists( 'Aireset_License_Base' ) ) {
 				return false;
 			}
 			$ref = new \ReflectionClass( $this );
-			if ( $ref->getMethod( '_check_wp_plugin' )->class !== 'Aireset_License_Base' ) {
+			if ( $ref->getMethod( '_check_wp_plugin' )->class !== 'Aireset_Default_License_Base' ) {
 				$this->_dispatch_status_report( 'integrity_override' );
 				return false;
 			}
@@ -816,7 +816,7 @@ if ( ! class_exists( 'Aireset_License_Base' ) ) {
 		 * @return string
 		 */
 		public static function get_integrity_token() {
-			return hash( 'sha256', __FILE__ . self::$_fp_salt . 'Aireset_License_Base' );
+			return hash( 'sha256', __FILE__ . self::$_fp_salt . 'Aireset_Default_License_Base' );
 		}
 
 		/**

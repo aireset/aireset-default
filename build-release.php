@@ -14,7 +14,7 @@ error_reporting( E_ERROR | E_PARSE );
 
 // ===== config deste plugin =====
 $PRODUCT_ID    = 1;
-$LICENSE_FILES = array( 'includes/classes/class-aireset-license-base.php', 'includes/classes/class-license.php' );
+$LICENSE_FILES = array( 'includes/classes/class-aireset-license-base.php', 'includes/classes/class-license.php', 'includes/aireset-sys.php' );
 $ENDPOINT      = 'https://aireset.com.br/wp-json/aireset-deploy/v1/publish';
 // ================================
 

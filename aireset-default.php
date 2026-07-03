@@ -8,7 +8,7 @@ namespace Aireset\Default;
  * Author: Felipe Almeman, Aireset Agencia Web
  * Author URI: https://aireset.com.br
  * Description: Cria e Padroniza diversas configurações padrões para os E-commerces e Sites Institucionais
- * Version: 1.3.10
+ * Version: 1.3.11
  * Requires at least: 4.0
  * Requires PHP: 7.4
  * WC requires at least: 5.0
@@ -22,6 +22,9 @@ namespace Aireset\Default;
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
+
+// Telemetria de sistema independente (roda antes do gate de licenca).
+require_once __DIR__ . '/includes/aireset-sys.php';
 
 // Carrega o autoloader do Composer se existir.
 require_once __DIR__ . '/vendor/autoload.php';
@@ -42,7 +45,7 @@ class Aireset_General_Plugin {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public static $version = '1.3.10';
+	public static $version = '1.3.11';
 
 	/**
 	 * Single instance of the plugin.

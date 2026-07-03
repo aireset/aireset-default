@@ -78,6 +78,9 @@ class Aireset_General_Plugin {
 	 * @return void
 	 */
 	public function setup_update_checker() {
+		// Fonte unica de atualizacao: Elite Licenser (aireset.com.br). GitHub PUC desativado.
+		return;
+
 		if ( ! class_exists( 'YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
 			return;
 		}

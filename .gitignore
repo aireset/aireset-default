@@ -1,1 +1,3 @@
+*.zipdist/
+.aireset-deploy-key
 *.zip
